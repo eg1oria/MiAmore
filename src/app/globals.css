@@ -1,0 +1,19 @@
+@import 'tailwindcss';
+
+body {
+  background: rgb(230, 230, 230);
+  color: black;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.container {
+  max-width: 1728px;
+  margin: 0 auto;
+  padding: 0 180px;
+}
+
+.introImg {
+  width: 100%;
+  height: auto;
+  margin: 50px 0 0 0;
+}

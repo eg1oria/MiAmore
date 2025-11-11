@@ -1,0 +1,93 @@
+.delivery {
+  position: relative;
+  display: flex;
+}
+
+.deliveryContent {
+  position: absolute;
+  display: flex;
+}
+
+.textd {
+  position: absolute;
+}
+
+.one {
+  top: 50px;
+  font-size: 35px;
+  left: 500px;
+  font-weight: bold;
+  color: #3f0c00;
+  letter-spacing: 4px;
+}
+
+.two {
+  font-size: 23px;
+  top: 100px;
+  left: 500px;
+  white-space: nowrap;
+  font-weight: bold;
+  background-color: #34a9e9;
+  padding: 0 10px;
+  color: white;
+}
+
+.three {
+  top: 95px;
+  font-size: 25px;
+  left: 630px;
+  font-weight: bold;
+  color: #3f0c00;
+  font-size: 30px;
+}
+.link {
+  top: 400px;
+  left: 600px;
+  background-color: #65c9ff;
+  padding: 0 15px;
+  font-size: 25px;
+  transition: background-color 0.1s linear;
+
+  &:hover {
+    background-color: #54a4cf;
+  }
+}
+
+.custom-prev,
+.custom-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: transparent; /* bg-pink-700 */
+  color: white;
+  padding: 40px;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.3s ease;
+  width: 300px;
+}
+
+.custom-prev:hover,
+.custom-next:hover {
+  background-color: #0000003c; /* bg-pink-600 */
+}
+
+.custom-prev {
+  left: -150px;
+  height: 100%;
+  border-radius: 100%;
+  justify-content: right;
+}
+
+.custom-next {
+  right: -150px;
+  height: 100%;
+  border-radius: 100%;
+}
+
+#swipper {
+  overflow: hidden;
+}
