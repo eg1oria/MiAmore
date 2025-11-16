@@ -1,9 +1,11 @@
 @import 'tailwindcss';
 
 body {
-  background: rgb(230, 230, 230);
+  background: white;
   color: black;
   font-family: Arial, Helvetica, sans-serif;
+  transition: background 0.3s, color 0.3s;
+  height: 100vh;
 }
 
 .container {
@@ -12,8 +14,9 @@ body {
   padding: 0 180px;
 }
 
-.introImg {
-  width: 100%;
-  height: auto;
-  margin: 50px 0 0 0;
+.mainTitle {
+  font-size: 32px;
+  font-weight: bold;
+  margin: 50px 0;
 }
+

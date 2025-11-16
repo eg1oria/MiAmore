@@ -9,11 +9,14 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.10.1",
     "lucide-react": "^0.553.0",
+    "mammoth": "^1.11.0",
     "next": "16.0.1",
     "react": "19.2.0",
     "react-dom": "19.2.0",
     "react-icons": "^5.5.0",
+    "react-redux": "^9.2.0",
     "swiper": "^12.0.3"
   },
   "devDependencies": {

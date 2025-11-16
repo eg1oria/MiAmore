@@ -1,0 +1,179 @@
+.cart-page {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 40px 0;
+  min-height: 80vh;
+}
+
+.cart-title {
+  font-size: 28px;
+  text-align: center;
+  margin-bottom: 25px;
+  color: #222;
+}
+
+.cartContainer {
+  display: flex;
+  gap: 200px;
+  position: relative;
+}
+
+.cart-empty {
+  text-align: center;
+  color: #666;
+  font-size: 25px;
+  padding: 40px 0;
+}
+
+.cart-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 0;
+  border-bottom: 1px solid #eee;
+  gap: 12px;
+  width: 600px;
+}
+
+.cart-item:last-child {
+  border-bottom: none;
+}
+
+.cart-item-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.cart-item-image {
+  border-radius: 12px;
+  object-fit: cover;
+  width: 120px;
+}
+
+.cart-item-name {
+  font-size: 18px;
+  margin: 0;
+  color: #333;
+}
+
+.cart-item-quantity {
+  margin: 4px 0 0;
+  color: #777;
+  font-size: 14px;
+}
+
+.cart-item-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.cart-item-price {
+  font-weight: bold;
+  color: #444;
+}
+
+.cart-remove-btn {
+  background: #ff6464;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 10px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.2s ease;
+}
+
+.cart-remove-btn:hover {
+  background: #e04848;
+}
+
+.cart-info {
+  text-align: right;
+  position: sticky;
+  top: 120px;
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+  width: fit-content;
+  background: white;
+  gap: 20px;
+  padding: 50px;
+  border-radius: 3px;
+  border: 1px solid silver;
+  background-color: #efefef5a;
+}
+
+.cartTitle {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.cart-total {
+  font-size: 25px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.cart-clear-btn {
+  background: #222;
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.cart-clear-btn:hover {
+  background: #444;
+}
+
+.CartAddFlowers {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.flowersMass {
+  margin-top: 200px;
+}
+
+.cart-item-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.quantity-btn {
+  background: #f1f1f1;
+  border: none;
+  border-radius: 6px;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+.quantity-btn:hover {
+  background: #ffb6c1;
+}
+
+.quantity-value {
+  min-width: 24px;
+  text-align: center;
+  font-weight: 500;
+}

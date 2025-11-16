@@ -1,0 +1,127 @@
+.flower-page {
+  background: #fafafa;
+  padding: 60px 20px;
+}
+
+.flower-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.image-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-wrapper {
+  position: relative;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  border: #1a1a1a 1px solid;
+}
+
+.flower-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.details-section {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.flower-title {
+  font-size: 2.5rem;
+  font-weight: 300;
+  color: #1a1a1a;
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+.flower-meta {
+  display: flex;
+}
+
+.flower-type {
+  font-size: 0.875rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 500;
+}
+
+.price-section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 24px 0;
+  border-top: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.price-label {
+  font-size: 0.75rem;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 500;
+}
+
+.price-value {
+  font-size: 1.75rem;
+  font-weight: 400;
+  color: #1a1a1a;
+}
+
+.actions-section {
+  display: flex;
+  gap: 12px;
+}
+
+.cart-button,
+.favs-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-self: center;
+  border: 1px solid #1a1a1a;
+  border-radius: 2px;
+  cursor: pointer;
+  height: 50px;
+}
+
+.cart-button {
+  width: 100%;
+  background: #111;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 0;
+  font-size: 0.95rem;
+  cursor: pointer;
+  padding: 12px 8px 8px 8px;
+  transition: all 0.3s ease;
+}
+
+.cart-button:hover {
+  background: #333;
+  border-color: #333;
+}
+
+.favs-button {
+  width: 100%;
+  border-radius: 10px;
+  padding: 10px 0;
+  font-size: 0.95rem;
+  cursor: pointer;
+  padding: 12px 8px 8px 8px;
+  transition: all 0.3s ease;
+}

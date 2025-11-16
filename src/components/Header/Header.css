@@ -1,8 +1,8 @@
 .header {
   display: flex;
   flex-direction: column;
-
-  background-color: #fff;
+  transition: background 0.3s, color 0.3s;
+  background: #fff;
 }
 
 .headerContent {
@@ -15,6 +15,7 @@
 .headerIcons {
   display: flex;
   gap: 10px;
+  align-items: center;
 }
 
 .cartIcon {
@@ -36,7 +37,6 @@
 
 .navItem {
   font-size: 16px;
-  color: #3d2d19;
   display: flex;
   gap: 4px;
   align-items: center;
@@ -50,30 +50,46 @@
   display: flex;
   gap: 10px;
   align-items: center;
-  color: rgb(243, 113, 156);
 }
 
 .logoText {
   font-size: 20px;
   font-weight: bold;
-  color: #000;
 }
 
 .themeButton {
   cursor: pointer;
   margin-right: 15px;
-  padding: 10px;
-  border-radius: 12px;
-  transition: background-color 0.3s, color 0.3s;
+  border-radius: 50%;
+  padding: 2px;
+  color: white;
+  width: 60px;
+  height: 30px;
+  border-radius: 40px;
+  display: flex;
+  align-items: center;
+  background: rgba(128, 128, 128, 0.125);
+  border: 1.5px solid black;
+  position: relative;
+  transition: border-color 0.3s ease;
 
   &:hover {
-    background-color: #b8c5b057;
+    border-color: rgb(200, 84, 84);
   }
 }
 
 .headerSale {
   width: 100%;
   text-align: center;
-  background-color: #ff626283;
+  background-color: #ff7e79ac;
   padding: 5px 0;
+}
+
+.themeButtonIcon {
+  border-radius: 50%;
+  padding: 4px;
+  transition: translate 0.3s linear;
+  transition: background-color 0.3s, color 0.3s, opacity 0.3s, transform 0.3s;
+  position: absolute;
+  border: 1px solid rgb(125, 125, 125);
 }

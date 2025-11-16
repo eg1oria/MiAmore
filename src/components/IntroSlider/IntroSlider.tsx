@@ -11,7 +11,7 @@ import './IntroSlider.css';
 
 export default function IntroSlider() {
   return (
-    <div className="relative mt-20" id="swipper">
+    <div className="relative mt-10" id="swipper">
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
         spaceBetween={30}
