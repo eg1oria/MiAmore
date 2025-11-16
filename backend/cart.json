@@ -124,5 +124,14 @@
     "count": 3,
     "userId": "18ed9ed0-0a17-4dbc-ae3e-458f630a182a",
     "createdAt": 1763321254413
+  },
+  "b2498b2f-1ec2-4161-b21b-7b70c3637ab7": {
+    "id": "b2498b2f-1ec2-4161-b21b-7b70c3637ab7",
+    "productId": "12",
+    "name": "Elegant Grace",
+    "price": 6000,
+    "count": 1,
+    "userId": "18ed9ed0-0a17-4dbc-ae3e-458f630a182a",
+    "createdAt": 1763321918652
   }
 }

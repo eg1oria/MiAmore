@@ -3,15 +3,14 @@
 import Link from 'next/link';
 import './Header.css';
 import { IoCart } from 'react-icons/io5';
-import { MdFavorite } from 'react-icons/md';
 import { MdOutlineWbSunny } from 'react-icons/md';
 import { PiLeafLight } from 'react-icons/pi';
 import { usePathname } from 'next/navigation';
 import { PiLeafFill } from 'react-icons/pi';
 import { useTheme } from '@/contexts/ThemeContext';
 import { Moon } from 'lucide-react';
-import { Provider, useSelector } from 'react-redux';
-import { RootState, store } from '@/app/store';
+import { Provider } from 'react-redux';
+import { store } from '@/app/store';
 import Image from 'next/image';
 import { useAuth } from '@/contexts/AuthContext';
 import { FaSignOutAlt, FaUser } from 'react-icons/fa';
@@ -32,7 +31,6 @@ export const navItem: INav[] = [
 export default function Header() {
   const linkPathname = usePathname();
   const { darkTheme, incTheme } = useTheme();
-  const { items } = useSelector((state: RootState) => state.cart);
   const { user, isAuthenticated, logout } = useAuth();
   const { cart } = useCart();
   const totalItems = cart.reduce((sum, item) => sum + item.count, 0);

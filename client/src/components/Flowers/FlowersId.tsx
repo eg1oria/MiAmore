@@ -1,6 +1,5 @@
 'use client';
 import CartButton from '@/components/Buttons/CartButton';
-// import FavsButton from '@/components/Buttons/FavsButton';
 import Image from 'next/image';
 import './Flowers.css';
 import { useEffect, useState } from 'react';
@@ -65,7 +64,6 @@ export default function FlowerId() {
 
             <div className="actions-section">
               <CartButton item={flower} className="cart-button" />
-              {/* <FavsButton item={flower} className="favs-button" /> */}
             </div>
             <Link href="/flowers" className="cart-button">
               Назад

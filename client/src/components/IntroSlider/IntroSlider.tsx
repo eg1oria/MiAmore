@@ -39,7 +39,6 @@ export default function IntroSlider() {
         </SwiperSlide>
       </Swiper>
 
-      {/* Кастомные стрелки */}
       <button className="custom-prev">
         <ChevronLeft size={24} />
       </button>
