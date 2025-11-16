@@ -1,0 +1,128 @@
+{
+  "2b283942-3432-4f0c-95b0-b39864aa6a2f": {
+    "id": "2b283942-3432-4f0c-95b0-b39864aa6a2f",
+    "productId": "2",
+    "name": "Pure Line",
+    "price": 2300,
+    "count": 1,
+    "userId": "f068bc5c-63e6-47e3-b3a6-4e5149c08149",
+    "createdAt": 1763310932106
+  },
+  "123a9660-8e83-4c21-8d4a-152bbeea6b53": {
+    "id": "123a9660-8e83-4c21-8d4a-152bbeea6b53",
+    "productId": "1",
+    "name": "Mono Mood",
+    "price": 2500,
+    "count": 1,
+    "userId": "f068bc5c-63e6-47e3-b3a6-4e5149c08149",
+    "createdAt": 1763310938415
+  },
+  "bc999013-3eee-4709-a1d4-4ee66c20ecad": {
+    "id": "bc999013-3eee-4709-a1d4-4ee66c20ecad",
+    "productId": "9",
+    "name": "Sunlit Kiss",
+    "price": 2200,
+    "count": 1,
+    "userId": "f068bc5c-63e6-47e3-b3a6-4e5149c08149",
+    "createdAt": 1763310974839
+  },
+  "4f628ea3-6afb-417e-97ab-fe54b23c9b03": {
+    "id": "4f628ea3-6afb-417e-97ab-fe54b23c9b03",
+    "productId": "14",
+    "name": "Crimson Heart",
+    "price": 4200,
+    "count": 1,
+    "userId": "18ed9ed0-0a17-4dbc-ae3e-458f630a182a",
+    "createdAt": 1763312387402
+  },
+  "79b77882-9fd1-40d6-a2b7-73388135f53b": {
+    "id": "79b77882-9fd1-40d6-a2b7-73388135f53b",
+    "productId": "3",
+    "name": "Minimal Bloom",
+    "price": 3200,
+    "count": 1,
+    "userId": "f068bc5c-63e6-47e3-b3a6-4e5149c08149",
+    "createdAt": 1763315617422
+  },
+  "5ba78165-a1f1-4ee6-9fc1-c4589db03ac3": {
+    "id": "5ba78165-a1f1-4ee6-9fc1-c4589db03ac3",
+    "productId": "5",
+    "name": "Urban Petals",
+    "price": 2800,
+    "count": 1,
+    "userId": "f068bc5c-63e6-47e3-b3a6-4e5149c08149",
+    "createdAt": 1763315945743
+  },
+  "71fab101-9847-416c-925a-c58db05e9089": {
+    "id": "71fab101-9847-416c-925a-c58db05e9089",
+    "productId": "19",
+    "name": "Berry Kiss",
+    "price": 2700,
+    "count": 1,
+    "userId": "f068bc5c-63e6-47e3-b3a6-4e5149c08149",
+    "createdAt": 1763316395791
+  },
+  "f7eee3b9-439e-4416-b107-a35a4597d104": {
+    "id": "f7eee3b9-439e-4416-b107-a35a4597d104",
+    "productId": "12",
+    "name": "Elegant Grace",
+    "price": 6000,
+    "count": 1,
+    "userId": "f068bc5c-63e6-47e3-b3a6-4e5149c08149",
+    "createdAt": 1763318489589
+  },
+  "82daa68e-4a3a-476d-8deb-065eb81c1f6e": {
+    "id": "82daa68e-4a3a-476d-8deb-065eb81c1f6e",
+    "productId": "5",
+    "name": "Urban Petals",
+    "price": 2800,
+    "count": 1,
+    "userId": "18ed9ed0-0a17-4dbc-ae3e-458f630a182a",
+    "createdAt": 1763320764873
+  },
+  "a03fd09f-3d9a-4f53-9d4a-184c489a12c4": {
+    "id": "a03fd09f-3d9a-4f53-9d4a-184c489a12c4",
+    "productId": "8",
+    "name": "Sunset Bliss",
+    "price": 3400,
+    "count": 1,
+    "userId": "18ed9ed0-0a17-4dbc-ae3e-458f630a182a",
+    "createdAt": 1763320764907
+  },
+  "505717c4-25ef-4e4e-8148-ddef0ce8c47e": {
+    "id": "505717c4-25ef-4e4e-8148-ddef0ce8c47e",
+    "productId": "1",
+    "name": "Mono Mood",
+    "price": 2500,
+    "count": 1,
+    "userId": "18ed9ed0-0a17-4dbc-ae3e-458f630a182a",
+    "createdAt": 1763320775823
+  },
+  "95c0ecf7-52fe-4956-87a0-a486de4dbb96": {
+    "id": "95c0ecf7-52fe-4956-87a0-a486de4dbb96",
+    "productId": "11",
+    "name": "Blossom Dream",
+    "price": 2900,
+    "count": 1,
+    "userId": "18ed9ed0-0a17-4dbc-ae3e-458f630a182a",
+    "createdAt": 1763321053235
+  },
+  "6e1ba463-5633-4b7d-b7a1-25940d3f0aad": {
+    "id": "6e1ba463-5633-4b7d-b7a1-25940d3f0aad",
+    "productId": "2",
+    "name": "Pure Line",
+    "price": 2300,
+    "count": 1,
+    "userId": "18ed9ed0-0a17-4dbc-ae3e-458f630a182a",
+    "createdAt": 1763321125048
+  },
+  "7588f15f-6293-4bee-9c76-079c072bb5c4": {
+    "id": "7588f15f-6293-4bee-9c76-079c072bb5c4",
+    "productId": "6",
+    "name": "Lush Harmony",
+    "price": 3600,
+    "count": 3,
+    "userId": "18ed9ed0-0a17-4dbc-ae3e-458f630a182a",
+    "createdAt": 1763321254413
+  }
+}

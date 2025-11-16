@@ -1,0 +1,164 @@
+.cart-container {
+  padding: 40px 0;
+}
+
+.cart-title {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 30px;
+}
+
+.cart-empty {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.cart-empty p {
+  font-size: 18px;
+  color: #999;
+  margin-bottom: 20px;
+}
+
+.cart-empty button {
+  padding: 12px 30px;
+  background: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.cart-content {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.cart-items {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.cart-item-image {
+  width: 100px;
+  height: 100px;
+  background: #f5f5f5;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+}
+
+.cart-item-info h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.cart-item-info .price {
+  font-size: 16px;
+  color: #4caf50;
+  font-weight: 600;
+}
+
+/* Количество */
+.cart-item-count {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cart-item-count button {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cart-item-count span {
+  font-weight: 600;
+  min-width: 30px;
+  text-align: center;
+}
+
+/* Сумма и удалить */
+.cart-item-total {
+  min-width: 100px;
+  text-align: right;
+  font-weight: 700;
+}
+
+.cart-item-remove {
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: #fee;
+  color: #c33;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Итоговая панель */
+.cart-summary {
+  flex: 1;
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  height: fit-content;
+  position: sticky;
+  top: 20px;
+}
+
+.summary-info {
+  margin-bottom: 20px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.summary-row.total {
+  font-size: 20px;
+  font-weight: 700;
+  border-top: 2px solid #eee;
+  padding-top: 10px;
+}
+
+.checkout-btn {
+  width: 100%;
+  padding: 16px;
+  background: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}

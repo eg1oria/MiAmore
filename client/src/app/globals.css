@@ -1,0 +1,21 @@
+@import 'tailwindcss';
+
+body {
+  background: white;
+  color: black;
+  font-family: Arial, Helvetica, sans-serif;
+  transition: background 0.3s, color 0.3s;
+  height: 100vh;
+}
+
+.container {
+  max-width: 1728px;
+  margin: 0 auto;
+  padding: 0 180px;
+}
+
+.mainTitle {
+  font-size: 32px;
+  font-weight: bold;
+  margin: 50px 0;
+}
