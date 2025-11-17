@@ -14,16 +14,43 @@ export default function RegisterPage() {
   const [isLoading, setIsLoading] = useState(false);
   const { register } = useAuth();
 
+  const escapeHtml = (str: string): string => {
+    const map: Record<string, string> = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;',
+      '/': '&#x2F;',
+      '`': '&#x60;',
+      '=': '&#x3D;',
+    };
+
+    return str.replace(/[&<>"'`=\/]/g, (match) => map[match] || match);
+  };
+
+  const sanitizeName = (name: string): string =>
+    escapeHtml(name.trim().replace(/[^a-zA-Zа-яА-ЯёЁ\s\-]/g, ''));
+
+  const sanitizeEmail = (email: string): string => escapeHtml(email.trim().toLowerCase());
+
+  const sanitizePassword = (password: string): string => escapeHtml(password.trim());
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
-    if (password !== confirmPassword) {
+    const cleanName = sanitizeName(name);
+    const cleanEmail = sanitizeEmail(email);
+    const cleanPassword = sanitizePassword(password);
+    const cleanConfirm = sanitizePassword(confirmPassword);
+
+    if (cleanPassword !== cleanConfirm) {
       setError('Пароли не совпадают');
       return;
     }
 
-    if (password.length < 6) {
+    if (cleanPassword.length < 6) {
       setError('Пароль должен содержать минимум 6 символов');
       return;
     }
@@ -31,7 +58,7 @@ export default function RegisterPage() {
     setIsLoading(true);
 
     try {
-      await register(email, password, name);
+      await register(cleanEmail, cleanPassword, cleanName);
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message || 'Ошибка при регистрации');

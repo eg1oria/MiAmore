@@ -89,15 +89,6 @@
     "userId": "18ed9ed0-0a17-4dbc-ae3e-458f630a182a",
     "createdAt": 1763320764907
   },
-  "505717c4-25ef-4e4e-8148-ddef0ce8c47e": {
-    "id": "505717c4-25ef-4e4e-8148-ddef0ce8c47e",
-    "productId": "1",
-    "name": "Mono Mood",
-    "price": 2500,
-    "count": 1,
-    "userId": "18ed9ed0-0a17-4dbc-ae3e-458f630a182a",
-    "createdAt": 1763320775823
-  },
   "95c0ecf7-52fe-4956-87a0-a486de4dbb96": {
     "id": "95c0ecf7-52fe-4956-87a0-a486de4dbb96",
     "productId": "11",
@@ -134,13 +125,13 @@
     "userId": "18ed9ed0-0a17-4dbc-ae3e-458f630a182a",
     "createdAt": 1763321918652
   },
-  "053949a4-5a21-4060-9190-829fd237e3f7": {
-    "id": "053949a4-5a21-4060-9190-829fd237e3f7",
-    "productId": "3",
-    "name": "Minimal Bloom",
-    "price": 3200,
+  "a22555f1-4fc5-4b7e-8616-c14ced96c37d": {
+    "id": "a22555f1-4fc5-4b7e-8616-c14ced96c37d",
+    "productId": "1",
+    "name": "Mono Mood",
+    "price": 2500,
     "count": 1,
-    "userId": "18ed9ed0-0a17-4dbc-ae3e-458f630a182a",
-    "createdAt": 1763389327777
+    "userId": "63ad3b5c-73ae-462d-8282-ae7ed9af1bb2",
+    "createdAt": 1763396156985
   }
 }

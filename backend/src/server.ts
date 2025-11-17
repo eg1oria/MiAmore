@@ -34,10 +34,10 @@ function sanitizePhone(phone: string): string {
 
 // ----------------- Validation -----------------
 const contactSchema = z.object({
-  name: z.string().min(0).max(50).optional(), // имя не обязательное
+  name: z.string().max(50).optional(),
   email: z.string().email('Неверный email').or(z.literal('')).optional(),
-  phone: z.string().regex(/^\+?[0-9]{7,15}$/, 'Неверный формат телефона'), // телефон обязателен
-  message: z.string().min(5, 'Сообщение слишком короткое').max(1000), // сообщение всё ещё обязательно
+  phone: z.string().regex(/^\+?[0-9]{7,15}$/, 'Неверный формат телефона'),
+  message: z.string().min(5, 'Сообщение слишком короткое').max(1000),
 });
 
 // ----------------- Rate Limiters -----------------
@@ -46,7 +46,6 @@ const generalLimiter = rateLimit({
   max: 100,
   message: 'Слишком много запросов с вашего IP, попробуйте позже',
   standardHeaders: true,
-  legacyHeaders: false,
 });
 
 const contactLimiter = rateLimit({
@@ -54,7 +53,6 @@ const contactLimiter = rateLimit({
   max: 5,
   message: 'Слишком много запросов, попробуйте позже',
   standardHeaders: true,
-  legacyHeaders: false,
 });
 
 // ----------------- Middleware -----------------
@@ -69,16 +67,30 @@ server.use(
       },
     },
   }),
-  json({ limit: '10kb' }),
-  mongoSanitize(),
-  cookieParser(),
+);
+
+server.use(json({ limit: '10kb' }));
+server.use(mongoSanitize());
+server.use(cookieParser());
+
+server.use(
   cors({
     origin: process.env.FRONTEND_URL || 'http://localhost:3000',
     credentials: true,
   }),
-  morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'),
-  generalLimiter,
-  sleep([400, 1500]),
+);
+
+server.use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'));
+
+server.use(generalLimiter);
+
+server.use(sleep([400, 1500]));
+
+// ----------------- Additional Logging -----------------
+server.use(
+  morgan('combined', {
+    skip: (req) => req.url.startsWith('/flowers'),
+  }),
 );
 
 // ----------------- Routes -----------------
@@ -93,19 +105,18 @@ interface TelegramResponse {
 server.post('/contact', contactLimiter, async (req: Request, res: Response) => {
   try {
     const result = contactSchema.safeParse(req.body);
-    console.log('📥 Получены данные:', req.body);
 
     if (!result.success) {
-      console.error('❌ Ошибка валидации:', result.error.errors);
       return res.status(400).json({ error: result.error.errors[0].message });
     }
 
     const { name, email, phone, message } = result.data;
+
     const text = `
 💐Новое сообщение с сайта:
 
-${name ? `Имя: ${escapeHtml(name)}` : 'Не указано'}
-${email ? `Email: ${escapeHtml(email)}` : 'Не указано'}
+${name ? `Имя: ${escapeHtml(name)}` : 'Имя: Не указано'}
+${email ? `Email: ${escapeHtml(email)}` : 'Email: Не указано'}
 Телефон: ${escapeHtml(sanitizePhone(phone))}
 Сообщение: ${escapeHtml(message)}
 `;
@@ -114,9 +125,9 @@ ${email ? `Email: ${escapeHtml(email)}` : 'Не указано'}
     const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
     if (!BOT_TOKEN || !CHAT_ID) {
-      console.error('❌ BOT_TOKEN или CHAT_ID не определены в .env!');
       return res.status(500).json({ error: 'Ошибка конфигурации сервера' });
     }
+
     const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -126,7 +137,6 @@ ${email ? `Email: ${escapeHtml(email)}` : 'Не указано'}
     const telegramResult = (await response.json()) as TelegramResponse;
 
     if (!telegramResult.ok) {
-      console.error('Ошибка Telegram API:', telegramResult);
       return res.status(500).json({ error: 'Ошибка при отправке сообщения' });
     }
 
@@ -148,11 +158,17 @@ server.get('/flowers', (req: Request, res: Response) => {
 });
 
 server.get('/flowers/:id', (req: Request, res: Response) => {
-  const id = Number(req.params.id);
-  if (isNaN(id)) return res.status(400).json({ error: 'Неверный ID' });
+  // 🔒 Строгая проверка ID
+  if (!/^\d+$/.test(req.params.id)) {
+    return res.status(400).json({ error: 'Invalid ID format' });
+  }
 
+  const id = Number(req.params.id);
   const flower = flowersData.flowers.find((f) => f.id === id);
-  if (!flower) return res.status(404).json({ error: 'Цветок не найден' });
+
+  if (!flower) {
+    return res.status(404).json({ error: 'Цветок не найден' });
+  }
 
   res.json(flower);
 });
