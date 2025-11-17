@@ -1,6 +1,49 @@
+'use client';
+
 import './contacts.css';
+import { useState } from 'react';
 
 export default function ContactsPage() {
+  const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+
+  function sanitizePhone(phone: string) {
+    // Оставляем только + и цифры
+    return phone.replace(/[^\d+]/g, '');
+  }
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setLoading(true);
+
+    const form = e.currentTarget as HTMLFormElement;
+    const formData = new FormData(form);
+    const data: Record<string, string> = Object.fromEntries(formData);
+
+    if (data.phone) data.phone = sanitizePhone(data.phone);
+
+    try {
+      const res = await fetch('http://localhost:4000/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      if (res.ok) {
+        setSubmitted(true);
+        form.reset();
+      } else {
+        const error = await res.json();
+        alert('Ошибка при отправке 😥: ' + error.error);
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Ошибка сети 😥');
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <div className="contacts-page">
       <section className="contacts-hero">
@@ -19,7 +62,6 @@ export default function ContactsPage() {
             </a>
             <p className="info-description">Ежедневно с 9:00 до 21:00</p>
           </div>
-
           <div className="info-block">
             <h3>Email</h3>
             <a href="mailto:info@miamore.kz" className="info-link">
@@ -27,7 +69,6 @@ export default function ContactsPage() {
             </a>
             <p className="info-description">Ответим в течение 24 часов</p>
           </div>
-
           <div className="info-block">
             <h3>Адрес</h3>
             <p className="info-link">г. Астана, ул. Кабанбай Батыра, 15</p>
@@ -38,40 +79,63 @@ export default function ContactsPage() {
 
       <section className="contacts-form-section">
         <div className="form-container">
-          <h2 className="form-title">Напишите нам</h2>
-          <p className="form-subtitle">Оставьте сообщение и мы свяжемся с вами в ближайшее время</p>
+          {!submitted ? (
+            <>
+              <h2 className="form-title">Напишите нам</h2>
+              <p className="form-subtitle">
+                Оставьте сообщение и мы свяжемся с вами в ближайшее время
+              </p>
 
-          <form className="contact-form">
-            <div className="form-group">
-              <label htmlFor="name">Имя</label>
-              <input type="text" id="name" name="name" placeholder="Ваше имя" required />
+              <form className="contact-form" onSubmit={handleSubmit}>
+                <div className="form-group">
+                  <label htmlFor="name">Имя</label>
+                  <input type="text" id="name" name="name" placeholder="Ваше имя" />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="email">Email</label>
+                  <input type="email" id="email" name="email" placeholder="your@email.com" />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="phone">Телефон</label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    placeholder="+7 (___) ___-__-__"
+                    required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="message">Сообщение</label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows={6}
+                    placeholder="Ваше сообщение..."
+                    required
+                  />
+                </div>
+
+                <button type="submit" className="submit-button" disabled={loading}>
+                  {loading ? 'Отправка...' : 'Отправить сообщение'}
+                </button>
+              </form>
+            </>
+          ) : (
+            <div className="thank-you-block">
+              <p>
+                Ваше сообщение успешно отправлено.
+                <br />
+                Мы свяжемся с вами в ближайшее время.
+              </p>
+              <button className="thank-you-back" onClick={() => setSubmitted(false)}>
+                Отправить ещё одно
+              </button>
             </div>
-
-            <div className="form-group">
-              <label htmlFor="email">Email</label>
-              <input type="email" id="email" name="email" placeholder="your@email.com" required />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="phone">Телефон</label>
-              <input type="tel" id="phone" name="phone" placeholder="+7 (___) ___-__-__" />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="message">Сообщение</label>
-              <textarea
-                id="message"
-                name="message"
-                rows={6}
-                placeholder="Ваше сообщение..."
-                required
-              />
-            </div>
-
-            <button type="submit" className="submit-button">
-              Отправить сообщение
-            </button>
-          </form>
+          )}
         </div>
       </section>
 
