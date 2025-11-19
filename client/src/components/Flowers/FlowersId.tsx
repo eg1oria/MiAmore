@@ -23,7 +23,14 @@ export default function FlowerId() {
       .finally(() => setLoading(false));
   }, [id]);
 
-  if (loading) return <div className="loader"></div>;
+  if (loading)
+    return (
+      <div
+        className="loader"
+        style={{
+          margin: '300px auto',
+        }}></div>
+    );
   if (!flower)
     return (
       <div className="not-found">
