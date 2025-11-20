@@ -1,8 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { api } from '@/app/api/CartApi';
 import { IFlower } from '@/types/IFlower';
-
-// Тип элемента корзины с сервера
 export interface CartItem {
   id: string; // ID элемента корзины (server item id)
   productId: string; // ID товара

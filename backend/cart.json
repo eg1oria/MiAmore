@@ -169,5 +169,14 @@
     "count": 1,
     "userId": "f068bc5c-63e6-47e3-b3a6-4e5149c08149",
     "createdAt": 1763576453388
+  },
+  "aca07778-1bdb-4ea6-88dd-087368e0a0b1": {
+    "id": "aca07778-1bdb-4ea6-88dd-087368e0a0b1",
+    "productId": "3",
+    "name": "Minimal Bloom",
+    "price": 3200,
+    "count": 1,
+    "userId": "18ed9ed0-0a17-4dbc-ae3e-458f630a182a",
+    "createdAt": 1763622237879
   }
 }

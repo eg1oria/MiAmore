@@ -34,7 +34,6 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       setIsLoading(true);
       const items = await getCart();
       setCart(items);
-      // Также обновляем Redux store
       dispatch(loadCart());
     } catch (error) {
       console.error('Error refreshing cart:', error);

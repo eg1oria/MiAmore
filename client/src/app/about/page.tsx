@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import './about.css';
 import Link from 'next/link';
+import Quest from '@/components/Quest/Quest';
 
 export default function AboutPage() {
   return (
@@ -75,6 +76,8 @@ export default function AboutPage() {
           Связаться
         </Link>
       </section>
+
+      <Quest />
     </div>
   );
 }
