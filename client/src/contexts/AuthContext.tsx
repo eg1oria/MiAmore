@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 interface User {
   id: string;
   email: string;
-  name?: string;
+  name: string;
 }
 
 interface AuthContextType {
@@ -16,6 +16,14 @@ interface AuthContextType {
   login: (email: string, password: string) => Promise<void>;
   register: (email: string, password: string, name?: string) => Promise<void>;
   logout: () => void;
+  name?: User;
+}
+
+interface ServerUser {
+  id: string;
+  email: string;
+  name?: string;
+  username?: string;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -25,7 +33,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
-  // Проверка токена при загрузке
+  function normalizeUser(data: ServerUser): User {
+    return {
+      id: data.id,
+      email: data.email,
+      name: data.username || '',
+    };
+  }
+
   useEffect(() => {
     checkAuth();
   }, []);
@@ -33,13 +48,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const checkAuth = async () => {
     try {
       const response = await fetch('http://localhost:4000/auth/check', {
-        credentials: 'include', // Важно для cookies
+        credentials: 'include',
       });
 
       if (response.ok) {
         const data = await response.json();
         if (data.isAuthenticated && data.user) {
-          setUser(data.user);
+          setUser(normalizeUser(data.user));
         }
       }
     } catch (error) {
@@ -54,7 +69,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const response = await fetch('http://localhost:4000/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        credentials: 'include', // Важно для cookies
+        credentials: 'include',
         body: JSON.stringify({ email, password }),
       });
 
@@ -64,8 +79,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
 
       const data = await response.json();
-
-      setUser(data.user);
+      setUser(normalizeUser(data.user));
       router.push('/');
     } catch (error) {
       if (error instanceof Error) {
@@ -90,8 +104,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
 
       const data = await response.json();
-
-      setUser(data.user);
+      setUser(normalizeUser(data.user));
       router.push('/');
     } catch (error) {
       if (error instanceof Error) {

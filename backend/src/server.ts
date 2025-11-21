@@ -18,7 +18,6 @@ dotenv.config();
 const server = express();
 const PORT = process.env.PORT || 4000;
 
-// ----------------- Helpers -----------------
 function escapeHtml(text: string): string {
   return text
     .replace(/&/g, '&amp;')
@@ -32,7 +31,6 @@ function sanitizePhone(phone: string): string {
   return phone.replace(/[^\d+]/g, '');
 }
 
-// ----------------- Validation -----------------
 const contactSchema = z.object({
   name: z.string().max(50).optional(),
   email: z.string().email('Неверный email').or(z.literal('')).optional(),
@@ -40,7 +38,6 @@ const contactSchema = z.object({
   message: z.string().min(5, 'Сообщение слишком короткое').max(1000),
 });
 
-// ----------------- Rate Limiters -----------------
 const generalLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 100,
@@ -55,7 +52,6 @@ const contactLimiter = rateLimit({
   standardHeaders: true,
 });
 
-// ----------------- Middleware -----------------
 server.use(
   helmet({
     contentSecurityPolicy: {
@@ -86,16 +82,12 @@ server.use(generalLimiter);
 
 server.use(sleep([400, 1500]));
 
-// ----------------- Additional Logging -----------------
 server.use(
   morgan('combined', {
     skip: (req) => req.url.startsWith('/flowers'),
   }),
 );
 
-// ----------------- Routes -----------------
-
-// --- Contact Form ---
 interface TelegramResponse {
   ok: boolean;
   result?: any;
@@ -147,18 +139,15 @@ ${email ? `Email: ${escapeHtml(email)}` : 'Email: Не указано'}
   }
 });
 
-// --- Users / Auth / Cart ---
 server.use('/users', usersRouter);
 server.use('/auth', authRouter);
 server.use('/cart', cartRouter);
 
-// --- Flowers ---
 server.get('/flowers', (req: Request, res: Response) => {
   res.json(flowersData.flowers);
 });
 
 server.get('/flowers/:id', (req: Request, res: Response) => {
-  // 🔒 Строгая проверка ID
   if (!/^\d+$/.test(req.params.id)) {
     return res.status(400).json({ error: 'Invalid ID format' });
   }
@@ -173,17 +162,14 @@ server.get('/flowers/:id', (req: Request, res: Response) => {
   res.json(flower);
 });
 
-// --- Health check ---
 server.get('/health', (req: Request, res: Response) => {
   res.status(200).json({ status: 'OK', timestamp: new Date().toISOString() });
 });
 
-// --- 404 handler ---
 server.use((req: Request, res: Response) => {
   res.status(404).json({ error: 'Route not found' });
 });
 
-// --- Error handler ---
 server.use((err: any, req: Request, res: Response, next: NextFunction) => {
   console.error('Error:', err);
   const status = err.status || 500;
@@ -194,7 +180,6 @@ server.use((err: any, req: Request, res: Response, next: NextFunction) => {
   });
 });
 
-// ----------------- Start Server -----------------
 server.listen(PORT, () => {
   console.log(`🚀 Server started on port ${PORT}`);
   console.log(`📍 http://localhost:${PORT}`);

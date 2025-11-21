@@ -112,7 +112,7 @@
     "productId": "12",
     "name": "Elegant Grace",
     "price": 6000,
-    "count": 1,
+    "count": 2,
     "userId": "18ed9ed0-0a17-4dbc-ae3e-458f630a182a",
     "createdAt": 1763321918652
   },
@@ -175,8 +175,44 @@
     "productId": "3",
     "name": "Minimal Bloom",
     "price": 3200,
-    "count": 1,
+    "count": 2,
     "userId": "18ed9ed0-0a17-4dbc-ae3e-458f630a182a",
     "createdAt": 1763622237879
+  },
+  "37d87d3e-1e23-4076-abd7-4b90dd74e1c5": {
+    "id": "37d87d3e-1e23-4076-abd7-4b90dd74e1c5",
+    "productId": "6",
+    "name": "Lush Harmony",
+    "price": 3600,
+    "count": 1,
+    "userId": "541acf33-58db-4ff5-b2cd-747beb132dfb",
+    "createdAt": 1763665062580
+  },
+  "40362350-95ae-4688-93ab-cea1f7462126": {
+    "id": "40362350-95ae-4688-93ab-cea1f7462126",
+    "productId": "1",
+    "name": "Mono Mood",
+    "price": 2500,
+    "count": 2,
+    "userId": "541acf33-58db-4ff5-b2cd-747beb132dfb",
+    "createdAt": 1763665087294
+  },
+  "bb5a3512-c81a-412b-b906-786d1cd8514b": {
+    "id": "bb5a3512-c81a-412b-b906-786d1cd8514b",
+    "productId": "1",
+    "name": "Mono Mood",
+    "price": 2500,
+    "count": 1,
+    "userId": "148ea632-f66c-48bc-bc06-3bbccb563aa8",
+    "createdAt": 1763665397224
+  },
+  "e3139f6f-dbc2-4483-97e8-211922a1c2d8": {
+    "id": "e3139f6f-dbc2-4483-97e8-211922a1c2d8",
+    "productId": "6",
+    "name": "Lush Harmony",
+    "price": 3600,
+    "count": 1,
+    "userId": "148ea632-f66c-48bc-bc06-3bbccb563aa8",
+    "createdAt": 1763665417822
   }
 }

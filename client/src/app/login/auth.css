@@ -135,3 +135,23 @@
 [data-theme='dark'] .auth-link {
   color: #999;
 }
+
+.auth-form input.input-error {
+  border: 1px solid #e63946;
+}
+
+.error-text {
+  font-size: 14px;
+  color: #e63946;
+  margin-top: 4px;
+
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, opacity 0.25s ease;
+}
+
+.error-text.show {
+  max-height: 100px;
+  opacity: 1;
+}

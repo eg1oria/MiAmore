@@ -15,11 +15,7 @@ import Image from 'next/image';
 import { useAuth } from '@/contexts/AuthContext';
 import { FaSignOutAlt, FaUser } from 'react-icons/fa';
 import { useCart } from '@/contexts/CartContext';
-
-interface INav {
-  name: string;
-  href: string;
-}
+import INav from '@/types/INav';
 
 export const navItem: INav[] = [
   { name: 'Главная', href: '/' },
@@ -101,10 +97,12 @@ export default function Header() {
               </Link>
               {isAuthenticated ? (
                 <div className="header__user">
-                  <div className="user-info">
-                    <FaUser size={16} />
-                    <span>{user?.name || user?.email}</span>
-                  </div>
+                  <Link href={'/user'}>
+                    <div className="user-info">
+                      <FaUser size={16} />
+                      <span>{user?.name || user?.email}</span>
+                    </div>
+                  </Link>
                   <button onClick={logout} className="logout-btn" title="Выйти">
                     <FaSignOutAlt size={18} fill="red" />
                   </button>

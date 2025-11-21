@@ -316,3 +316,13 @@
     transform: translateY(0);
   }
 }
+
+.input-error {
+  border: 1px solid #e63946 !important;
+}
+
+.error-text {
+  margin-top: 4px;
+  font-size: 14px;
+  color: #e63946;
+}

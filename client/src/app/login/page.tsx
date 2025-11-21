@@ -8,11 +8,10 @@ import './auth.css';
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [errors, setErrors] = useState<{ email?: string; password?: string; form?: string }>({});
   const [isLoading, setIsLoading] = useState(false);
   const { login } = useAuth();
 
-  // --- Защита от XSS ---
   const escapeHtml = (str: string): string => {
     const map: Record<string, string> = {
       '&': '&amp;',
@@ -24,39 +23,52 @@ export default function LoginPage() {
       '`': '&#x60;',
       '=': '&#x3D;',
     };
-
     return str.replace(/[&<>"'`=\/]/g, (char: string) => map[char] || char);
   };
 
-  // --- Валидация email ---
-  const validateEmail = (email: string) => {
-    const safe = escapeHtml(email.trim());
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return regex.test(safe);
+  // --- Валидация поля по имени ---
+  const validateField = (name: string, value: string): string | undefined => {
+    const safe = escapeHtml(value.trim());
+    switch (name) {
+      case 'email':
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(safe)) return 'Некорректный email';
+        break;
+      case 'password':
+        if (safe.length < 6) return 'Пароль слишком короткий';
+        if (/[<>]/.test(safe)) return 'Пароль содержит запрещённые символы';
+        break;
+    }
   };
 
-  // --- Валидация password ---
-  const validatePassword = (password: string) => {
-    if (password.length < 6) return false;
-    return !/[<>]/.test(password); // нельзя вставлять теги
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setEmail(value);
+    setErrors((prev) => ({ ...prev, email: validateField('email', value) }));
+  };
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setPassword(value);
+    setErrors((prev) => ({ ...prev, password: validateField('password', value) }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setErrors({});
     setIsLoading(true);
 
     const safeEmail = escapeHtml(email.trim());
     const safePassword = escapeHtml(password);
 
-    if (!validateEmail(safeEmail)) {
-      setError('Некорректный email');
-      setIsLoading(false);
-      return;
-    }
+    const newErrors: typeof errors = {};
+    const emailError = validateField('email', safeEmail);
+    const passwordError = validateField('password', safePassword);
 
-    if (!validatePassword(safePassword)) {
-      setError('Пароль содержит запрещённые символы');
+    if (emailError) newErrors.email = emailError;
+    if (passwordError) newErrors.password = passwordError;
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
       setIsLoading(false);
       return;
     }
@@ -64,11 +76,11 @@ export default function LoginPage() {
     try {
       await login(safeEmail, safePassword);
     } catch (err) {
-      if (err instanceof Error) {
-        setError(err.message || 'Неверный email или пароль');
-      } else {
-        setError('Неверный email или пароль');
-      }
+      newErrors.form =
+        err instanceof Error
+          ? err.message || 'Неверный email или пароль'
+          : 'Неверный email или пароль';
+      setErrors(newErrors);
     } finally {
       setIsLoading(false);
     }
@@ -80,20 +92,19 @@ export default function LoginPage() {
         <h1 className="auth-title">Вход</h1>
 
         <form onSubmit={handleSubmit} className="auth-form">
-          {error && <div className="auth-error">{error}</div>}
-
           <div className="form-group">
             <label htmlFor="email">Email</label>
             <input
               id="email"
               type="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
+              onChange={handleEmailChange}
               placeholder="your@email.com"
               disabled={isLoading}
               maxLength={80}
+              className={errors.email ? 'input-error' : ''}
             />
+            {errors.email && <p className="error-text show">{errors.email}</p>}
           </div>
 
           <div className="form-group">
@@ -102,14 +113,17 @@ export default function LoginPage() {
               id="password"
               type="password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
+              onChange={handlePasswordChange}
               placeholder="••••••••"
               disabled={isLoading}
               minLength={6}
               maxLength={64}
+              className={errors.password ? 'input-error' : ''}
             />
+            {errors.password && <p className="error-text show">{errors.password}</p>}
           </div>
+
+          {errors.form && <p className="error-text form-error show">{errors.form}</p>}
 
           <button type="submit" className="auth-submit" disabled={isLoading}>
             {isLoading ? 'Вход...' : 'Войти'}

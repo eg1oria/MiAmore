@@ -7,7 +7,7 @@ import Link from 'next/link';
 import CartButton from '../Buttons/CartButton';
 
 export default function Flowers() {
-  const [data, setData] = useState<IFlower[]>([]);
+  const [data, setData] = useState<IFlower[] | null>(null); // null пока не загружено
   const [filter, setFilter] = useState<string>('Все');
   const [loading, setLoading] = useState(true);
   const [visibleCount, setVisibleCount] = useState(() => {
@@ -20,29 +20,61 @@ export default function Flowers() {
   }, [visibleCount]);
 
   useEffect(() => {
-    fetch('http://localhost:4000/flowers')
-      .then((res) => res.json())
-      .then(setData)
-      .finally(() => setLoading(false));
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const res = await fetch('http://localhost:4000/flowers');
+        const json = await res.json();
+        setData(json);
+      } catch {
+        setData([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
   }, []);
 
-  const types = useMemo(() => ['Все', ...new Set(data.map((f) => f.type))], [data]);
+  const reFetch = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch('http://localhost:4000/flowers');
+      const json = await res.json();
+      setData(json);
+    } catch {
+      setData([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const types = useMemo(
+    () => (data ? ['Все', ...new Set(data.map((f) => f.type))] : ['Все']),
+    [data],
+  );
   const filtered = useMemo(
-    () => (filter === 'Все' ? data : data.filter((f) => f.type === filter)),
+    () => (data ? (filter === 'Все' ? data : data.filter((f) => f.type === filter)) : []),
     [data, filter],
   );
   const visibleFlowers = useMemo(() => filtered.slice(0, visibleCount), [filtered, visibleCount]);
 
-  if (loading)
+  if (loading) {
+    return <div className="loader" style={{ margin: '300px auto' }}></div>;
+  }
+
+  if (!data || data.length === 0) {
     return (
-      <div
-        className="loader"
-        style={{
-          margin: '300px auto',
-        }}></div>
+      <div className="">
+        <p style={{ textAlign: 'center', margin: '100px' }}>Ошибка сервера или нет данных</p>
+        <button onClick={reFetch}>Обновить</button>
+      </div>
     );
+  }
+
   const canShowMore = visibleCount < filtered.length;
   const canShowUp = visibleCount > 8;
+
   return (
     <>
       <div className="filters">
