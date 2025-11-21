@@ -10,14 +10,7 @@ export default function Flowers() {
   const [data, setData] = useState<IFlower[] | null>(null); // null пока не загружено
   const [filter, setFilter] = useState<string>('Все');
   const [loading, setLoading] = useState(true);
-  const [visibleCount, setVisibleCount] = useState(() => {
-    const saved = localStorage.getItem('visibleFlowers');
-    return saved ? Number(saved) : 8;
-  });
-
-  useEffect(() => {
-    localStorage.setItem('visibleFlowers', String(visibleCount));
-  }, [visibleCount]);
+  const [visibleCount, setVisibleCount] = useState(8);
 
   useEffect(() => {
     const fetchData = async () => {

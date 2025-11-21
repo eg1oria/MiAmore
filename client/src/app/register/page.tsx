@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import Link from 'next/link';
 import '../login/auth.css';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 export default function RegisterPage() {
   const { register } = useAuth();
@@ -21,6 +22,15 @@ export default function RegisterPage() {
     form?: string;
   }>({});
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  function handleShowPassword() {
+    if (!showPassword) {
+      setShowPassword(true);
+    } else {
+      setShowPassword(false);
+    }
+  }
 
   const escapeHtml = (str: string) =>
     str.replace(/[&<>"'`=\/]/g, (char) => {
@@ -129,15 +139,20 @@ export default function RegisterPage() {
 
           <div className="form-group">
             <label htmlFor="password">Пароль</label>
-            <input
-              id="password"
-              type="password"
-              value={formData.password}
-              onChange={(e) => handleChange('password', e.target.value)}
-              placeholder="••••••••"
-              disabled={isLoading}
-              className={errors.password ? 'input-error' : ''}
-            />
+            <div className="password-wrapper">
+              <input
+                id="password"
+                type={showPassword ? 'text' : 'password'}
+                value={formData.password}
+                onChange={(e) => handleChange('password', e.target.value)}
+                placeholder="••••••••"
+                disabled={isLoading}
+                className={errors.password ? 'input-error' : ''}
+              />
+              <button className="toggle-btn" onClick={handleShowPassword} tabIndex={-1}>
+                {showPassword ? <FaEye /> : <FaEyeSlash />}
+              </button>
+            </div>
             {errors.password && <p className="error-text show">{errors.password}</p>}
           </div>
 
@@ -145,7 +160,7 @@ export default function RegisterPage() {
             <label htmlFor="confirmPassword">Подтвердите пароль</label>
             <input
               id="confirmPassword"
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               value={formData.confirmPassword}
               onChange={(e) => handleChange('confirmPassword', e.target.value)}
               placeholder="••••••••"

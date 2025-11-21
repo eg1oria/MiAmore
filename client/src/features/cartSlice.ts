@@ -53,12 +53,10 @@ const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    // Увеличить количество (по ID элемента корзины)
     increaseQuantity: (state, action: PayloadAction<string>) => {
       const item = state.items.find((i) => i.id === action.payload);
       if (item) item.count += 1;
     },
-    // Уменьшить количество (по ID элемента корзины)
     decreaseQuantity: (state, action: PayloadAction<string>) => {
       const item = state.items.find((i) => i.id === action.payload);
       if (!item) return;

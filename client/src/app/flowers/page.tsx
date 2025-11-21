@@ -1,3 +1,4 @@
+import { ErrorBoundary } from '@/components/ErrorBoundary/ErrorBoundary';
 import Flowers from '@/components/Flowers/Flowers';
 
 export default function App() {
@@ -11,7 +12,9 @@ export default function App() {
         }}>
         Каталог
       </h1>
-      <Flowers />
+      <ErrorBoundary>
+        <Flowers />
+      </ErrorBoundary>
     </div>
   );
 }

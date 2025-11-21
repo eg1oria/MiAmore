@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import Link from 'next/link';
 import './auth.css';
+import { FaEye } from 'react-icons/fa';
+import { FaEyeSlash } from 'react-icons/fa';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -11,6 +13,15 @@ export default function LoginPage() {
   const [errors, setErrors] = useState<{ email?: string; password?: string; form?: string }>({});
   const [isLoading, setIsLoading] = useState(false);
   const { login } = useAuth();
+  const [showPassword, setShowPassword] = useState(false);
+
+  function handleShowPassword() {
+    if (!showPassword) {
+      setShowPassword(true);
+    } else {
+      setShowPassword(false);
+    }
+  }
 
   const escapeHtml = (str: string): string => {
     const map: Record<string, string> = {
@@ -109,17 +120,29 @@ export default function LoginPage() {
 
           <div className="form-group">
             <label htmlFor="password">Пароль</label>
-            <input
-              id="password"
-              type="password"
-              value={password}
-              onChange={handlePasswordChange}
-              placeholder="••••••••"
-              disabled={isLoading}
-              minLength={6}
-              maxLength={64}
-              className={errors.password ? 'input-error' : ''}
-            />
+
+            <div className="password-wrapper">
+              <input
+                id="password"
+                type={showPassword ? 'text' : 'password'}
+                value={password}
+                onChange={handlePasswordChange}
+                placeholder="••••••••"
+                disabled={isLoading}
+                minLength={6}
+                maxLength={64}
+                className={`input ${errors.password ? 'input-error' : ''}`}
+              />
+
+              <button
+                type="button"
+                className="toggle-btn"
+                onClick={handleShowPassword}
+                tabIndex={-1}>
+                {showPassword ? <FaEye /> : <FaEyeSlash />}
+              </button>
+            </div>
+
             {errors.password && <p className="error-text show">{errors.password}</p>}
           </div>
 
