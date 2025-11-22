@@ -5,6 +5,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import Link from 'next/link';
 import '../login/auth.css';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { useCart } from '@/contexts/CartContext';
 
 export default function RegisterPage() {
   const { register } = useAuth();
@@ -23,6 +24,7 @@ export default function RegisterPage() {
   }>({});
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const { refresh } = useCart();
 
   function handleShowPassword() {
     if (!showPassword) {
@@ -94,6 +96,7 @@ export default function RegisterPage() {
         escapeHtml(formData.password),
         escapeHtml(formData.name),
       );
+      refresh();
     } catch (err) {
       fieldErrors.form =
         err instanceof Error ? err.message || 'Ошибка при регистрации' : 'Ошибка при регистрации';

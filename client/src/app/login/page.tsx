@@ -6,6 +6,7 @@ import Link from 'next/link';
 import './auth.css';
 import { FaEye } from 'react-icons/fa';
 import { FaEyeSlash } from 'react-icons/fa';
+import { useCart } from '@/contexts/CartContext';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -14,12 +15,7 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const { login } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
-
-  const handleLogin = () => {
-    setTimeout(() => {
-      window.location.reload();
-    }, 1500);
-  };
+  const { refresh } = useCart();
 
   function handleShowPassword() {
     if (!showPassword) {
@@ -92,6 +88,7 @@ export default function LoginPage() {
 
     try {
       await login(safeEmail, safePassword);
+      await refresh();
     } catch (err) {
       newErrors.form =
         err instanceof Error
@@ -154,7 +151,7 @@ export default function LoginPage() {
 
           {errors.form && <p className="error-text form-error show">{errors.form}</p>}
 
-          <button type="submit" className="auth-submit" disabled={isLoading} onClick={handleLogin}>
+          <button type="submit" className="auth-submit" disabled={isLoading}>
             {isLoading ? 'Вход...' : 'Войти'}
           </button>
         </form>

@@ -169,5 +169,50 @@
     "count": 1,
     "userId": "148ea632-f66c-48bc-bc06-3bbccb563aa8",
     "createdAt": 1763665417822
+  },
+  "29d76ec7-422c-4027-9bd9-0bf5c1526a22": {
+    "id": "29d76ec7-422c-4027-9bd9-0bf5c1526a22",
+    "productId": "2",
+    "name": "Pure Line",
+    "price": 2300,
+    "count": 1,
+    "userId": "18ed9ed0-0a17-4dbc-ae3e-458f630a182a",
+    "createdAt": 1763838600957
+  },
+  "6f63d0a6-a1c8-420f-9aca-fddb546c80a3": {
+    "id": "6f63d0a6-a1c8-420f-9aca-fddb546c80a3",
+    "productId": "6",
+    "name": "Lush Harmony",
+    "price": 3600,
+    "count": 1,
+    "userId": "18ed9ed0-0a17-4dbc-ae3e-458f630a182a",
+    "createdAt": 1763840824229
+  },
+  "3e382b8d-0ee7-4ac2-93bc-4e17b8485dfe": {
+    "id": "3e382b8d-0ee7-4ac2-93bc-4e17b8485dfe",
+    "productId": "2",
+    "name": "Pure Line",
+    "price": 2300,
+    "count": 1,
+    "userId": "acf629fd-fe0b-43ab-822d-2667719f008a",
+    "createdAt": 1763841816992
+  },
+  "11fb8352-356c-4cc9-9c37-a78848e922f4": {
+    "id": "11fb8352-356c-4cc9-9c37-a78848e922f4",
+    "productId": "3",
+    "name": "Minimal Bloom",
+    "price": 3200,
+    "count": 1,
+    "userId": "acf629fd-fe0b-43ab-822d-2667719f008a",
+    "createdAt": 1763841819792
+  },
+  "41a6f8ab-1e3b-4dfb-944e-237a8d2d4432": {
+    "id": "41a6f8ab-1e3b-4dfb-944e-237a8d2d4432",
+    "productId": "1",
+    "name": "Mono Mood",
+    "price": 2500,
+    "count": 1,
+    "userId": "acf629fd-fe0b-43ab-822d-2667719f008a",
+    "createdAt": 1763841825818
   }
 }

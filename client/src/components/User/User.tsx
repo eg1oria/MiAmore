@@ -6,13 +6,6 @@ import DeleteAccountButton from '../Buttons/DeleteAccount';
 export default function User() {
   const { user, isAuthenticated, logout } = useAuth();
 
-  function handleLogout() {
-    logout();
-    setTimeout(() => {
-      window.location.reload();
-    }, 1500);
-  }
-
   if (!isAuthenticated) {
     return (
       <div className="flex items-center justify-center h-[60vh] text-xl font-semibold">
@@ -38,7 +31,7 @@ export default function User() {
           </p>
         </div>
         <button
-          onClick={handleLogout}
+          onClick={logout}
           className="mt-5 w-full py-3 bg-red-500 text-white font-semibold rounded-xl hover:bg-red-600 cursor-pointer transition-colors duration-200">
           Выйти
         </button>

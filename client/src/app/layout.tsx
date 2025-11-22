@@ -22,8 +22,8 @@ export default function RootLayout({
 
   return (
     <Provider store={store}>
-      <AuthProvider>
-        <CartProvider>
+      <CartProvider>
+        <AuthProvider>
           <ThemeProvider>
             <BodyContent>
               <Header />
@@ -54,8 +54,8 @@ export default function RootLayout({
               <Footer />
             </BodyContent>
           </ThemeProvider>
-        </CartProvider>
-      </AuthProvider>
+        </AuthProvider>
+      </CartProvider>
     </Provider>
   );
 }
