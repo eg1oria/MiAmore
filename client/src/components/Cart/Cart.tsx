@@ -1,24 +1,24 @@
 'use client';
 
 import { useCart } from '@/contexts/CartContext';
-import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import { FaPlus, FaMinus, FaTrash } from 'react-icons/fa';
-import { useEffect } from 'react';
 import './Cart.css';
+import Flowers from '../Flowers/Flowers';
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function CartPage() {
   const { cart, changeCount, remove, isLoading } = useCart();
-  const { isAuthenticated } = useAuth();
   const router = useRouter();
+  const { isAuthenticated } = useAuth();
 
-  useEffect(() => {
-    if (!isAuthenticated) {
-      router.push('/login');
-    } else {
-      router.push('/cart');
-    }
-  }, [isAuthenticated, router]);
+  if (!isAuthenticated) {
+    return (
+      <div className="flex items-center justify-center h-[60vh] text-xl font-semibold">
+        Вы не авторизованы
+      </div>
+    );
+  }
 
   const total = cart.reduce((sum, item) => sum + item.price * item.count, 0);
   const totalItems = cart.reduce((sum, item) => sum + item.count, 0);
@@ -86,6 +86,15 @@ export default function CartPage() {
             </div>
           </div>
         )}
+        <h1
+          style={{
+            fontSize: '30px',
+            fontWeight: 'bold',
+            margin: '150px 0 30px 0',
+          }}>
+          Можете добавить букеты прямо из корзины
+        </h1>
+        <Flowers />
       </div>
     </>
   );

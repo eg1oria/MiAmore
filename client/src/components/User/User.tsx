@@ -1,9 +1,17 @@
 'use client';
 
 import { useAuth } from '@/contexts/AuthContext';
+import DeleteAccountButton from '../Buttons/DeleteAccount';
 
 export default function User() {
   const { user, isAuthenticated, logout } = useAuth();
+
+  function handleLogout() {
+    logout();
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
+  }
 
   if (!isAuthenticated) {
     return (
@@ -30,10 +38,11 @@ export default function User() {
           </p>
         </div>
         <button
-          onClick={logout}
-          className="mt-5 w-full py-3 bg-red-500 text-white font-semibold rounded-xl hover:bg-red-600 transition-all">
+          onClick={handleLogout}
+          className="mt-5 w-full py-3 bg-red-500 text-white font-semibold rounded-xl hover:bg-red-600 cursor-pointer transition-colors duration-200">
           Выйти
         </button>
+        <DeleteAccountButton />
       </div>
     </div>
   );

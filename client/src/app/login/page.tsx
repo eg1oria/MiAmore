@@ -15,6 +15,12 @@ export default function LoginPage() {
   const { login } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
 
+  const handleLogin = () => {
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
+  };
+
   function handleShowPassword() {
     if (!showPassword) {
       setShowPassword(true);
@@ -148,7 +154,7 @@ export default function LoginPage() {
 
           {errors.form && <p className="error-text form-error show">{errors.form}</p>}
 
-          <button type="submit" className="auth-submit" disabled={isLoading}>
+          <button type="submit" className="auth-submit" disabled={isLoading} onClick={handleLogin}>
             {isLoading ? 'Вход...' : 'Войти'}
           </button>
         </form>

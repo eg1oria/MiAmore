@@ -13,9 +13,10 @@ import { Provider } from 'react-redux';
 import { store } from '@/app/store';
 import Image from 'next/image';
 import { useAuth } from '@/contexts/AuthContext';
-import { FaSignOutAlt, FaUser } from 'react-icons/fa';
 import { useCart } from '@/contexts/CartContext';
 import INav from '@/types/INav';
+import { FaUser } from 'react-icons/fa';
+import LogoutButton from '../Buttons/LogoutButton';
 
 export const navItem: INav[] = [
   { name: 'Главная', href: '/' },
@@ -27,7 +28,7 @@ export const navItem: INav[] = [
 export default function Header() {
   const linkPathname = usePathname();
   const { darkTheme, incTheme } = useTheme();
-  const { user, isAuthenticated, logout } = useAuth();
+  const { user, isAuthenticated } = useAuth();
   const { cart } = useCart();
   const totalItems = cart.reduce((sum, item) => sum + item.count, 0);
 
@@ -103,9 +104,7 @@ export default function Header() {
                       <span>{user?.name || user?.email}</span>
                     </div>
                   </Link>
-                  <button onClick={logout} className="logout-btn" title="Выйти">
-                    <FaSignOutAlt size={18} fill="red" />
-                  </button>
+                  <LogoutButton />
                 </div>
               ) : (
                 <Link href="/login" className="header__login">

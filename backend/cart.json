@@ -89,33 +89,6 @@
     "userId": "18ed9ed0-0a17-4dbc-ae3e-458f630a182a",
     "createdAt": 1763321053235
   },
-  "6e1ba463-5633-4b7d-b7a1-25940d3f0aad": {
-    "id": "6e1ba463-5633-4b7d-b7a1-25940d3f0aad",
-    "productId": "2",
-    "name": "Pure Line",
-    "price": 2300,
-    "count": 1,
-    "userId": "18ed9ed0-0a17-4dbc-ae3e-458f630a182a",
-    "createdAt": 1763321125048
-  },
-  "7588f15f-6293-4bee-9c76-079c072bb5c4": {
-    "id": "7588f15f-6293-4bee-9c76-079c072bb5c4",
-    "productId": "6",
-    "name": "Lush Harmony",
-    "price": 3600,
-    "count": 3,
-    "userId": "18ed9ed0-0a17-4dbc-ae3e-458f630a182a",
-    "createdAt": 1763321254413
-  },
-  "b2498b2f-1ec2-4161-b21b-7b70c3637ab7": {
-    "id": "b2498b2f-1ec2-4161-b21b-7b70c3637ab7",
-    "productId": "12",
-    "name": "Elegant Grace",
-    "price": 6000,
-    "count": 2,
-    "userId": "18ed9ed0-0a17-4dbc-ae3e-458f630a182a",
-    "createdAt": 1763321918652
-  },
   "a22555f1-4fc5-4b7e-8616-c14ced96c37d": {
     "id": "a22555f1-4fc5-4b7e-8616-c14ced96c37d",
     "productId": "1",
@@ -152,15 +125,6 @@
     "userId": "63ad3b5c-73ae-462d-8282-ae7ed9af1bb2",
     "createdAt": 1763575073014
   },
-  "def6fc5f-870a-4a33-a3bd-92eb57c17988": {
-    "id": "def6fc5f-870a-4a33-a3bd-92eb57c17988",
-    "productId": "1",
-    "name": "Mono Mood",
-    "price": 2500,
-    "count": 2,
-    "userId": "18ed9ed0-0a17-4dbc-ae3e-458f630a182a",
-    "createdAt": 1763575445721
-  },
   "7f24b52b-5f7b-42c6-bc93-ddb468f2dd04": {
     "id": "7f24b52b-5f7b-42c6-bc93-ddb468f2dd04",
     "productId": "6",
@@ -169,15 +133,6 @@
     "count": 1,
     "userId": "f068bc5c-63e6-47e3-b3a6-4e5149c08149",
     "createdAt": 1763576453388
-  },
-  "aca07778-1bdb-4ea6-88dd-087368e0a0b1": {
-    "id": "aca07778-1bdb-4ea6-88dd-087368e0a0b1",
-    "productId": "3",
-    "name": "Minimal Bloom",
-    "price": 3200,
-    "count": 2,
-    "userId": "18ed9ed0-0a17-4dbc-ae3e-458f630a182a",
-    "createdAt": 1763622237879
   },
   "37d87d3e-1e23-4076-abd7-4b90dd74e1c5": {
     "id": "37d87d3e-1e23-4076-abd7-4b90dd74e1c5",

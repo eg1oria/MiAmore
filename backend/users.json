@@ -5,12 +5,6 @@
     "username": "Егор",
     "createdAt": 1763306318619
   },
-  "f068bc5c-63e6-47e3-b3a6-4e5149c08149": {
-    "id": "f068bc5c-63e6-47e3-b3a6-4e5149c08149",
-    "email": "kamzamadi870@gmail.com",
-    "username": "YEGOR",
-    "createdAt": 1763307868954
-  },
   "06a4b7fd-f456-4363-a055-51499fc603cd": {
     "id": "06a4b7fd-f456-4363-a055-51499fc603cd",
     "email": "kamzamadi8705@gmail.com",
@@ -40,5 +34,11 @@
     "email": "User12345@gmail.com",
     "username": "Егор",
     "createdAt": 1763665366669
+  },
+  "acf629fd-fe0b-43ab-822d-2667719f008a": {
+    "id": "acf629fd-fe0b-43ab-822d-2667719f008a",
+    "email": "kamzamadi870@gmail.com",
+    "username": "YEGOR LEONTYEV",
+    "createdAt": 1763801491298
   }
 }

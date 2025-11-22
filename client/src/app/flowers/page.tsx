@@ -1,5 +1,9 @@
 import { ErrorBoundary } from '@/components/ErrorBoundary/ErrorBoundary';
-import Flowers from '@/components/Flowers/Flowers';
+import dynamic from 'next/dynamic';
+
+const Flowers = dynamic(() => import('@/components/Flowers/Flowers'), {
+  loading: () => <div className="loader"></div>,
+});
 
 export default function App() {
   return (
