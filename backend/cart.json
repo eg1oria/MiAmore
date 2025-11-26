@@ -26,15 +26,6 @@
     "userId": "f068bc5c-63e6-47e3-b3a6-4e5149c08149",
     "createdAt": 1763310974839
   },
-  "4f628ea3-6afb-417e-97ab-fe54b23c9b03": {
-    "id": "4f628ea3-6afb-417e-97ab-fe54b23c9b03",
-    "productId": "14",
-    "name": "Crimson Heart",
-    "price": 4200,
-    "count": 1,
-    "userId": "18ed9ed0-0a17-4dbc-ae3e-458f630a182a",
-    "createdAt": 1763312387402
-  },
   "79b77882-9fd1-40d6-a2b7-73388135f53b": {
     "id": "79b77882-9fd1-40d6-a2b7-73388135f53b",
     "productId": "3",
@@ -61,33 +52,6 @@
     "count": 1,
     "userId": "f068bc5c-63e6-47e3-b3a6-4e5149c08149",
     "createdAt": 1763318489589
-  },
-  "82daa68e-4a3a-476d-8deb-065eb81c1f6e": {
-    "id": "82daa68e-4a3a-476d-8deb-065eb81c1f6e",
-    "productId": "5",
-    "name": "Urban Petals",
-    "price": 2800,
-    "count": 1,
-    "userId": "18ed9ed0-0a17-4dbc-ae3e-458f630a182a",
-    "createdAt": 1763320764873
-  },
-  "a03fd09f-3d9a-4f53-9d4a-184c489a12c4": {
-    "id": "a03fd09f-3d9a-4f53-9d4a-184c489a12c4",
-    "productId": "8",
-    "name": "Sunset Bliss",
-    "price": 3400,
-    "count": 1,
-    "userId": "18ed9ed0-0a17-4dbc-ae3e-458f630a182a",
-    "createdAt": 1763320764907
-  },
-  "95c0ecf7-52fe-4956-87a0-a486de4dbb96": {
-    "id": "95c0ecf7-52fe-4956-87a0-a486de4dbb96",
-    "productId": "11",
-    "name": "Blossom Dream",
-    "price": 2900,
-    "count": 1,
-    "userId": "18ed9ed0-0a17-4dbc-ae3e-458f630a182a",
-    "createdAt": 1763321053235
   },
   "a22555f1-4fc5-4b7e-8616-c14ced96c37d": {
     "id": "a22555f1-4fc5-4b7e-8616-c14ced96c37d",
@@ -170,24 +134,6 @@
     "userId": "148ea632-f66c-48bc-bc06-3bbccb563aa8",
     "createdAt": 1763665417822
   },
-  "29d76ec7-422c-4027-9bd9-0bf5c1526a22": {
-    "id": "29d76ec7-422c-4027-9bd9-0bf5c1526a22",
-    "productId": "2",
-    "name": "Pure Line",
-    "price": 2300,
-    "count": 1,
-    "userId": "18ed9ed0-0a17-4dbc-ae3e-458f630a182a",
-    "createdAt": 1763838600957
-  },
-  "6f63d0a6-a1c8-420f-9aca-fddb546c80a3": {
-    "id": "6f63d0a6-a1c8-420f-9aca-fddb546c80a3",
-    "productId": "6",
-    "name": "Lush Harmony",
-    "price": 3600,
-    "count": 1,
-    "userId": "18ed9ed0-0a17-4dbc-ae3e-458f630a182a",
-    "createdAt": 1763840824229
-  },
   "3e382b8d-0ee7-4ac2-93bc-4e17b8485dfe": {
     "id": "3e382b8d-0ee7-4ac2-93bc-4e17b8485dfe",
     "productId": "2",
@@ -214,5 +160,14 @@
     "count": 1,
     "userId": "acf629fd-fe0b-43ab-822d-2667719f008a",
     "createdAt": 1763841825818
+  },
+  "1001a200-324b-4322-9553-a95aab20db1d": {
+    "id": "1001a200-324b-4322-9553-a95aab20db1d",
+    "productId": "3",
+    "name": "Minimal Bloom",
+    "price": 3200,
+    "count": 1,
+    "userId": "5160c056-d8b1-40e0-a7ca-2c6005f7d372",
+    "createdAt": 1764154081460
   }
 }

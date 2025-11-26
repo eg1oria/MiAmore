@@ -1,10 +1,4 @@
 {
-  "18ed9ed0-0a17-4dbc-ae3e-458f630a182a": {
-    "id": "18ed9ed0-0a17-4dbc-ae3e-458f630a182a",
-    "email": "leontevegor57@gmail.com",
-    "username": "Егор",
-    "createdAt": 1763306318619
-  },
   "06a4b7fd-f456-4363-a055-51499fc603cd": {
     "id": "06a4b7fd-f456-4363-a055-51499fc603cd",
     "email": "kamzamadi8705@gmail.com",
@@ -40,5 +34,11 @@
     "email": "kamzamadi870@gmail.com",
     "username": "YEGOR LEONTYEV",
     "createdAt": 1763801491298
+  },
+  "5160c056-d8b1-40e0-a7ca-2c6005f7d372": {
+    "id": "5160c056-d8b1-40e0-a7ca-2c6005f7d372",
+    "email": "leontevegor57@gmail.com",
+    "username": "YEGOR LEONTYEV",
+    "createdAt": 1764153971035
   }
 }

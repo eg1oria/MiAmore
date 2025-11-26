@@ -44,7 +44,7 @@ ul {
   align-items: center;
   background: #ffffff;
   border-radius: 12px;
-  height: 180px;
+  height: 200px;
   overflow: hidden;
 }
 
@@ -102,7 +102,6 @@ ul {
   background: #333;
 }
 
-/* ===== Фильтры ===== */
 .filters {
   display: flex;
   flex-wrap: wrap;
@@ -126,7 +125,6 @@ ul {
   color: #fff;
 }
 
-/* ===== Кнопки "Показать ещё" ===== */
 .show-more-btn {
   background: #222;
   color: #fff;
