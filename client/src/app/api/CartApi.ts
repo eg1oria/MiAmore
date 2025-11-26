@@ -1,7 +1,4 @@
-// api/CartApi.ts
-
 const API_URL = 'http://localhost:4000';
-
 export interface CartItem {
   id: string;
   productId: string;
@@ -25,7 +22,6 @@ export const api = {
     return data.items || [];
   },
 
-  // Добавить товар
   async add(item: {
     productId: string;
     name: string;
@@ -48,7 +44,6 @@ export const api = {
     return response.json();
   },
 
-  // Обновить количество
   async updateCount(itemId: string, count: number): Promise<void> {
     const response = await fetch(`${API_URL}/cart/update`, {
       method: 'POST',

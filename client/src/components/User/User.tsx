@@ -2,39 +2,37 @@
 
 import { useAuth } from '@/contexts/AuthContext';
 import DeleteAccountButton from '../Buttons/DeleteAccount';
+import styles from './User.module.css';
 
 export default function User() {
   const { user, isAuthenticated, logout } = useAuth();
 
   if (!isAuthenticated) {
-    return (
-      <div className="flex items-center justify-center h-[60vh] text-xl font-semibold">
-        Вы не авторизованы
-      </div>
-    );
+    return <div className={styles.notAuth}>Вы не авторизованы</div>;
   }
 
   return (
-    <div className="flex justify-center p-6">
-      <div className="w-full max-w-md bg-white shadow-xl rounded-2xl p-6 border border-gray-200">
-        <div className="flex items-center gap-4">
+    <div className={styles.wrapper}>
+      <div className={styles.card}>
+        <div className={styles.header}>
           <div>
-            <h1 className="text-2xl font-bold">{user?.name || 'User'}</h1>
-            <p className="text-gray-500">{user?.email}</p>
+            <h1 className={styles.name}>{user?.name || 'User'}</h1>
+            <p className={styles.email}>{user?.email}</p>
           </div>
         </div>
-        <div className="my-4 h-px bg-gray-200" />
 
-        <div className="space-y-3">
-          <p className="text-gray-600">
+        <div className={styles.divider} />
+
+        <div className={styles.textBlock}>
+          <p className={styles.text}>
             Добро пожаловать в ваш профиль! Тут будет информация о вас, ваши действия и настройки.
           </p>
         </div>
-        <button
-          onClick={logout}
-          className="mt-5 w-full py-3 bg-red-500 text-white font-semibold rounded-xl hover:bg-red-600 cursor-pointer transition-colors duration-200">
+
+        <button onClick={logout} className={styles.logoutBtn}>
           Выйти
         </button>
+
         <DeleteAccountButton />
       </div>
     </div>
