@@ -1,0 +1,152 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+}
+
+.content {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.titleInput {
+  border: 1px solid silver;
+  transition: border 0.3s linear;
+  padding: 10px;
+  border-radius: 12px;
+}
+
+.titleInput:hover {
+  border: 1px solid green;
+}
+
+.titleHead {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0 0 20px 0;
+}
+
+.addButton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 10px;
+  background-color: rgb(63, 182, 182);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s linear;
+
+  &:hover {
+    background-color: rgba(57, 165, 165, 0.575);
+  }
+}
+
+.listInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.listTitle {
+  font-size: 18px;
+}
+
+.listDesk {
+  font-size: 12px;
+}
+
+.listItem {
+  display: flex;
+  gap: 20px;
+  border-radius: 22px;
+  border: 1px solid rgb(226, 107, 107);
+  padding: 30px;
+  align-items: center;
+  justify-content: center;
+  width: 700px;
+  position: relative;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.titleInput {
+  border: 1px solid silver;
+  transition: border 0.3s linear;
+  padding: 10px;
+  border-radius: 12px;
+}
+
+.titleInput:focus {
+  border-color: green;
+  outline: none;
+}
+
+.buttonMinus {
+  background-color: rgb(226, 107, 107);
+  width: 200px;
+  height: 100%;
+  padding: 10px 20px;
+  border-radius: 20px;
+  transition: background-color 0.3s linear;
+  position: absolute;
+  right: -1;
+}
+
+.buttonMinus:hover {
+  background-color: rgba(226, 107, 107, 0.685);
+}
+
+.anim {
+  background-color: rgb(226, 107, 107);
+  width: 200px;
+  height: 100%;
+  padding: 10px 20px;
+  border-radius: 20px;
+  transition: background-color 0.3s linear;
+  position: absolute;
+  right: -1px;
+  animation: identifier 1s linear;
+  transition: transform 1s linear;
+}
+
+.del {
+  opacity: 1;
+  animation: del 0.1s 0.3s linear forwards;
+}
+
+@keyframes del {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes identifier {
+  from {
+    transform: translateX(-1px);
+  }
+  to {
+    transform: translateX(-500px);
+  }
+}

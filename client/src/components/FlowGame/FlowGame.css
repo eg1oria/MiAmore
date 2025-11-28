@@ -1,142 +1,211 @@
-body {
-  margin: 0;
-  font-family: 'Inter', sans-serif;
-}
+/* FlowerBouquetBuilder.css */
 
-.game-container {
+.wrapper {
   min-height: 100vh;
-  padding: 32px;
-  background: linear-gradient(135deg, #fce7f3 0%, #e9d5ff 50%, #dbeafe 100%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  background: linear-gradient(to bottom right, #fce7f3, #ddd6fe);
+  padding: 2rem;
 }
 
-header h1 {
-  font-size: 48px;
-  margin: 0;
-  color: #1f2937;
-}
-
-header p {
-  font-size: 18px;
-  color: #6b7280;
-  margin-top: 8px;
-}
-
-.sections {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 32px;
-  margin-top: 32px;
-  width: 100%;
+.container {
   max-width: 1200px;
+  margin: 0 auto;
 }
 
-.flowers-section {
-  background-color: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(10px);
-  border-radius: 24px;
-  padding: 32px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+.title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  color: #831843;
 }
 
-.flowers-section h2 {
-  font-size: 24px;
-  margin: 0 0 24px 0;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  color: #1f2937;
+.subtitle {
+  text-align: center;
+  color: #9333ea;
+  margin-bottom: 2rem;
 }
 
-.bouquet-count {
-  margin-left: auto;
-  font-size: 14px;
-  background-color: #fce7f3;
-  color: #be185d;
-  padding: 4px 12px;
-  border-radius: 999px;
-}
-
-.drop-area {
-  min-height: 400px;
-  border-radius: 16px;
-  padding: 16px;
-  background-color: rgba(255, 255, 255, 0.3);
-  transition: all 0.2s;
-}
-
-.bouquet-area {
-  border: 3px dashed #fbcfe8;
-}
-
-.flowers-grid {
+.grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
 }
 
-.flower-card {
+.card {
   background: white;
-  border-radius: 16px;
-  padding: 16px;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #831843;
+}
+
+.flower-control {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.flower-control-header {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  gap: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  cursor: grab;
-  user-select: none;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.flower-card:active {
-  cursor: grabbing;
-  transform: scale(0.95);
-}
-
-.flower-emoji {
-  font-size: 48px;
+  margin-bottom: 0.75rem;
 }
 
 .flower-name {
-  font-size: 14px;
-  font-weight: 500;
-  color: #374151;
-}
-
-.empty-message {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  color: #9ca3af;
-  text-align: center;
-  gap: 8px;
-}
-
-.reset-button {
-  margin-top: 32px;
-}
-
-.reset-button button {
-  background: linear-gradient(90deg, #ec4899, #a855f7);
+  font-weight: 700;
   color: white;
-  padding: 12px 32px;
-  border-radius: 999px;
-  font-weight: 600;
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
-  box-shadow: 0 10px 20px rgba(236, 72, 153, 0.3);
-  transition: transform 0.2s;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-.reset-button button:hover {
-  transform: scale(1.05);
+.reset-btn {
+  padding: 0.25rem 0.75rem;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 0.375rem;
+  cursor: pointer;
+  font-size: 0.75rem;
 }
-.reset-button button:active {
+
+.rotation-display {
+  text-align: center;
+  font-weight: 700;
+  color: white;
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.rotation-controls {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.rotation-controls button {
+  flex: 1;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.rotation-controls input[type='range'] {
+  flex: 3;
+  height: 8px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.3);
+  outline: none;
+  cursor: pointer;
+}
+
+.flower-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.flower-item {
+  padding: 1rem;
+  border-radius: 0.75rem;
+  text-align: center;
+  transition: all 0.2s;
+  border: 2px solid #e9d5ff;
+  cursor: pointer;
+}
+
+.flower-item.selected {
+  background: linear-gradient(to bottom, #c4b5fd, #a78bfa);
+  border: 2px solid #7c3aed;
   transform: scale(0.95);
+}
+
+.flower-item .flower-name {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.flower-item .selected-label {
+  font-size: 0.75rem;
+  color: white;
+  margin-top: 0.25rem;
+}
+
+.bouquet-zone {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  background: linear-gradient(to bottom, #fef3c7, #fce7f3);
+  border-radius: 0.75rem;
+  border: 3px dashed #d8b4fe;
+  overflow: hidden;
+}
+
+.active-slot {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(168, 85, 247, 0.3);
+  border: 3px solid #a855f7;
+  transform: translate(-50%, -50%);
+  animation: pulse 1s infinite;
+  pointer-events: none;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+}
+
+.bouquet-flower {
+  position: absolute;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.bouquet-flower img {
+  height: 200px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.range-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.range-thumb::-webkit-slider-thumb {
+  appearance: none;
+}
+
+.range-thumb::-moz-range-thumb {
+  border: none;
 }

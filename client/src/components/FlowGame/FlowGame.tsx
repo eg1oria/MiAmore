@@ -1,63 +1,162 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { ReactNode, useState, useRef } from 'react';
+import { IoIosRose } from 'react-icons/io';
+import { PiFlowerTulip } from 'react-icons/pi';
+import { GiSunflower, GiTrefoilLily } from 'react-icons/gi';
+import { TbFlower } from 'react-icons/tb';
+import { RotateCw } from 'lucide-react';
+
+type Flower = {
+  id: string;
+  name: string;
+  image: string;
+  color: string;
+  icon: ReactNode;
+  uniqueId?: number;
+  x?: number;
+  y?: number;
+  rotation?: number;
+};
+
+const SLOT_COUNT = 30;
 
 const FlowerBouquetBuilder = () => {
-  const [bouquet, setBouquet] = useState([]);
-  const [draggedFlower, setDraggedFlower] = useState(null);
+  const [bouquet, setBouquet] = useState<Flower[]>([]);
+  const [selectedFlower, setSelectedFlower] = useState<Flower | null>(null);
+  const [currentRotation, setCurrentRotation] = useState<number>(0);
+  const [activeSlotId, setActiveSlotId] = useState<number | null>(null);
+  const [previewPosition, setPreviewPosition] = useState<{ x: number; y: number } | null>(null);
 
-  const availableFlowers = [
-    { id: 'rose', name: 'Роза', emoji: '🌹', color: 'text-red-500' },
-    { id: 'tulip', name: 'Тюльпан', emoji: '🌷', color: 'text-pink-500' },
-    { id: 'sunflower', name: 'Подсолнух', emoji: '🌻', color: 'text-yellow-500' },
-    { id: 'hibiscus', name: 'Гибискус', emoji: '🌺', color: 'text-pink-600' },
-    { id: 'blossom', name: 'Цветок', emoji: '🌸', color: 'text-pink-300' },
-    { id: 'daisy', name: 'Ромашка', emoji: '🌼', color: 'text-yellow-300' },
+  const bouquetZoneRef = useRef<HTMLDivElement>(null);
+
+  const COLS = 50;
+
+  const [slots] = useState(
+    Array.from({ length: SLOT_COUNT }, (_, i) => ({
+      id: i,
+      x: (i % COLS) * 1 + 35,
+      y: Math.floor(i / COLS) * 0 + 60,
+    })),
+  );
+
+  const availableFlowers: Flower[] = [
+    {
+      id: 'rose',
+      name: 'Роза',
+      image: '/img/flow/rose1.png',
+      color: 'text-red-500',
+      icon: <IoIosRose size={30} />,
+    },
+    {
+      id: 'tulip',
+      name: 'Тюльпан',
+      image: '/img/flow/tulip.png',
+      color: 'text-pink-500',
+      icon: <PiFlowerTulip size={30} />,
+    },
+    {
+      id: 'sunflower',
+      name: 'Подсолнух',
+      image: '/img/flow/sunflow.png',
+      color: 'text-yellow-500',
+      icon: <GiSunflower size={30} />,
+    },
+    {
+      id: 'lily',
+      name: 'Лилия',
+      image: '/img/flow/lily.png',
+      color: 'text-pink-600',
+      icon: <GiTrefoilLily size={30} />,
+    },
+    {
+      id: 'daisy',
+      name: 'Ромашка',
+      image: '/img/flow/romash.png',
+      color: 'text-pink-300',
+      icon: <TbFlower size={30} />,
+    },
   ];
 
-  const handleDragStart = (flower) => {
-    setDraggedFlower(flower);
+  const handleFlowerSelect = (flower: Flower) => {
+    setSelectedFlower(flower);
+    setCurrentRotation(0); // Сбрасываем угол при выборе нового цветка
   };
 
-  const handleDragOver = (e) => {
-    e.preventDefault();
-  };
+  const handleDragStart = (e: React.DragEvent, flower: Flower) => {
+    if (!selectedFlower) return;
 
-  const getFlowerPosition = (bouquetLength) => {
-    const centerX = 50;
-    const centerY = 60;
-
-    const layer = bouquetLength;
-    const maxRadius = 10 + layer * 2;
-    const radius = Math.random() * maxRadius;
-    const angle = Math.random() * 2 * Math.PI;
-
-    const rotation = Math.random() * 30 - 15;
-
-    return {
-      x: centerX + radius * Math.cos(angle),
-      y: centerY + radius * Math.sin(angle),
-      rotation,
+    // Создаем копию выбранного цветка с текущим углом поворота
+    const flowerToDrag = {
+      ...selectedFlower,
+      rotation: currentRotation,
     };
+
+    e.dataTransfer.setData('application/json', JSON.stringify(flowerToDrag));
   };
 
-  const handleDrop = (e) => {
+  const handleDragOverZone = (e: React.DragEvent) => {
     e.preventDefault();
-    if (draggedFlower) {
-      const { x, y, rotation } = getFlowerPosition(bouquet.length);
-      const newFlower = {
-        ...draggedFlower,
-        uniqueId: Date.now() + Math.random(),
-        x,
-        y,
-        rotation,
-      };
-      setBouquet([...bouquet, newFlower]);
-      setDraggedFlower(null);
+    if (!bouquetZoneRef.current || !selectedFlower) return;
+
+    const rect = bouquetZoneRef.current.getBoundingClientRect();
+    const mouseX = ((e.clientX - rect.left) / rect.width) * 100;
+    const mouseY = ((e.clientY - rect.top) / rect.height) * 100;
+
+    let nearestSlotId: number | null = null;
+    let minDist = Infinity;
+
+    for (const slot of slots) {
+      const isBusy = bouquet.some((flower) => flower.x === slot.x && flower.y === slot.y);
+
+      if (isBusy) continue;
+
+      const dx = slot.x - mouseX;
+      const dy = slot.y - mouseY;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+
+      if (dist < minDist) {
+        minDist = dist;
+        nearestSlotId = slot.id;
+      }
+    }
+
+    setActiveSlotId(nearestSlotId);
+
+    if (nearestSlotId !== null) {
+      setPreviewPosition({
+        x: slots[nearestSlotId].x,
+        y: slots[nearestSlotId].y,
+      });
     }
   };
 
-  const removeFlower = (uniqueId) => {
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+
+    if (!selectedFlower || activeSlotId === null) return;
+
+    const slot = slots[activeSlotId];
+
+    const isBusy = bouquet.some((flower) => flower.x === slot.x && flower.y === slot.y);
+
+    if (isBusy) return;
+
+    const newFlower: Flower = {
+      ...selectedFlower,
+      uniqueId: Date.now() + Math.random(),
+      x: slot.x,
+      y: slot.y,
+      rotation: currentRotation,
+    };
+
+    setBouquet([...bouquet, newFlower]);
+    setActiveSlotId(null);
+    setPreviewPosition(null);
+    // Не сбрасываем selectedFlower и currentRotation, чтобы можно было добавлять несколько одинаковых цветков
+  };
+
+  const removeFlower = (uniqueId: number) => {
     setBouquet(bouquet.filter((f) => f.uniqueId !== uniqueId));
   };
 
@@ -65,113 +164,492 @@ const FlowerBouquetBuilder = () => {
     setBouquet([]);
   };
 
+  const handleRotateLeft = () => {
+    setCurrentRotation((prev) => {
+      let newRotation = prev - 15;
+      while (newRotation < -180) newRotation += 360;
+      return newRotation;
+    });
+  };
+
+  const handleRotateRight = () => {
+    setCurrentRotation((prev) => {
+      let newRotation = prev + 15;
+      while (newRotation > 180) newRotation -= 360;
+      return newRotation;
+    });
+  };
+
+  const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCurrentRotation(parseInt(e.target.value));
+  };
+
+  const resetSelection = () => {
+    setSelectedFlower(null);
+    setCurrentRotation(0);
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 p-8">
-      <div className="max-w-6xl mx-auto">
-        <h1 className="text-4xl font-bold text-center mb-2 text-gray-800">
+    <div
+      style={{
+        minHeight: '100vh',
+        background: 'linear-gradient(to bottom right, #fce7f3, #ddd6fe)',
+        padding: '2rem',
+      }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+        <h1
+          style={{
+            fontSize: '2.5rem',
+            fontWeight: 'bold',
+            textAlign: 'center',
+            marginBottom: '0.5rem',
+            color: '#831843',
+          }}>
           🌸 Конструктор букетов 🌸
         </h1>
-        <p className="text-center text-gray-600 mb-8">
-          Перетаскивайте цветы в вазу, чтобы создать свой уникальный букет
+        <p
+          style={{
+            textAlign: 'center',
+            color: '#9333ea',
+            marginBottom: '2rem',
+          }}>
+          Сначала выберите цветок и угол поворота, затем перетащите в букет
         </p>
 
-        <div className="grid md:grid-cols-3 gap-6">
-          {/* Палитра цветов */}
-          <div className="md:col-span-1">
-            <div className="bg-white rounded-2xl shadow-lg p-6">
-              <h2 className="text-2xl font-semibold mb-4 text-gray-700">Доступные цветы</h2>
-              <div className="grid grid-cols-2 gap-4">
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+            gap: '2rem',
+          }}>
+          {/* Палитра */}
+          <div>
+            <div
+              style={{
+                background: 'white',
+                borderRadius: '1rem',
+                padding: '1.5rem',
+                boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+              }}>
+              <h2
+                style={{
+                  fontSize: '1.5rem',
+                  fontWeight: '600',
+                  marginBottom: '1rem',
+                  color: '#831843',
+                }}>
+                Доступные цветы
+              </h2>
+
+              {/* Панель управления поворотом */}
+              {selectedFlower && (
+                <div
+                  style={{
+                    marginBottom: '1.5rem',
+                    padding: '1rem',
+                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                    borderRadius: '0.75rem',
+                    boxShadow: '0 4px 12px rgba(102, 126, 234, 0.3)',
+                  }}>
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      marginBottom: '0.75rem',
+                    }}>
+                    <div
+                      style={{
+                        fontWeight: '700',
+                        color: 'white',
+                        fontSize: '1.1rem',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.5rem',
+                      }}>
+                      <RotateCw size={18} />
+                      Выбран: {selectedFlower.name}
+                    </div>
+                    <button
+                      onClick={resetSelection}
+                      style={{
+                        padding: '0.25rem 0.75rem',
+                        background: 'rgba(255, 255, 255, 0.2)',
+                        color: 'white',
+                        border: '1px solid rgba(255, 255, 255, 0.3)',
+                        borderRadius: '0.375rem',
+                        cursor: 'pointer',
+                        fontSize: '0.75rem',
+                      }}>
+                      Сбросить
+                    </button>
+                  </div>
+
+                  <div
+                    style={{
+                      textAlign: 'center',
+                      fontWeight: '700',
+                      color: 'white',
+                      fontSize: '1.25rem',
+                      marginBottom: '0.75rem',
+                    }}>
+                    Угол: {currentRotation}°
+                  </div>
+
+                  <div
+                    style={{
+                      display: 'flex',
+                      gap: '0.5rem',
+                      alignItems: 'center',
+                    }}>
+                    <button
+                      onClick={handleRotateLeft}
+                      style={{
+                        flex: 1,
+                        padding: '0.5rem',
+                        background: 'rgba(255, 255, 255, 0.2)',
+                        color: 'white',
+                        border: '2px solid rgba(255, 255, 255, 0.3)',
+                        borderRadius: '0.5rem',
+                        cursor: 'pointer',
+                        fontSize: '1rem',
+                        fontWeight: '700',
+                      }}>
+                      ← −15°
+                    </button>
+
+                    <input
+                      type="range"
+                      min="-180"
+                      max="180"
+                      value={currentRotation}
+                      onChange={handleSliderChange}
+                      style={{
+                        flex: 3,
+                        height: '8px',
+                        borderRadius: '4px',
+                        background: 'rgba(255, 255, 255, 0.3)',
+                        outline: 'none',
+                        cursor: 'pointer',
+                      }}
+                    />
+
+                    <button
+                      onClick={handleRotateRight}
+                      style={{
+                        flex: 1,
+                        padding: '0.5rem',
+                        background: 'rgba(255, 255, 255, 0.2)',
+                        color: 'white',
+                        border: '2px solid rgba(255, 255, 255, 0.3)',
+                        borderRadius: '0.5rem',
+                        cursor: 'pointer',
+                        fontSize: '1rem',
+                        fontWeight: '700',
+                      }}>
+                      +15° →
+                    </button>
+                  </div>
+
+                  <div
+                    style={{
+                      marginTop: '0.75rem',
+                      textAlign: 'center',
+                      fontSize: '0.75rem',
+                      color: 'rgba(255, 255, 255, 0.8)',
+                    }}>
+                    💡 Установите угол, затем перетащите цветок в букет
+                  </div>
+                </div>
+              )}
+
+              <div
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(2, 1fr)',
+                  gap: '1rem',
+                }}>
                 {availableFlowers.map((flower) => (
                   <div
                     key={flower.id}
-                    draggable
-                    onDragStart={() => handleDragStart(flower)}
-                    className="bg-gradient-to-br from-white to-gray-50 border-2 border-gray-200 rounded-xl p-4 cursor-move hover:shadow-lg hover:scale-105 transition-all duration-200 active:scale-95">
-                    <div className="text-5xl mb-2 text-center">{flower.emoji}</div>
-                    <div className={`text-sm font-medium text-center ${flower.color}`}>
+                    draggable={!!selectedFlower}
+                    onDragStart={(e) => handleDragStart(e, flower)}
+                    onClick={() => handleFlowerSelect(flower)}
+                    style={{
+                      padding: '1rem',
+                      background:
+                        selectedFlower?.id === flower.id
+                          ? 'linear-gradient(to bottom, #c4b5fd, #a78bfa)'
+                          : 'linear-gradient(to bottom, #fdf4ff, #fae8ff)',
+                      borderRadius: '0.75rem',
+                      cursor: selectedFlower?.id === flower.id ? 'grab' : 'pointer',
+                      textAlign: 'center',
+                      transition: 'all 0.2s',
+                      border:
+                        selectedFlower?.id === flower.id
+                          ? '2px solid #7c3aed'
+                          : '2px solid #e9d5ff',
+                      transform: selectedFlower?.id === flower.id ? 'scale(0.95)' : 'scale(1)',
+                    }}
+                    onMouseDown={(e) => {
+                      if (selectedFlower?.id === flower.id) {
+                        e.currentTarget.style.cursor = 'grabbing';
+                      }
+                    }}
+                    onMouseUp={(e) => {
+                      if (selectedFlower?.id === flower.id) {
+                        e.currentTarget.style.cursor = 'grab';
+                      }
+                    }}>
+                    <div
+                      style={{ display: 'flex', justifyContent: 'center', marginBottom: '0.5rem' }}>
+                      {flower.icon}
+                    </div>
+                    <div
+                      className={flower.color}
+                      style={{
+                        fontSize: '0.875rem',
+                        fontWeight: '500',
+                        color: selectedFlower?.id === flower.id ? 'white' : 'inherit',
+                      }}>
                       {flower.name}
                     </div>
+                    {selectedFlower?.id === flower.id && (
+                      <div style={{ fontSize: '0.75rem', color: 'white', marginTop: '0.25rem' }}>
+                        ✓ Выбран
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
+
+              {!selectedFlower && (
+                <div
+                  style={{
+                    marginTop: '1rem',
+                    padding: '1rem',
+                    background: '#fef3c7',
+                    borderRadius: '0.5rem',
+                    textAlign: 'center',
+                    fontSize: '0.875rem',
+                    color: '#92400e',
+                  }}>
+                  💡 Сначала кликните на цветок чтобы выбрать его и установить угол поворота
+                </div>
+              )}
             </div>
           </div>
 
-          {/* Ваза для букета */}
-          <div className="md:col-span-2">
-            <div className="bg-white rounded-2xl shadow-lg p-6 h-full">
-              <div className="flex justify-between items-center mb-4">
-                <h2 className="text-2xl font-semibold text-gray-700">
-                  Ваш букет ({bouquet.length}{' '}
-                  {bouquet.length === 1 ? 'цветок' : bouquet.length < 5 ? 'цветка' : 'цветков'})
+          {/* Букет */}
+          <div>
+            <div
+              style={{
+                background: 'white',
+                borderRadius: '1rem',
+                padding: '1.5rem',
+                boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+              }}>
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  marginBottom: '1rem',
+                }}>
+                <h2
+                  style={{
+                    fontSize: '1.5rem',
+                    fontWeight: '600',
+                    color: '#831843',
+                  }}>
+                  Ваш букет ({bouquet.length})
                 </h2>
+
                 {bouquet.length > 0 && (
                   <button
                     onClick={clearBouquet}
-                    className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors">
+                    style={{
+                      padding: '0.5rem 1rem',
+                      background: '#dc2626',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '0.5rem',
+                      cursor: 'pointer',
+                      fontSize: '0.875rem',
+                      fontWeight: '500',
+                    }}>
                     Очистить
                   </button>
                 )}
               </div>
 
               <div
-                onDragOver={handleDragOver}
+                ref={bouquetZoneRef}
+                onDragOver={handleDragOverZone}
                 onDrop={handleDrop}
-                className="relative h-96 bg-gradient-to-b from-blue-50 to-green-100 rounded-xl border-4 border-dashed border-gray-300 overflow-hidden">
+                style={{
+                  position: 'relative',
+                  width: '100%',
+                  height: '400px',
+                  background: 'linear-gradient(to bottom, #fef3c7, #fce7f3)',
+                  borderRadius: '0.75rem',
+                  border: '3px dashed #d8b4fe',
+                  overflow: 'hidden',
+                }}>
+                {/* АКТИВНЫЙ СЛОТ */}
+                {activeSlotId !== null && (
+                  <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}>
+                    <div
+                      style={{
+                        position: 'absolute',
+                        width: '40px',
+                        height: '40px',
+                        borderRadius: '50%',
+                        background: 'rgba(168, 85, 247, 0.3)',
+                        border: '3px solid #a855f7',
+                        left: `${slots[activeSlotId].x}%`,
+                        top: `${slots[activeSlotId].y}%`,
+                        transform: 'translate(-50%, -50%)',
+                        animation: 'pulse 1s infinite',
+                      }}
+                    />
+                  </div>
+                )}
+
+                {/* ПРЕВЬЮ ЦВЕТКА ПРИ ПЕРЕТАСКИВАНИИ */}
+                {selectedFlower && previewPosition && (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      left: `${previewPosition.x}%`,
+                      top: `${previewPosition.y}%`,
+                      transform: `translate(-50%, -50%) rotate(${currentRotation}deg)`,
+                      pointerEvents: 'none',
+                      opacity: 0.7,
+                    }}>
+                    <img
+                      src={selectedFlower.image}
+                      alt={selectedFlower.name}
+                      style={{
+                        height: '200px',
+                        objectFit: 'contain',
+                        filter: 'drop-shadow(0 2px 8px rgba(168, 85, 247, 0.5))',
+                      }}
+                    />
+                  </div>
+                )}
+
+                {/* ЦВЕТЫ */}
                 {bouquet.length === 0 ? (
-                  <div className="absolute inset-0 flex items-center justify-center text-gray-400 text-lg">
-                    Перетащите сюда цветы для создания букета
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: '50%',
+                      left: '50%',
+                      transform: 'translate(-50%, -50%)',
+                      color: '#9333ea',
+                      textAlign: 'center',
+                      fontSize: '1.125rem',
+                    }}>
+                    {selectedFlower
+                      ? 'Перетащите цветок в подсвеченный слот'
+                      : 'Сначала выберите цветок слева'}
                   </div>
                 ) : (
                   bouquet.map((flower) => (
                     <div
                       key={flower.uniqueId}
-                      onClick={() => removeFlower(flower.uniqueId)}
+                      onClick={() => removeFlower(flower.uniqueId!)}
                       style={{
                         position: 'absolute',
+                        cursor: 'pointer',
+                        transition: 'all 0.3s',
                         left: `${flower.x}%`,
                         top: `${flower.y}%`,
-                        transform: `rotate(${flower.rotation}deg)`,
-                        cursor: 'pointer',
-                      }}
-                      className="text-6xl hover:scale-110 transition-transform duration-200 animate-fade-in"
-                      title="Нажмите, чтобы удалить">
-                      {flower.emoji}
+                        transform: `translate(-50%, -50%) rotate(${flower.rotation}deg)`,
+                      }}>
+                      <img
+                        src={flower.image}
+                        alt={flower.name}
+                        style={{
+                          height: '200px',
+                          objectFit: 'contain',
+                          filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.2))',
+                        }}
+                      />
                     </div>
                   ))
                 )}
 
-                {/* Ваза */}
-                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2">
+                <div
+                  style={{
+                    position: 'absolute',
+                    bottom: '0',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    width: '200px',
+                    height: '120px',
+                  }}>
                   <div
-                    className="w-48 h-32 bg-gradient-to-b from-blue-400 to-blue-600 opacity-30"
                     style={{
-                      clipPath: 'polygon(30% 0%, 70% 0%, 85% 100%, 15% 100%)',
-                    }}></div>
+                      width: '100%',
+                      height: '100%',
+                      background:
+                        'linear-gradient(to bottom, rgba(139, 92, 246, 0.9), rgba(139, 92, 246, 0.7))',
+                      clipPath: 'polygon(30% 0%, 70% 0%, 100% 100%, 0% 100%)',
+                      borderRadius: '0 0 1rem 1rem',
+                    }}
+                  />
                 </div>
               </div>
 
-              <div className="mt-4 text-sm text-gray-500 text-center">
-                💡 Совет: Нажмите на цветок в букете, чтобы удалить его
+              <div
+                style={{
+                  marginTop: '1rem',
+                  padding: '0.75rem',
+                  background: '#fef3c7',
+                  borderRadius: '0.5rem',
+                  fontSize: '0.875rem',
+                  color: '#92400e',
+                  textAlign: 'center',
+                }}>
+                💡 Клик на цветок - удалить | 📝 Сначала выберите цветок и угол, затем перетащите
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <style jsx>{`
-        @keyframes fade-in {
-          from {
-            opacity: 0;
-            transform: scale(0.5) rotate(0deg);
-          }
-          to {
+      <style>{`
+        @keyframes pulse {
+          0%, 100% {
             opacity: 1;
-            transform: scale(1) rotate(var(--rotation));
+            transform: translate(-50%, -50%) scale(1);
+          }
+          50% {
+            opacity: 0.7;
+            transform: translate(-50%, -50%) scale(1.1);
           }
         }
-        .animate-fade-in {
-          animation: fade-in 0.3s ease-out;
+
+        input[type="range"]::-webkit-slider-thumb {
+          appearance: none;
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          background: white;
+          cursor: pointer;
+          box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        input[type="range"]::-moz-range-thumb {
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          background: white;
+          cursor: pointer;
+          border: none;
+          box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
       `}</style>
     </div>
