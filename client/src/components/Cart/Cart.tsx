@@ -3,14 +3,16 @@
 import { useCart } from '@/contexts/CartContext';
 import { useRouter } from 'next/navigation';
 import { FaPlus, FaMinus, FaTrash } from 'react-icons/fa';
+import { useState } from 'react';
 import './Cart.css';
 import Flowers from '../Flowers/Flowers';
 import { useAuth } from '@/contexts/AuthContext';
 
 export default function CartPage() {
-  const { cart, changeCount, remove, isLoading } = useCart();
+  const { cart, changeCount, remove, isLoading, clearCart } = useCart();
   const router = useRouter();
   const { isAuthenticated } = useAuth();
+  const [isCheckingOut, setIsCheckingOut] = useState(false);
 
   if (!isAuthenticated) {
     return (
@@ -19,6 +21,41 @@ export default function CartPage() {
       </div>
     );
   }
+
+  const handleCheckout = async () => {
+    if (isCheckingOut) return;
+
+    setIsCheckingOut(true);
+
+    try {
+      const res = await fetch('http://localhost:4000/cart/checkout', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        alert(data.error || 'Ошибка при оформлении заказа');
+        return;
+      }
+
+      clearCart();
+
+      alert('✅ Заказ успешно отправлен!');
+
+      // Опционально: перенаправляем на страницу успеха
+      // router.push('/order-success');
+    } catch (e) {
+      console.error('Checkout error:', e);
+      alert('Ошибка сети. Попробуйте ещё раз.');
+    } finally {
+      setIsCheckingOut(false);
+    }
+  };
 
   const total = cart.reduce((sum, item) => sum + item.price * item.count, 0);
   const totalItems = cart.reduce((sum, item) => sum + item.count, 0);
@@ -48,13 +85,13 @@ export default function CartPage() {
                   <div className="cart-item-count">
                     <button
                       onClick={() => changeCount(item.id, item.count - 1)}
-                      disabled={isLoading}>
+                      disabled={isLoading || isCheckingOut}>
                       <FaMinus />
                     </button>
                     <span>{item.count}</span>
                     <button
                       onClick={() => changeCount(item.id, item.count + 1)}
-                      disabled={isLoading}>
+                      disabled={isLoading || isCheckingOut}>
                       <FaPlus />
                     </button>
                   </div>
@@ -63,7 +100,7 @@ export default function CartPage() {
 
                   <button
                     onClick={() => remove(item.id)}
-                    disabled={isLoading}
+                    disabled={isLoading || isCheckingOut}
                     className="cart-item-remove">
                     <FaTrash />
                   </button>
@@ -82,7 +119,12 @@ export default function CartPage() {
                   <span>{total} ₽</span>
                 </div>
               </div>
-              <button className="checkout-btn">Оформить заказ</button>
+              <button
+                className="checkout-btn"
+                onClick={handleCheckout}
+                disabled={isCheckingOut || isLoading}>
+                {isCheckingOut ? 'Отправка...' : 'Оформить заказ'}
+              </button>
             </div>
           </div>
         )}

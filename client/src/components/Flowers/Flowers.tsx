@@ -88,7 +88,12 @@ export default function Flowers() {
             className="main__right-item"
             style={
               item.count === 0
-                ? { filter: 'blur(1px)', opacity: 0.5, pointerEvents: 'none', position: 'relative' }
+                ? {
+                    filter: 'blur(1px)',
+                    opacity: 0.5,
+                    pointerEvents: 'none',
+                    position: 'relative',
+                  }
                 : {}
             }>
             {item.count === 0 && (
