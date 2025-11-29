@@ -2,6 +2,7 @@
 import dynamic from 'next/dynamic';
 
 const CartPage = dynamic(() => import('@/components/Cart/Cart'), {
+  ssr: false,
   loading: () => <div className="loader"></div>,
 });
 

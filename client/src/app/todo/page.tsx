@@ -8,7 +8,6 @@ export default function Home() {
   const [titlesValue, setTitlesValue] = useState('');
   const [desks, setDesks] = useState<string[]>([]);
   const [desksValue, setDeskValue] = useState('');
-  const [delAnim, setDelAnim] = useState(false);
 
   function handleTitiles(e) {
     setTitlesValue(e.target.value);
@@ -27,12 +26,10 @@ export default function Home() {
   }
 
   function handleDel(i: number) {
-    setDelAnim(true);
-    setTimeout(() => {
-      setTitles((prev) => prev.filter((_, index) => index !== i));
-      setDelAnim(false);
-    }, 1000);
+    setTitles((prev) => prev.filter((_, index) => index !== i));
   }
+
+  const filtered = [...titles].sort((a, b) => b - a);
 
   return (
     <div className="container">
@@ -66,29 +63,15 @@ export default function Home() {
         </div>
 
         <ul className="list">
-          {titles.map((t, i) => (
+          {filtered.map((t, i) => (
             <li className="listItem" key={i}>
-              {delAnim ? (
-                <div className="listInfo del">
-                  <span className="listTitle">{t}</span>
-                  <span className="listDesk">{desks[i]}</span>
-                </div>
-              ) : (
-                <div className="listInfo">
-                  <span className="listTitle">{t}</span>
-                  <span className="listDesk">{desks[i]}</span>
-                </div>
-              )}
-
-              {delAnim ? (
-                <button className="anim" onClick={() => handleDel(i)}>
-                  Удалить
-                </button>
-              ) : (
-                <button className="buttonMinus" onClick={() => handleDel(i)}>
-                  Удалить
-                </button>
-              )}
+              <div className="listInfo">
+                <span className="listTitle">{t}</span>
+                <span className="listDesk">{desks[i]}</span>
+              </div>
+              <button className="buttonMinus" onClick={() => handleDel(i)}>
+                Удалить
+              </button>
             </li>
           ))}
         </ul>

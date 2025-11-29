@@ -3,7 +3,7 @@
 import { useCart } from '@/contexts/CartContext';
 import { useRouter } from 'next/navigation';
 import { FaPlus, FaMinus, FaTrash } from 'react-icons/fa';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './Cart.css';
 import Flowers from '../Flowers/Flowers';
 import { useAuth } from '@/contexts/AuthContext';
@@ -13,6 +13,11 @@ export default function CartPage() {
   const router = useRouter();
   const { isAuthenticated } = useAuth();
   const [isCheckingOut, setIsCheckingOut] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
+
+  if (!mounted) return null;
 
   if (!isAuthenticated) {
     return (

@@ -171,7 +171,7 @@ ${items
 💰 Итого: ${total} ₽
     `.trim();
 
-    const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
+    const BOT_TOKEN = process.env.TG_BOT_TOKEN_ORDER;
     const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
     if (!BOT_TOKEN || !CHAT_ID) {
@@ -199,7 +199,7 @@ ${items
       return res.status(500).json({ error: 'Ошибка Telegram API' });
     }
 
-    const result = await response.json();
+    const result: any = await response.json();
 
     if (!result.ok) {
       console.error('Telegram result not ok:', result);
