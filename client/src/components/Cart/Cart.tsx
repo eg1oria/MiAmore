@@ -10,6 +10,10 @@ import Flowers from '../Flowers/Flowers';
 import { useAuth } from '@/contexts/AuthContext';
 import { PhotoProvider, PhotoView } from 'react-photo-view';
 import Image from 'next/image';
+import { FiUser } from 'react-icons/fi';
+import { FaMapMarkerAlt } from 'react-icons/fa';
+import { FaPhoneAlt } from 'react-icons/fa';
+import { BsFillPostcardHeartFill } from 'react-icons/bs';
 
 export default function CartPage() {
   const { cart, changeCount, remove, isLoading, clearCart } = useCart();
@@ -20,9 +24,19 @@ export default function CartPage() {
   const [phone, setPhone] = useState('');
   const [name, setName] = useState('');
   const [adres, setAdres] = useState('');
+  const [postCard, setPostCard] = useState(false);
+  const [postCardText, setPostCardText] = useState('');
   const [errors, setErrors] = useState<{ phone?: string; name?: string; adres?: string }>({});
 
   useEffect(() => setMounted(true), []);
+
+  const handlePostCard = () => {
+    if (postCard) {
+      setPostCard(false);
+    } else {
+      setPostCard(true);
+    }
+  };
 
   if (!mounted) return null;
 
@@ -47,7 +61,7 @@ export default function CartPage() {
   };
 
   const validateField = (name: string, value: string): string | undefined => {
-    const safe = escapeHtml(value.trim()); // escapeHtml можно добавить, если нужно
+    const safe = escapeHtml(value.trim());
     switch (name) {
       case 'phone':
         if (!safe) return 'Номер телефона обязателен';
@@ -103,6 +117,8 @@ export default function CartPage() {
           phone,
           name,
           adres,
+          postCard,
+          postCardText,
         }),
       });
 
@@ -203,38 +219,104 @@ export default function CartPage() {
                 </div>
                 <div className="inputs">
                   <div className="inputWrap">
-                    <input
-                      type="text"
-                      placeholder="Введите имя"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      className="checkout-phone"
-                      disabled={isCheckingOut}
-                    />
+                    <div className="iconWrap">
+                      <FiUser
+                        className="inputIcon"
+                        style={{ color: phone.length > 0 ? '#4caf50' : '#ccc' }}
+                      />
+                      <input
+                        type="text"
+                        placeholder="Введите имя"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        className="checkout-phone"
+                        disabled={isCheckingOut}
+                        style={{
+                          borderColor: name.length > 0 ? '#4caf50' : '#ccc',
+                        }}
+                      />
+                    </div>
                   </div>
                   <div className="inputWrap">
-                    <input
-                      type="tel"
-                      placeholder="Введите номер телефона"
-                      value={phone}
-                      onChange={handlePhoneChange}
-                      className="checkout-phone"
-                      disabled={isCheckingOut}
-                    />
+                    <div className="iconWrap">
+                      <FaPhoneAlt
+                        className="inputIcon"
+                        style={{
+                          color: errors.phone ? '#ff0000a5' : phone.length > 0 ? '#4caf50' : '#ccc',
+                        }}
+                      />
+                      <input
+                        type="tel"
+                        placeholder="Введите номер телефона"
+                        value={phone}
+                        onChange={handlePhoneChange}
+                        className="checkout-phone"
+                        disabled={isCheckingOut}
+                        style={{
+                          borderColor: errors.phone
+                            ? '#ff0000a5'
+                            : phone.length > 0
+                            ? '#4caf50'
+                            : '#ccc',
+                        }}
+                      />
+                    </div>
                     {errors.phone && <span className="error-text">{errors.phone}</span>}
                   </div>
 
                   <div className="inputWrap">
-                    <input
-                      type="text"
-                      placeholder="Введите адрес доставки"
-                      value={adres}
-                      onChange={handleAdresChange}
-                      className="checkout-phone"
-                      disabled={isCheckingOut}
-                    />
+                    <div className="iconWrap">
+                      <FaMapMarkerAlt
+                        className="inputIcon"
+                        style={{
+                          color: errors.adres ? '#ff0000a5' : adres.length > 0 ? '#4caf50' : '#ccc',
+                        }}
+                      />
+                      <input
+                        type="text"
+                        placeholder="Введите адрес доставки"
+                        value={adres}
+                        onChange={handleAdresChange}
+                        className="checkout-phone"
+                        disabled={isCheckingOut}
+                        style={{
+                          borderColor: errors.adres
+                            ? '#ff0000a5'
+                            : adres.length > 0
+                            ? '#4caf50'
+                            : '#ccc',
+                        }}
+                      />
+                    </div>
                     {errors.adres && <span className="error-text">{errors.adres}</span>}
                   </div>
+                  <div className="inputWrap">
+                    <label className="customCheckbox">
+                      <input
+                        id="postCard"
+                        type="checkbox"
+                        checked={postCard}
+                        onChange={handlePostCard}
+                      />
+                      <span className="checkmark"></span>
+                      Добавить открытку
+                    </label>
+                  </div>
+
+                  {postCard && (
+                    <div className="inputWrap">
+                      <textarea
+                        placeholder="Введите текст для открытки"
+                        value={postCardText}
+                        onChange={(e) => setPostCardText(e.target.value)}
+                        className="checkout-textarea"
+                        disabled={isCheckingOut}
+                        style={{
+                          borderColor: postCardText.length > 0 ? '#4caf50' : '#ccc',
+                        }}
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
               <button

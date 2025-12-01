@@ -24,6 +24,8 @@ const CheckoutSchema = z.object({
   phone: z.string(),
   name: z.string().max(50, 'Слишком длинное имя'),
   adres: z.string(),
+  postCard: z.boolean(),
+  postCardText: z.string(),
 });
 
 cartRouter.get('/', async (req, res) => {
@@ -161,6 +163,8 @@ cartRouter.post('/checkout', async (req, res) => {
     const { phone } = parseResult.data;
     const { name } = parseResult.data;
     const { adres } = parseResult.data;
+    const { postCard } = parseResult.data;
+    const { postCardText } = parseResult.data;
 
     const items = Cart.getAllForUser(userId);
 
@@ -188,6 +192,17 @@ ${items
     (item) => `• ${item.name} — ${item.count} шт × ${item.price} ₽ = ${item.count * item.price} ₽`,
   )
   .join('\n')}
+
+  ${
+    postCard
+      ? `Открытка: Да 
+  Текст к открытке: 
+
+  ${postCardText}
+    `
+      : 'Открытка: Нет'
+  }
+
 
 💰 Итого: ${total} ₽
     `.trim();

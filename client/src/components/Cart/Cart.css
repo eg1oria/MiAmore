@@ -31,7 +31,7 @@
 
 .checkout-phone {
   width: 100%;
-  padding: 12px;
+  padding: 12px 12px 12px 40px;
   border-radius: 8px;
   border: 1px solid #ccc;
   font-size: 16px;
@@ -187,4 +187,102 @@
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
+}
+
+.inputWrap input[type='checkbox'] {
+  width: 18px;
+  height: 18px;
+  accent-color: #4caf50;
+  cursor: pointer;
+}
+
+.checkout-phone {
+  outline: none;
+  transition: border 0.2s;
+}
+
+.checkout-phone:focus {
+  border-color: #4caf50;
+}
+
+.inputWrap {
+  margin-bottom: 16px;
+}
+
+.customCheckbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  user-select: none;
+  color: #333;
+  position: relative;
+}
+
+.customCheckbox input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.checkmark {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  border: 2px solid #ccc;
+  background: #f6f6f6;
+  transition: 0.2s;
+  position: relative;
+}
+
+.checkmark::after {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 2px;
+  width: 6px;
+  height: 12px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  opacity: 0;
+}
+
+.customCheckbox input:checked + .checkmark {
+  background: #4caf50;
+  border-color: #4caf50;
+}
+
+.customCheckbox input:checked + .checkmark::after {
+  opacity: 1;
+}
+
+.customCheckbox:hover .checkmark {
+  border-color: #4caf50;
+}
+
+.checkout-textarea {
+  width: 100%;
+  min-height: 110px;
+  max-height: 200px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  outline: none;
+  position: relative;
+}
+
+.iconWrap {
+  position: relative;
+}
+
+.inputIcon {
+  position: absolute;
+  width: 23px;
+  height: 23px;
+  top: 50%;
+  left: 10px;
+  padding: 2px;
+  transform: translateY(-50%);
 }

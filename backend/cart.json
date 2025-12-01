@@ -133,35 +133,5 @@
     "count": 1,
     "userId": "148ea632-f66c-48bc-bc06-3bbccb563aa8",
     "createdAt": 1763665417822
-  },
-  "386d0f10-c32a-41bd-ab0d-baee070acd6a": {
-    "id": "386d0f10-c32a-41bd-ab0d-baee070acd6a",
-    "productId": "6",
-    "name": "Lush Harmony",
-    "price": 3600,
-    "image": "/img/flowers/flower7.jpg",
-    "count": 1,
-    "userId": "acf629fd-fe0b-43ab-822d-2667719f008a",
-    "createdAt": 1764577746254
-  },
-  "bc8daea5-cbda-45c0-b67e-2310c208d061": {
-    "id": "bc8daea5-cbda-45c0-b67e-2310c208d061",
-    "productId": "5",
-    "name": "Urban Petals",
-    "price": 2800,
-    "image": "/img/flowers/flower6.jpg",
-    "count": 1,
-    "userId": "acf629fd-fe0b-43ab-822d-2667719f008a",
-    "createdAt": 1764577749992
-  },
-  "7779f7ee-22ce-4e68-b479-1cc832f40e0b": {
-    "id": "7779f7ee-22ce-4e68-b479-1cc832f40e0b",
-    "productId": "8",
-    "name": "Sunset Bliss",
-    "price": 3400,
-    "image": "/img/flowers/flower9.jpg",
-    "count": 1,
-    "userId": "acf629fd-fe0b-43ab-822d-2667719f008a",
-    "createdAt": 1764577753418
   }
 }
