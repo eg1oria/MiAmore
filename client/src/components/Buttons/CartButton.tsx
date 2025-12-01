@@ -32,6 +32,7 @@ export default function CartButton({ item, className }: Props) {
       productId: String(item.id),
       name: item.name,
       price: item.price,
+      image: item.image,
       count: 1,
     });
     setLoadingAdd(false);

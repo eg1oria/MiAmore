@@ -134,67 +134,34 @@
     "userId": "148ea632-f66c-48bc-bc06-3bbccb563aa8",
     "createdAt": 1763665417822
   },
-  "3e382b8d-0ee7-4ac2-93bc-4e17b8485dfe": {
-    "id": "3e382b8d-0ee7-4ac2-93bc-4e17b8485dfe",
-    "productId": "2",
-    "name": "Pure Line",
-    "price": 2300,
-    "count": 1,
-    "userId": "acf629fd-fe0b-43ab-822d-2667719f008a",
-    "createdAt": 1763841816992
-  },
-  "11fb8352-356c-4cc9-9c37-a78848e922f4": {
-    "id": "11fb8352-356c-4cc9-9c37-a78848e922f4",
-    "productId": "3",
-    "name": "Minimal Bloom",
-    "price": 3200,
-    "count": 1,
-    "userId": "acf629fd-fe0b-43ab-822d-2667719f008a",
-    "createdAt": 1763841819792
-  },
-  "41a6f8ab-1e3b-4dfb-944e-237a8d2d4432": {
-    "id": "41a6f8ab-1e3b-4dfb-944e-237a8d2d4432",
-    "productId": "1",
-    "name": "Mono Mood",
-    "price": 2500,
-    "count": 1,
-    "userId": "acf629fd-fe0b-43ab-822d-2667719f008a",
-    "createdAt": 1763841825818
-  },
-  "aac7d572-5248-4e00-8f36-0473c28b15f6": {
-    "id": "aac7d572-5248-4e00-8f36-0473c28b15f6",
+  "386d0f10-c32a-41bd-ab0d-baee070acd6a": {
+    "id": "386d0f10-c32a-41bd-ab0d-baee070acd6a",
     "productId": "6",
     "name": "Lush Harmony",
     "price": 3600,
+    "image": "/img/flowers/flower7.jpg",
     "count": 1,
-    "userId": "5160c056-d8b1-40e0-a7ca-2c6005f7d372",
-    "createdAt": 1764400268632
+    "userId": "acf629fd-fe0b-43ab-822d-2667719f008a",
+    "createdAt": 1764577746254
   },
-  "be654de8-1c10-42f4-a038-63ad0b3ac457": {
-    "id": "be654de8-1c10-42f4-a038-63ad0b3ac457",
-    "productId": "2",
-    "name": "Pure Line",
-    "price": 2300,
+  "bc8daea5-cbda-45c0-b67e-2310c208d061": {
+    "id": "bc8daea5-cbda-45c0-b67e-2310c208d061",
+    "productId": "5",
+    "name": "Urban Petals",
+    "price": 2800,
+    "image": "/img/flowers/flower6.jpg",
     "count": 1,
-    "userId": "5160c056-d8b1-40e0-a7ca-2c6005f7d372",
-    "createdAt": 1764400320797
+    "userId": "acf629fd-fe0b-43ab-822d-2667719f008a",
+    "createdAt": 1764577749992
   },
-  "a135d7c9-b9b3-41d2-b32a-cba35fc0aebe": {
-    "id": "a135d7c9-b9b3-41d2-b32a-cba35fc0aebe",
-    "productId": "3",
-    "name": "Minimal Bloom",
-    "price": 3200,
+  "7779f7ee-22ce-4e68-b479-1cc832f40e0b": {
+    "id": "7779f7ee-22ce-4e68-b479-1cc832f40e0b",
+    "productId": "8",
+    "name": "Sunset Bliss",
+    "price": 3400,
+    "image": "/img/flowers/flower9.jpg",
     "count": 1,
-    "userId": "5160c056-d8b1-40e0-a7ca-2c6005f7d372",
-    "createdAt": 1764403645549
-  },
-  "af3695ec-63a8-4825-8fc0-b721c9bde5ad": {
-    "id": "af3695ec-63a8-4825-8fc0-b721c9bde5ad",
-    "productId": "30",
-    "name": "Autumn Mood",
-    "price": 3500,
-    "count": 1,
-    "userId": "5160c056-d8b1-40e0-a7ca-2c6005f7d372",
-    "createdAt": 1764403720795
+    "userId": "acf629fd-fe0b-43ab-822d-2667719f008a",
+    "createdAt": 1764577753418
   }
 }

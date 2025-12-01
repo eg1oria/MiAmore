@@ -4,6 +4,7 @@ export interface CartItem {
   productId: string;
   name: string;
   price: number;
+  image: string; // ✅ ДОБАВИЛИ
   count: number;
 }
 
@@ -26,6 +27,7 @@ export const api = {
     productId: string;
     name: string;
     price: number;
+    image: string; // ✅ ДОБАВИЛИ
     count: number;
   }): Promise<CartItem> {
     const response = await fetch(`${API_URL}/cart/add`, {
@@ -105,6 +107,7 @@ export async function addToCart(item: {
   productId: string;
   name: string;
   price: number;
+  image: string;
   count?: number;
 }) {
   return api.add({ ...item, count: item.count || 1 });

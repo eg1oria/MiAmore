@@ -17,7 +17,6 @@ const LoginSchema = z.object({
   password: z.string(),
 });
 
-// Регистрация
 authRouter.post('/register', async (req, res) => {
   const bodyParseResult = RegisterSchema.safeParse(req.body);
 
@@ -41,13 +40,15 @@ authRouter.post('/register', async (req, res) => {
 
   await Passwords.create(user.id, password);
 
-  authorizeResponse(res, user.id).status(201).json({
-    user: {
-      id: user.id,
-      username: user.username,
-      email: user.email,
-    },
-  });
+  authorizeResponse(res, user.id)
+    .status(201)
+    .json({
+      user: {
+        id: user.id,
+        username: user.username,
+        email: user.email,
+      },
+    });
 });
 
 // Вход
@@ -70,23 +71,23 @@ authRouter.post('/login', (req, res) => {
     });
   }
 
-  authorizeResponse(res, user.id).status(200).json({
-    user: {
-      id: user.id,
-      username: user.username,
-      email: user.email,
-    },
-  });
+  authorizeResponse(res, user.id)
+    .status(200)
+    .json({
+      user: {
+        id: user.id,
+        username: user.username,
+        email: user.email,
+      },
+    });
 });
 
-// Выход
 authRouter.post('/logout', (req, res) => {
   unauthorizeResponse(res).status(200).json({
     message: 'Вы успешно вышли из системы',
   });
 });
 
-// Проверка авторизации
 authRouter.get('/check', (req, res) => {
   const userId = authorizeRequest(req);
 

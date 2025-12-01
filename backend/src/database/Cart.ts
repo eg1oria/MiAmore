@@ -6,6 +6,7 @@ export interface ICartItem {
   productId: string; // ID товара из магазина
   name: string;
   price: number;
+  image: string;
   count: number;
   userId: string;
   createdAt: number;
@@ -29,6 +30,7 @@ export class Cart {
     productId: string,
     name: string,
     price: number,
+    image: string,
     count: number = 1,
   ): Promise<ICartItem> {
     const existingItem = Object.values(database.data).find(
@@ -36,20 +38,22 @@ export class Cart {
     );
 
     if (existingItem) {
-      // Увеличиваем количество
       existingItem.count += count;
+      existingItem.image = image;
+
       await database.update((data) => {
         data[existingItem.id] = existingItem;
       });
+
       return existingItem;
     }
 
-    // Создаем новый элемент
     const cartItem: ICartItem = {
       id: randomUUID(),
       productId,
       name,
       price,
+      image,
       count,
       userId,
       createdAt: Date.now(),

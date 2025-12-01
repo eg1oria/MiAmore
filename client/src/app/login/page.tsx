@@ -39,7 +39,6 @@ export default function LoginPage() {
     return str.replace(/[&<>"'`=\/]/g, (char: string) => map[char] || char);
   };
 
-  // --- Валидация поля по имени ---
   const validateField = (name: string, value: string): string | undefined => {
     const safe = escapeHtml(value.trim());
     switch (name) {

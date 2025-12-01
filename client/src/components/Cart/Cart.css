@@ -8,6 +8,35 @@
   margin-bottom: 30px;
 }
 
+.inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cart-img {
+  cursor: pointer;
+  object-fit: cover;
+}
+
+.inputWrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.error-text {
+  color: #ff0000a5;
+  margin: 2px 0 0 0;
+}
+
+.checkout-phone {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
 .cart-empty {
   text-align: center;
   padding: 60px 20px;
@@ -76,7 +105,6 @@
   font-weight: 600;
 }
 
-/* Количество */
 .cart-item-count {
   display: flex;
   align-items: center;
@@ -101,7 +129,6 @@
   text-align: center;
 }
 
-/* Сумма и удалить */
 .cart-item-total {
   min-width: 100px;
   text-align: right;
@@ -121,7 +148,6 @@
   justify-content: center;
 }
 
-/* Итоговая панель */
 .cart-summary {
   flex: 1;
   background: white;

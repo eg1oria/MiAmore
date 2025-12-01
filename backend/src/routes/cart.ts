@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { authorizeRequest } from '../auth.js';
 import { Cart } from '../database/index.js';
 import fetch from 'node-fetch';
+import { escape } from 'node:querystring';
 
 export const cartRouter = Router();
 
@@ -10,6 +11,7 @@ const AddItemSchema = z.object({
   productId: z.string(),
   name: z.string(),
   price: z.number().positive(),
+  image: z.string(),
   count: z.number().int().positive().default(1),
 });
 
@@ -18,7 +20,12 @@ const UpdateCountSchema = z.object({
   count: z.number().int().min(0),
 });
 
-// Получить корзину пользователя
+const CheckoutSchema = z.object({
+  phone: z.string(),
+  name: z.string().max(50, 'Слишком длинное имя'),
+  adres: z.string(),
+});
+
 cartRouter.get('/', async (req, res) => {
   try {
     const userId = authorizeRequest(req);
@@ -59,9 +66,9 @@ cartRouter.post('/add', async (req, res) => {
       });
     }
 
-    const { productId, name, price, count } = parseResult.data;
+    const { productId, name, price, image, count } = parseResult.data;
 
-    const item = await Cart.addItem(userId, productId, name, price, count);
+    const item = await Cart.addItem(userId, productId, name, price, image, count);
     res.status(201).json(item);
   } catch (error) {
     console.error('ADD cart error:', error);
@@ -69,7 +76,6 @@ cartRouter.post('/add', async (req, res) => {
   }
 });
 
-// Изменить количество товара
 cartRouter.post('/update', async (req, res) => {
   try {
     const userId = authorizeRequest(req);
@@ -88,7 +94,6 @@ cartRouter.post('/update', async (req, res) => {
 
     const { itemId, count } = parseResult.data;
 
-    // Проверяем, принадлежит ли товар пользователю
     const item = Cart.getOne(itemId);
 
     if (!item || item.userId !== userId) {
@@ -108,7 +113,6 @@ cartRouter.post('/update', async (req, res) => {
   }
 });
 
-// Удалить товар из корзины
 cartRouter.delete('/:id', async (req, res) => {
   try {
     const userId = authorizeRequest(req);
@@ -119,7 +123,6 @@ cartRouter.delete('/:id', async (req, res) => {
 
     const itemId = req.params.id;
 
-    // Проверяем, принадлежит ли товар пользователю
     const item = Cart.getOne(itemId);
 
     if (!item || item.userId !== userId) {
@@ -139,7 +142,6 @@ cartRouter.delete('/:id', async (req, res) => {
   }
 });
 
-// Оформить заказ
 cartRouter.post('/checkout', async (req, res) => {
   try {
     const userId = authorizeRequest(req);
@@ -147,6 +149,18 @@ cartRouter.post('/checkout', async (req, res) => {
     if (!userId) {
       return res.status(401).json({ error: 'Unauthorized' });
     }
+
+    const parseResult = CheckoutSchema.safeParse(req.body);
+
+    if (!parseResult.success) {
+      return res.status(400).json({
+        error: parseResult.error.issues[0].message,
+      });
+    }
+
+    const { phone } = parseResult.data;
+    const { name } = parseResult.data;
+    const { adres } = parseResult.data;
 
     const items = Cart.getAllForUser(userId);
 
@@ -159,7 +173,14 @@ cartRouter.post('/checkout', async (req, res) => {
     const text = `
 🛒 Новый заказ!
 
-Пользователь: ${userId}
+👤 Пользователь:
+
+Id: ${userId}
+${name ? `Имя: ${name}` : 'Имя: Не указано'}
+
+Телефон: ${phone}
+Адрес: ${adres}
+
 
 Товары:
 ${items
@@ -179,34 +200,22 @@ ${items
       return res.status(500).json({ error: 'Telegram не настроен' });
     }
 
-    // Отправка в Telegram с таймаутом
-    const controller = new AbortController();
-
     const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         chat_id: CHAT_ID,
         text,
-        parse_mode: 'HTML',
       }),
-      signal: controller.signal,
     });
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error('Telegram API error:', response.status, errorText);
-      return res.status(500).json({ error: 'Ошибка Telegram API' });
-    }
 
     const result: any = await response.json();
 
     if (!result.ok) {
-      console.error('Telegram result not ok:', result);
+      console.error('Telegram error:', result);
       return res.status(500).json({ error: 'Ошибка при отправке в Telegram' });
     }
 
-    // Очищаем корзину после успешной отправки
     await Cart.clearForUser(userId);
 
     res.json({
@@ -216,7 +225,6 @@ ${items
     });
   } catch (e) {
     console.error('CHECKOUT ERROR:', e);
-
     res.status(500).json({ error: 'Ошибка при отправке заказа' });
   }
 });
