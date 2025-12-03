@@ -1,0 +1,10 @@
+.mapContainer {
+  position: fixed; /* фиксируем карту на экране */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000; /* чтобы перекрывала остальной контент */
+  display: flex;
+  flex-direction: column;
+}

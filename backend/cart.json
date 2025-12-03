@@ -133,5 +133,25 @@
     "count": 1,
     "userId": "148ea632-f66c-48bc-bc06-3bbccb563aa8",
     "createdAt": 1763665417822
+  },
+  "5214e708-122e-49c5-a6a7-7ce20021bd5a": {
+    "id": "5214e708-122e-49c5-a6a7-7ce20021bd5a",
+    "productId": "3",
+    "name": "Minimal Bloom",
+    "price": 3200,
+    "image": "/img/flowers/flower3.jpg",
+    "count": 1,
+    "userId": "acf629fd-fe0b-43ab-822d-2667719f008a",
+    "createdAt": 1764750849702
+  },
+  "ab4f8c92-99af-43af-bff8-b27567463eab": {
+    "id": "ab4f8c92-99af-43af-bff8-b27567463eab",
+    "productId": "8",
+    "name": "Sunset Bliss",
+    "price": 3400,
+    "image": "/img/flowers/flower9.jpg",
+    "count": 1,
+    "userId": "acf629fd-fe0b-43ab-822d-2667719f008a",
+    "createdAt": 1764750925724
   }
 }

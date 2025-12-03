@@ -13,7 +13,7 @@ import Image from 'next/image';
 import { FiUser } from 'react-icons/fi';
 import { FaMapMarkerAlt } from 'react-icons/fa';
 import { FaPhoneAlt } from 'react-icons/fa';
-import { BsFillPostcardHeartFill } from 'react-icons/bs';
+import Map from '../Map/Map';
 
 export default function CartPage() {
   const { cart, changeCount, remove, isLoading, clearCart } = useCart();
@@ -27,8 +27,17 @@ export default function CartPage() {
   const [postCard, setPostCard] = useState(false);
   const [postCardText, setPostCardText] = useState('');
   const [errors, setErrors] = useState<{ phone?: string; name?: string; adres?: string }>({});
+  const [openMap, setOpenMap] = useState(false);
 
   useEffect(() => setMounted(true), []);
+
+  function handleOpenMap() {
+    if (openMap) {
+      setOpenMap(false);
+    } else {
+      setOpenMap(true);
+    }
+  }
 
   const handlePostCard = () => {
     if (postCard) {
@@ -134,6 +143,7 @@ export default function CartPage() {
       setName('');
       setAdres('');
       setErrors({});
+      setPostCardText('');
 
       alert('Заказ успешно отправлен!');
     } catch (e) {
@@ -288,7 +298,11 @@ export default function CartPage() {
                         }}
                       />
                     </div>
+
                     {errors.adres && <span className="error-text">{errors.adres}</span>}
+                    <button onClick={handleOpenMap} className="openMapBtn">
+                      Выбрать на карте
+                    </button>
                   </div>
                   <div className="inputWrap">
                     <label className="customCheckbox">
@@ -338,6 +352,15 @@ export default function CartPage() {
         </h1>
         <Flowers />
       </div>
+      {openMap && (
+        <Map
+          onAddressSelect={(address) => {
+            setAdres(address);
+            setErrors((prev) => ({ ...prev, adres: undefined }));
+          }}
+          onClose={() => setOpenMap(false)}
+        />
+      )}
     </>
   );
 }
