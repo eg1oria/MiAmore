@@ -21,7 +21,6 @@ export const navItem: INav[] = [
   { name: 'Каталог', href: '/flowers' },
   { name: 'О нас', href: '/about' },
   { name: 'Контакты', href: '/contacts' },
-  { name: 'Создать', href: '/game' },
 ];
 
 export default function Header() {

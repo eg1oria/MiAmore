@@ -74,7 +74,6 @@ export class Cart {
     }
 
     if (count <= 0) {
-      // Удаляем, если количество 0 или меньше
       await Cart.removeItem(itemId);
       return true;
     }

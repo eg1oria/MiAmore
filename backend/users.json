@@ -1,44 +1,14 @@
 {
-  "06a4b7fd-f456-4363-a055-51499fc603cd": {
-    "id": "06a4b7fd-f456-4363-a055-51499fc603cd",
-    "email": "kamzamadi8705@gmail.com",
-    "username": "kamzamadi8705@gmail.com",
-    "createdAt": 1763395033944
-  },
-  "63ad3b5c-73ae-462d-8282-ae7ed9af1bb2": {
-    "id": "63ad3b5c-73ae-462d-8282-ae7ed9af1bb2",
-    "email": "leontevegor@gmail.com",
-    "username": "Егоор",
-    "createdAt": 1763396135353
-  },
-  "09ae7641-d158-48c2-b8ac-856a10824d49": {
-    "id": "09ae7641-d158-48c2-b8ac-856a10824d49",
-    "email": "User123@gmail.com",
-    "username": "Ваня",
-    "createdAt": 1763664934674
-  },
-  "541acf33-58db-4ff5-b2cd-747beb132dfb": {
-    "id": "541acf33-58db-4ff5-b2cd-747beb132dfb",
-    "email": "user1234@gmail.com",
-    "username": "Ваня",
-    "createdAt": 1763665034774
-  },
-  "148ea632-f66c-48bc-bc06-3bbccb563aa8": {
-    "id": "148ea632-f66c-48bc-bc06-3bbccb563aa8",
-    "email": "User12345@gmail.com",
-    "username": "Егор",
-    "createdAt": 1763665366669
-  },
-  "acf629fd-fe0b-43ab-822d-2667719f008a": {
-    "id": "acf629fd-fe0b-43ab-822d-2667719f008a",
-    "email": "kamzamadi870@gmail.com",
-    "username": "YEGOR LEONTYEV",
-    "createdAt": 1763801491298
-  },
   "5160c056-d8b1-40e0-a7ca-2c6005f7d372": {
     "id": "5160c056-d8b1-40e0-a7ca-2c6005f7d372",
     "email": "leontevegor57@gmail.com",
     "username": "YEGOR LEONTYEV",
     "createdAt": 1764153971035
+  },
+  "902fa367-c79f-48de-85cb-1e11ca45dd9a": {
+    "id": "902fa367-c79f-48de-85cb-1e11ca45dd9a",
+    "email": "kamzamadi870@gmail.com",
+    "username": "Егор",
+    "createdAt": 1764869701014
   }
 }

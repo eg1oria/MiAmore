@@ -9,8 +9,7 @@ import morgan from 'morgan';
 import { z } from 'zod';
 import fetch from 'node-fetch';
 
-import { usersRouter, authRouter, cartRouter } from './routes/index.js';
-import { sleep } from './sleep.js';
+import { usersRouter, authRouter, cartRouter, adminRouter } from './routes/index.js';
 import flowersData from '../db.json';
 
 dotenv.config();
@@ -80,8 +79,6 @@ server.use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'));
 
 server.use(generalLimiter);
 
-server.use(sleep([400, 1500]));
-
 server.use(
   morgan('combined', {
     skip: (req) => req.url.startsWith('/flowers'),
@@ -142,6 +139,7 @@ ${email ? `Email: ${escapeHtml(email)}` : 'Email: Не указано'}
 server.use('/users', usersRouter);
 server.use('/auth', authRouter);
 server.use('/cart', cartRouter);
+server.use('/admin', adminRouter);
 
 server.get('/flowers', (req: Request, res: Response) => {
   res.json(flowersData.flowers);
@@ -179,6 +177,11 @@ server.use((err: any, req: Request, res: Response, next: NextFunction) => {
     ...(process.env.NODE_ENV === 'development' && { stack: err.stack }),
   });
 });
+
+// В server.ts добавьте импорт
+
+// И используйте роутер
+server.use('/admin', adminRouter);
 
 server.listen(PORT, () => {
   console.log(`🚀 Server started on port ${PORT}`);

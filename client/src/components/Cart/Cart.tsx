@@ -71,10 +71,11 @@ export default function CartPage() {
 
   const validateField = (name: string, value: string): string | undefined => {
     const safe = escapeHtml(value.trim());
+    const cleaned = safe.replace(/\s/g, '');
     switch (name) {
       case 'phone':
         if (!safe) return 'Номер телефона обязателен';
-        if (!/^\d{10,15}$/.test(safe)) return 'Неверный номер телефона';
+        if (!/^\+?\d{10,15}$/.test(cleaned)) return 'Неверный номер телефона';
         break;
       case 'adres':
         if (!safe) return 'Адрес обязателен';
@@ -236,6 +237,7 @@ export default function CartPage() {
                       />
                       <input
                         type="text"
+                        name="name"
                         placeholder="Введите имя"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
@@ -257,6 +259,7 @@ export default function CartPage() {
                       />
                       <input
                         type="tel"
+                        name="phone"
                         placeholder="Введите номер телефона"
                         value={phone}
                         onChange={handlePhoneChange}
@@ -284,6 +287,7 @@ export default function CartPage() {
                       />
                       <input
                         type="text"
+                        name="adres"
                         placeholder="Введите адрес доставки"
                         value={adres}
                         onChange={handleAdresChange}

@@ -15,8 +15,7 @@ export default function ContactsPage() {
   useEffect(() => {
     if (user?.name) setUserName(user.name);
   }, [user]);
-
-  // если user приходит позже (например, после fetch)
+  
   useEffect(() => {
     if (user?.email) setEmail(user.email);
   }, [user]);

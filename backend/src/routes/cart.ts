@@ -3,7 +3,6 @@ import { z } from 'zod';
 import { authorizeRequest } from '../auth.js';
 import { Cart } from '../database/index.js';
 import fetch from 'node-fetch';
-import { escape } from 'node:querystring';
 
 export const cartRouter = Router();
 
@@ -51,7 +50,6 @@ cartRouter.get('/', async (req, res) => {
   }
 });
 
-// Добавить товар в корзину
 cartRouter.post('/add', async (req, res) => {
   try {
     const userId = authorizeRequest(req);
@@ -244,7 +242,6 @@ ${items
   }
 });
 
-// Очистить корзину
 cartRouter.delete('/', async (req, res) => {
   try {
     const userId = authorizeRequest(req);
@@ -261,7 +258,6 @@ cartRouter.delete('/', async (req, res) => {
   }
 });
 
-// Получить общую сумму корзины
 cartRouter.get('/total', async (req, res) => {
   try {
     const userId = authorizeRequest(req);
