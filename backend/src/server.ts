@@ -8,11 +8,17 @@ import mongoSanitize from 'express-mongo-sanitize';
 import morgan from 'morgan';
 import { z } from 'zod';
 import fetch from 'node-fetch';
+import fs from 'fs/promises';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 import { usersRouter, authRouter, cartRouter, adminRouter } from './routes/index.js';
 import flowersData from '../db.json';
 
 dotenv.config();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const server = express();
 const PORT = process.env.PORT || 4000;
@@ -160,6 +166,51 @@ server.get('/flowers/:id', (req: Request, res: Response) => {
   res.json(flower);
 });
 
+server.patch('/flowers/:id', async (req: Request, res: Response) => {
+  try {
+    if (!/^\d+$/.test(req.params.id)) {
+      return res.status(400).json({ error: 'Invalid ID format' });
+    }
+
+    const id = Number(req.params.id);
+    const { rating } = req.body;
+
+    if (typeof rating !== 'number' || rating < 1 || rating > 5) {
+      return res.status(400).json({ error: 'Рейтинг должен быть числом от 1 до 5' });
+    }
+
+    const flowerIndex = flowersData.flowers.findIndex((f) => f.id === id);
+
+    if (flowerIndex === -1) {
+      return res.status(404).json({ error: 'Цветок не найден' });
+    }
+
+    const flower = flowersData.flowers[flowerIndex];
+
+    if (!flower.ratingCount) {
+      flower.ratingCount = 0;
+      flower.totalRating = 0;
+    }
+
+    flower.totalRating = (flower.totalRating || 0) + rating;
+    flower.ratingCount = (flower.ratingCount || 0) + 1;
+    flower.rating = Math.round((flower.totalRating / flower.ratingCount) * 10) / 10;
+
+    const dbPath = path.join(__dirname, '..', 'db.json');
+    await fs.writeFile(dbPath, JSON.stringify(flowersData, null, 2), 'utf-8');
+
+    console.log(`✅ Рейтинг цветка ID ${id}: ${flower.rating} (голосов: ${flower.ratingCount})`);
+
+    res.json({
+      success: true,
+      flower: flowersData.flowers[flowerIndex],
+    });
+  } catch (error) {
+    console.error('ERROR updating rating:', error);
+    res.status(500).json({ error: 'Ошибка при обновлении рейтинга' });
+  }
+});
+
 server.get('/health', (req: Request, res: Response) => {
   res.status(200).json({ status: 'OK', timestamp: new Date().toISOString() });
 });
@@ -177,11 +228,6 @@ server.use((err: any, req: Request, res: Response, next: NextFunction) => {
     ...(process.env.NODE_ENV === 'development' && { stack: err.stack }),
   });
 });
-
-// В server.ts добавьте импорт
-
-// И используйте роутер
-server.use('/admin', adminRouter);
 
 server.listen(PORT, () => {
   console.log(`🚀 Server started on port ${PORT}`);

@@ -7,6 +7,9 @@ export interface IFlower {
   count: number;
   type: string;
   quantity?: number;
+  rating: number;
+  ratingCount?: number;
+  totalRating?: number;
 }
 
 export interface CartItem {

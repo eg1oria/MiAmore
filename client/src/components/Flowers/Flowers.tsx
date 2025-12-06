@@ -5,12 +5,15 @@ import Image from 'next/image';
 import './Flowers.css';
 import Link from 'next/link';
 import CartButton from '../Buttons/CartButton';
+import StarRating from '../StarRating/StarRating';
 
 export default function Flowers() {
-  const [data, setData] = useState<IFlower[] | null>(null); // null пока не загружено
+  const [data, setData] = useState<IFlower[] | null>(null);
   const [filter, setFilter] = useState<string>('Все');
   const [loading, setLoading] = useState(true);
   const [visibleCount, setVisibleCount] = useState(8);
+  const [typeFilter, setTypeFilter] = useState('Все');
+  const [ratingFilterValue, setRatingFilterValue] = useState('Все');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,7 +22,8 @@ export default function Flowers() {
         const res = await fetch('http://localhost:4000/flowers');
         const json = await res.json();
         setData(json);
-      } catch {
+      } catch (error) {
+        console.error('Ошибка при загрузке данных:', error);
         setData([]);
       } finally {
         setLoading(false);
@@ -35,21 +39,52 @@ export default function Flowers() {
       const res = await fetch('http://localhost:4000/flowers');
       const json = await res.json();
       setData(json);
-    } catch {
+    } catch (error) {
+      console.error('Ошибка при загрузке данных:', error);
       setData([]);
     } finally {
       setLoading(false);
     }
   };
 
+  const handleRatingChange = (flowerId: number, newRating: number, newRatingCount: number) => {
+    setData((prevData) =>
+      prevData
+        ? prevData.map((flower) =>
+            flower.id === flowerId
+              ? { ...flower, rating: newRating, ratingCount: newRatingCount }
+              : flower,
+          )
+        : null,
+    );
+  };
+
   const types = useMemo(
     () => (data ? ['Все', ...new Set(data.map((f) => f.type))] : ['Все']),
     [data],
   );
-  const filtered = useMemo(
-    () => (data ? (filter === 'Все' ? data : data.filter((f) => f.type === filter)) : []),
-    [data, filter],
-  );
+
+  const ratingFilter = useMemo(() => {
+    if (!data) return ['Все'];
+
+    const uniqueRatings = [...new Set(data.map((f) => f.rating.toFixed(1)))];
+
+    return ['Все', ...uniqueRatings.sort((a, b) => Number(b) - Number(a))];
+  }, [data]);
+
+  const filtered = useMemo(() => {
+    if (!data) return [];
+
+    return data.filter((f) => {
+      const matchesType = typeFilter === 'Все' ? true : f.type === typeFilter;
+
+      const matchesRating =
+        ratingFilterValue === 'Все' ? true : f.rating.toFixed(1) === ratingFilterValue;
+
+      return matchesType && matchesRating;
+    });
+  }, [data, typeFilter, ratingFilterValue]);
+
   const visibleFlowers = useMemo(() => filtered.slice(0, visibleCount), [filtered, visibleCount]);
 
   if (loading) {
@@ -58,9 +93,18 @@ export default function Flowers() {
 
   if (!data || data.length === 0) {
     return (
-      <div className="">
-        <p style={{ textAlign: 'center', margin: '100px' }}>Ошибка сервера или нет данных</p>
-        <button onClick={reFetch}>Обновить</button>
+      <div style={{ textAlign: 'center', margin: '100px auto' }}>
+        <p>Ошибка сервера или нет данных</p>
+        <button
+          onClick={reFetch}
+          style={{
+            padding: '10px 20px',
+            marginTop: '20px',
+            cursor: 'pointer',
+            fontSize: '16px',
+          }}>
+          Обновить
+        </button>
       </div>
     );
   }
@@ -71,14 +115,32 @@ export default function Flowers() {
   return (
     <>
       <div className="filters">
-        {types.map((t) => (
-          <button
-            key={t}
-            className={`filter-btn ${filter === t ? 'active' : ''}`}
-            onClick={() => setFilter(t)}>
-            {t}
-          </button>
-        ))}
+        <div className="filters-block">
+          {types.map((t) => (
+            <button
+              key={t}
+              className={`filter-btn ${typeFilter === t ? 'active' : ''}`}
+              onClick={() => {
+                setTypeFilter(t);
+                setVisibleCount(8);
+              }}>
+              {t}
+            </button>
+          ))}
+        </div>
+        <div className="filters-block">
+          {ratingFilter.map((t) => (
+            <button
+              key={t}
+              className={`filter-btn ${ratingFilterValue === t ? 'active' : ''}`}
+              onClick={() => {
+                setRatingFilterValue(t);
+                setVisibleCount(8);
+              }}>
+              {t}
+            </button>
+          ))}
+        </div>
       </div>
 
       <ul className="flowers-list">
@@ -131,6 +193,15 @@ export default function Flowers() {
                 <span className="main__item-price">{item.price} ₽</span>
               </div>
             </Link>
+
+            <StarRating
+              flowerId={item.id}
+              initialRating={item.rating || 0}
+              ratingCount={item.ratingCount || 0}
+              onRatingChange={(newRating, newRatingCount) =>
+                handleRatingChange(item.id, newRating, newRatingCount)
+              }
+            />
 
             {item.count > 0 && <CartButton className="main__buy-button" item={item} />}
           </li>
