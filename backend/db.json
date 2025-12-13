@@ -68,9 +68,9 @@
       "description": "Нежные хризантемы и эвкалипт дарят спокойствие и лёгкость.",
       "count": 3,
       "type": "Розы",
-      "rating": 5,
-      "ratingCount": 2,
-      "totalRating": 10
+      "rating": 3.7,
+      "ratingCount": 3,
+      "totalRating": 11
     },
     {
       "id": 7,
@@ -140,9 +140,9 @@
       "description": "Королевские орхидеи олицетворяют роскошь и изысканность.",
       "count": 4,
       "type": "Тюльпаны",
-      "rating": 4,
-      "ratingCount": 3,
-      "totalRating": 12
+      "rating": 4.4,
+      "ratingCount": 5,
+      "totalRating": 22
     },
     {
       "id": 13,
@@ -224,9 +224,9 @@
       "description": "Ягодные тона и аромат лаванды — страсть в каждом лепестке.",
       "count": 4,
       "type": "Лилии",
-      "rating": 4,
-      "ratingCount": 1,
-      "totalRating": 4
+      "rating": 4.5,
+      "ratingCount": 2,
+      "totalRating": 9
     },
     {
       "id": 20,

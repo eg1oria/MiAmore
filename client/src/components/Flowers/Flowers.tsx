@@ -5,11 +5,9 @@ import Image from 'next/image';
 import './Flowers.css';
 import Link from 'next/link';
 import CartButton from '../Buttons/CartButton';
-import StarRating from '../StarRating/StarRating';
 
 export default function Flowers() {
   const [data, setData] = useState<IFlower[] | null>(null);
-  const [filter, setFilter] = useState<string>('Все');
   const [loading, setLoading] = useState(true);
   const [visibleCount, setVisibleCount] = useState(8);
   const [typeFilter, setTypeFilter] = useState('Все');
@@ -45,18 +43,6 @@ export default function Flowers() {
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleRatingChange = (flowerId: number, newRating: number, newRatingCount: number) => {
-    setData((prevData) =>
-      prevData
-        ? prevData.map((flower) =>
-            flower.id === flowerId
-              ? { ...flower, rating: newRating, ratingCount: newRatingCount }
-              : flower,
-          )
-        : null,
-    );
   };
 
   const types = useMemo(
@@ -193,15 +179,6 @@ export default function Flowers() {
                 <span className="main__item-price">{item.price} ₽</span>
               </div>
             </Link>
-
-            <StarRating
-              flowerId={item.id}
-              initialRating={item.rating || 0}
-              ratingCount={item.ratingCount || 0}
-              onRatingChange={(newRating, newRatingCount) =>
-                handleRatingChange(item.id, newRating, newRatingCount)
-              }
-            />
 
             {item.count > 0 && <CartButton className="main__buy-button" item={item} />}
           </li>

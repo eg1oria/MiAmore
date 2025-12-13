@@ -19,3 +19,12 @@ export interface CartItem {
   price: number;
   count: number;
 }
+
+export interface CartItemApi {
+  id: string;
+  productId: string;
+  name: string;
+  price: number;
+  image: string;
+  count: number;
+}

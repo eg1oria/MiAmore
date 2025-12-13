@@ -112,7 +112,6 @@ export default function Header() {
           </div>
         </div>
       </div>
-      <div className="headerSale">Скидка 15% на букеты ко Дню рождения!</div>
     </header>
   );
 }

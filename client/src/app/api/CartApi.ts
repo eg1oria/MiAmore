@@ -1,18 +1,11 @@
+import { CartItemApi } from "@/types/IFlower";
+
 const API_URL = 'http://localhost:4000';
-export interface CartItem {
-  id: string;
-  productId: string;
-  name: string;
-  price: number;
-  image: string; // ✅ ДОБАВИЛИ
-  count: number;
-}
 
 export const api = {
-  // Получить корзину
-  async get(): Promise<CartItem[]> {
+  async get(): Promise<CartItemApi[]> {
     const response = await fetch(`${API_URL}/cart`, {
-      credentials: 'include', // Важно для отправки cookies
+      credentials: 'include',
     });
 
     if (!response.ok) {
@@ -27,9 +20,9 @@ export const api = {
     productId: string;
     name: string;
     price: number;
-    image: string; // ✅ ДОБАВИЛИ
+    image?: string;
     count: number;
-  }): Promise<CartItem> {
+  }): Promise<CartItemApi> {
     const response = await fetch(`${API_URL}/cart/add`, {
       method: 'POST',
       headers: {
@@ -72,7 +65,6 @@ export const api = {
     }
   },
 
-  // Очистить корзину
   async clear(): Promise<void> {
     const response = await fetch(`${API_URL}/cart`, {
       method: 'DELETE',
@@ -84,7 +76,6 @@ export const api = {
     }
   },
 
-  // Получить общую сумму
   async getTotal(): Promise<{ total: number; count: number }> {
     const response = await fetch(`${API_URL}/cart/total`, {
       credentials: 'include',
@@ -98,7 +89,6 @@ export const api = {
   },
 };
 
-// Удобные функции для использования в компонентах
 export async function getCart() {
   return api.get();
 }

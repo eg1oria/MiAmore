@@ -1,13 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { api } from '@/app/api/CartApi';
-import { IFlower } from '@/types/IFlower';
-export interface CartItem {
-  id: string; // ID элемента корзины (server item id)
-  productId: string; // ID товара
-  name: string;
-  price: number;
-  count: number; // количество на сервере
-}
+import { CartItem, IFlower } from '@/types/IFlower';
 
 export const loadCart = createAsyncThunk('cart/load', async () => {
   return await api.get();
@@ -66,13 +59,11 @@ const cartSlice = createSlice({
         state.items = state.items.filter((i) => i.id !== action.payload);
       }
     },
-    // Очистить корзину
     clearCart: (state) => {
       state.items = [];
     },
   },
   extraReducers: (builder) => {
-    // Load Cart
     builder.addCase(loadCart.pending, (state) => {
       state.status = 'loading';
     });
@@ -84,7 +75,6 @@ const cartSlice = createSlice({
       state.status = 'failed';
     });
 
-    // Add to Cart
     builder.addCase(serverAddToCart.pending, (state) => {
       state.status = 'loading';
     });
@@ -96,7 +86,6 @@ const cartSlice = createSlice({
       state.status = 'failed';
     });
 
-    // Remove from Cart
     builder.addCase(serverRemoveFromCart.pending, (state) => {
       state.status = 'loading';
     });
@@ -107,8 +96,7 @@ const cartSlice = createSlice({
     builder.addCase(serverRemoveFromCart.rejected, (state) => {
       state.status = 'failed';
     });
-
-    // Update Count
+    
     builder.addCase(serverUpdateCount.pending, (state) => {
       state.status = 'loading';
     });
