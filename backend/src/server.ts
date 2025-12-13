@@ -185,21 +185,8 @@ server.patch('/flowers/:id', async (req: Request, res: Response) => {
       return res.status(404).json({ error: 'Цветок не найден' });
     }
 
-    const flower = flowersData.flowers[flowerIndex];
-
-    if (!flower.ratingCount) {
-      flower.ratingCount = 0;
-      flower.totalRating = 0;
-    }
-
-    flower.totalRating = (flower.totalRating || 0) + rating;
-    flower.ratingCount = (flower.ratingCount || 0) + 1;
-    flower.rating = Math.round((flower.totalRating / flower.ratingCount) * 10) / 10;
-
     const dbPath = path.join(__dirname, '..', 'db.json');
     await fs.writeFile(dbPath, JSON.stringify(flowersData, null, 2), 'utf-8');
-
-    console.log(`✅ Рейтинг цветка ID ${id}: ${flower.rating} (голосов: ${flower.ratingCount})`);
 
     res.json({
       success: true,

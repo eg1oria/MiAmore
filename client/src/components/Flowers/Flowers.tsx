@@ -10,8 +10,7 @@ export default function Flowers() {
   const [data, setData] = useState<IFlower[] | null>(null);
   const [loading, setLoading] = useState(true);
   const [visibleCount, setVisibleCount] = useState(8);
-  const [typeFilter, setTypeFilter] = useState('Все');
-  const [ratingFilterValue, setRatingFilterValue] = useState('Все');
+  const [filter, setFilter] = useState('Все');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -50,26 +49,10 @@ export default function Flowers() {
     [data],
   );
 
-  const ratingFilter = useMemo(() => {
-    if (!data) return ['Все'];
-
-    const uniqueRatings = [...new Set(data.map((f) => f.rating.toFixed(1)))];
-
-    return ['Все', ...uniqueRatings.sort((a, b) => Number(b) - Number(a))];
-  }, [data]);
-
-  const filtered = useMemo(() => {
-    if (!data) return [];
-
-    return data.filter((f) => {
-      const matchesType = typeFilter === 'Все' ? true : f.type === typeFilter;
-
-      const matchesRating =
-        ratingFilterValue === 'Все' ? true : f.rating.toFixed(1) === ratingFilterValue;
-
-      return matchesType && matchesRating;
-    });
-  }, [data, typeFilter, ratingFilterValue]);
+  const filtered = useMemo(
+    () => (data ? (filter === 'Все' ? data : data.filter((f) => f.type === filter)) : []),
+    [data, filter],
+  );
 
   const visibleFlowers = useMemo(() => filtered.slice(0, visibleCount), [filtered, visibleCount]);
 
@@ -105,22 +88,9 @@ export default function Flowers() {
           {types.map((t) => (
             <button
               key={t}
-              className={`filter-btn ${typeFilter === t ? 'active' : ''}`}
+              className={`filter-btn ${filter === t ? 'active' : ''}`}
               onClick={() => {
-                setTypeFilter(t);
-                setVisibleCount(8);
-              }}>
-              {t}
-            </button>
-          ))}
-        </div>
-        <div className="filters-block">
-          {ratingFilter.map((t) => (
-            <button
-              key={t}
-              className={`filter-btn ${ratingFilterValue === t ? 'active' : ''}`}
-              onClick={() => {
-                setRatingFilterValue(t);
+                setFilter(t);
                 setVisibleCount(8);
               }}>
               {t}

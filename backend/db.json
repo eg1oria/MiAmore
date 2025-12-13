@@ -7,10 +7,7 @@
       "image": "/img/flowers/flower1.jpg",
       "description": "Красная роза символизирует любовь и страсть.",
       "count": 4,
-      "type": "Розы",
-      "rating": 4,
-      "ratingCount": 3,
-      "totalRating": 12
+      "type": "Розы"
     },
     {
       "id": 2,
@@ -19,10 +16,7 @@
       "image": "/img/flowers/flower.jpg",
       "description": "Яркий тюльпан приносит радость и весеннее настроение.",
       "count": 3,
-      "type": "Тюльпаны",
-      "rating": 3.3,
-      "ratingCount": 20,
-      "totalRating": 66
+      "type": "Тюльпаны"
     },
     {
       "id": 3,
@@ -31,10 +25,7 @@
       "image": "/img/flowers/flower3.jpg",
       "description": "Элегантная лилия олицетворяет чистоту и изящество.",
       "count": 5,
-      "type": "Розы",
-      "rating": 4,
-      "ratingCount": 12,
-      "totalRating": 48
+      "type": "Розы"
     },
     {
       "id": 4,
@@ -43,10 +34,7 @@
       "image": "/img/flowers/flower5.jpg",
       "description": "Пышные пионы создают атмосферу уюта и роскоши.",
       "count": 0,
-      "type": "Лилии",
-      "rating": 0,
-      "ratingCount": 0,
-      "totalRating": 0
+      "type": "Лилии"
     },
     {
       "id": 5,
@@ -55,10 +43,7 @@
       "image": "/img/flowers/flower6.jpg",
       "description": "Контрастный букет в современном стиле — гармония города и природы.",
       "count": 3,
-      "type": "Розы",
-      "rating": 5,
-      "ratingCount": 1,
-      "totalRating": 5
+      "type": "Розы"
     },
     {
       "id": 6,
@@ -67,10 +52,7 @@
       "image": "/img/flowers/flower7.jpg",
       "description": "Нежные хризантемы и эвкалипт дарят спокойствие и лёгкость.",
       "count": 3,
-      "type": "Розы",
-      "rating": 3.7,
-      "ratingCount": 3,
-      "totalRating": 11
+      "type": "Розы"
     },
     {
       "id": 7,
@@ -79,10 +61,7 @@
       "image": "/img/flowers/flower8.jpg",
       "description": "Жёлтые герберы символизируют радость и дружбу.",
       "count": 0,
-      "type": "Розы",
-      "rating": 0,
-      "ratingCount": 0,
-      "totalRating": 0
+      "type": "Розы"
     },
     {
       "id": 8,
@@ -91,10 +70,7 @@
       "image": "/img/flowers/flower9.jpg",
       "description": "Оранжевые розы выражают восхищение и энтузиазм.",
       "count": 9,
-      "type": "Подсолнухи",
-      "rating": 4,
-      "ratingCount": 3,
-      "totalRating": 12
+      "type": "Подсолнухи"
     },
     {
       "id": 9,
@@ -103,10 +79,7 @@
       "image": "/img/flowers/flower10.jpg",
       "description": "Белые ромашки символизируют невинность и чистоту.",
       "count": 5,
-      "type": "Розы",
-      "rating": 4,
-      "ratingCount": 1,
-      "totalRating": 4
+      "type": "Розы"
     },
     {
       "id": 10,
@@ -115,10 +88,7 @@
       "image": "/img/flowers/flower11.jpg",
       "description": "Свежий букет из сезонных цветов — идеальный подарок на любой случай.",
       "count": 0,
-      "type": "Розы",
-      "rating": 0,
-      "ratingCount": 0,
-      "totalRating": 0
+      "type": "Розы"
     },
     {
       "id": 11,
@@ -127,10 +97,7 @@
       "image": "/img/flowers/flower12.jpg",
       "description": "Розовые тюльпаны символизируют заботу и нежность.",
       "count": 6,
-      "type": "Ирисы",
-      "rating": 4,
-      "ratingCount": 1,
-      "totalRating": 4
+      "type": "Ирисы"
     },
     {
       "id": 12,
@@ -139,10 +106,7 @@
       "image": "/img/flowers/flower13.jpg",
       "description": "Королевские орхидеи олицетворяют роскошь и изысканность.",
       "count": 4,
-      "type": "Тюльпаны",
-      "rating": 4.4,
-      "ratingCount": 5,
-      "totalRating": 22
+      "type": "Тюльпаны"
     },
     {
       "id": 13,
@@ -151,10 +115,7 @@
       "image": "/img/flowers/flower14.jpg",
       "description": "Нежный букет из лавандовых роз и эвкалипта пробуждает лёгкость утра.",
       "count": 5,
-      "type": "Ирисы",
-      "rating": 4,
-      "ratingCount": 2,
-      "totalRating": 8
+      "type": "Ирисы"
     },
     {
       "id": 14,
@@ -163,10 +124,7 @@
       "image": "/img/flowers/flower2.jpg",
       "description": "Глубокий красный оттенок говорит больше, чем слова.",
       "count": 3,
-      "type": "Подсолнухи",
-      "rating": 4,
-      "ratingCount": 1,
-      "totalRating": 4
+      "type": "Подсолнухи"
     },
     {
       "id": 15,
@@ -175,10 +133,7 @@
       "image": "/img/flowers/flower15.jpg",
       "description": "Свежий и сочный букет для тех, кто любит жизнь во всех её красках.",
       "count": 6,
-      "type": "Ирисы",
-      "rating": 5,
-      "ratingCount": 1,
-      "totalRating": 5
+      "type": "Ирисы"
     },
     {
       "id": 16,
@@ -187,10 +142,7 @@
       "image": "/img/flowers/flower16.jpg",
       "description": "Тёплые оттенки жёлтого создают ощущение летнего заката.",
       "count": 8,
-      "type": "Розы",
-      "rating": 4,
-      "ratingCount": 2,
-      "totalRating": 8
+      "type": "Розы"
     },
     {
       "id": 17,
@@ -199,10 +151,7 @@
       "image": "/img/flowers/flower17.jpg",
       "description": "Светлый букет с орхидеями и лилиями — символ нежности.",
       "count": 5,
-      "type": "Лилии",
-      "rating": 5,
-      "ratingCount": 1,
-      "totalRating": 5
+      "type": "Лилии"
     },
     {
       "id": 18,
@@ -211,10 +160,7 @@
       "image": "/img/flowers/flower18.jpg",
       "description": "Нежные оттенки розового и кремового — для самых романтичных моментов.",
       "count": 3,
-      "type": "Ирисы",
-      "rating": 5,
-      "ratingCount": 1,
-      "totalRating": 5
+      "type": "Ирисы"
     },
     {
       "id": 19,
@@ -223,10 +169,7 @@
       "image": "/img/flowers/flower19.jpg",
       "description": "Ягодные тона и аромат лаванды — страсть в каждом лепестке.",
       "count": 4,
-      "type": "Лилии",
-      "rating": 4.5,
-      "ratingCount": 2,
-      "totalRating": 9
+      "type": "Лилии"
     },
     {
       "id": 20,
@@ -235,10 +178,7 @@
       "image": "/img/flowers/flower20.jpg",
       "description": "Белоснежные розы и гортензии — элегантная классика.",
       "count": 0,
-      "type": "Пионы",
-      "rating": 0,
-      "ratingCount": 0,
-      "totalRating": 0
+      "type": "Пионы"
     },
     {
       "id": 21,
@@ -247,10 +187,7 @@
       "image": "/img/flowers/flower21.jpg",
       "description": "Оранжевые и розовые тона, словно рассвет над садом.",
       "count": 9,
-      "type": "Розы",
-      "rating": 4,
-      "ratingCount": 1,
-      "totalRating": 4
+      "type": "Розы"
     },
     {
       "id": 22,
@@ -259,10 +196,7 @@
       "image": "/img/flowers/flower22.jpg",
       "description": "Тюльпаны и фрезии создают аромат весны в каждой комнате.",
       "count": 5,
-      "type": "Пионы",
-      "rating": 5,
-      "ratingCount": 1,
-      "totalRating": 5
+      "type": "Пионы"
     },
     {
       "id": 23,
@@ -271,10 +205,7 @@
       "image": "/img/flowers/flower23.jpg",
       "description": "Яркий янтарный букет с герберами и подсолнухами.",
       "count": 4,
-      "type": "Розы",
-      "rating": 4,
-      "ratingCount": 1,
-      "totalRating": 4
+      "type": "Розы"
     },
     {
       "id": 24,
@@ -283,10 +214,7 @@
       "image": "/img/flowers/flower24.jpg",
       "description": "Королевская композиция из орхидей и роз.",
       "count": 0,
-      "type": "Тюльпаны",
-      "rating": 0,
-      "ratingCount": 0,
-      "totalRating": 0
+      "type": "Тюльпаны"
     },
     {
       "id": 25,
@@ -295,10 +223,7 @@
       "image": "/img/flowers/flower25.jpg",
       "description": "Голубые ирисы и белые лилии создают ощущение лёгкости.",
       "count": 4,
-      "type": "Тюльпаны",
-      "rating": 1,
-      "ratingCount": 1,
-      "totalRating": 1
+      "type": "Тюльпаны"
     },
     {
       "id": 26,
@@ -307,10 +232,7 @@
       "image": "/img/flowers/flower26.jpg",
       "description": "Коралловые пионы и кремовые розы — нежность и тепло.",
       "count": 6,
-      "type": "Подсолнухи",
-      "rating": 5,
-      "ratingCount": 1,
-      "totalRating": 5
+      "type": "Подсолнухи"
     },
     {
       "id": 27,
@@ -319,10 +241,7 @@
       "image": "/img/flowers/flower27.jpg",
       "description": "Пышный букет в бордовых и алых тонах — для особых случаев.",
       "count": 3,
-      "type": "Лилии",
-      "rating": 5,
-      "ratingCount": 1,
-      "totalRating": 5
+      "type": "Лилии"
     },
     {
       "id": 28,
@@ -331,10 +250,7 @@
       "image": "/img/flowers/flower28.jpg",
       "description": "Сиреневые тона и аромат лаванды переносят в Прованс.",
       "count": 0,
-      "type": "Подсолнухи",
-      "rating": 0,
-      "ratingCount": 0,
-      "totalRating": 0
+      "type": "Подсолнухи"
     },
     {
       "id": 29,
@@ -343,10 +259,7 @@
       "image": "/img/flowers/flower29.jpg",
       "description": "Воздушная композиция с белыми пионами и эвкалиптом.",
       "count": 4,
-      "type": "Ирисы",
-      "rating": 5,
-      "ratingCount": 1,
-      "totalRating": 5
+      "type": "Ирисы"
     },
     {
       "id": 30,
@@ -355,10 +268,7 @@
       "image": "/img/flowers/flower30.jpg",
       "description": "Осенние оттенки с сухоцветами — уют и тепло в каждом букете.",
       "count": 5,
-      "type": "Пионы",
-      "rating": 5,
-      "ratingCount": 1,
-      "totalRating": 5
+      "type": "Пионы"
     },
     {
       "id": 31,
@@ -367,10 +277,7 @@
       "image": "/img/flowers/flower31.jpg",
       "description": "Пастельные розы и гвоздики, как облако из сладкой ваты.",
       "count": 8,
-      "type": "Розы",
-      "rating": 5,
-      "ratingCount": 1,
-      "totalRating": 5
+      "type": "Розы"
     },
     {
       "id": 32,
@@ -379,10 +286,7 @@
       "image": "/img/flowers/flower32.jpg",
       "description": "Букет с лёгкой дымкой из роз и лаванды.",
       "count": 6,
-      "type": "Розы",
-      "rating": 4,
-      "ratingCount": 1,
-      "totalRating": 4
+      "type": "Розы"
     },
     {
       "id": 33,
@@ -391,10 +295,7 @@
       "image": "/img/flowers/flower33.jpg",
       "description": "Свежий букет с нотками цитрусовых и зелени.",
       "count": 0,
-      "type": "Лилии",
-      "rating": 0,
-      "ratingCount": 0,
-      "totalRating": 0
+      "type": "Лилии"
     }
   ]
 }

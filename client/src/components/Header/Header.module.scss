@@ -1,0 +1,60 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: transparent;
+  width: 100%;
+  z-index: 999;
+  padding: 23px 0;
+  transition: background 0.2s linear;
+
+  &:hover {
+    background: #fff;
+  }
+
+  &_wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1920px;
+    margin: 0 auto;
+    padding: 0 200px;
+
+    &_right {
+      display: flex;
+      gap: 30px;
+      align-items: center;
+
+      &_icon {
+        position: relative;
+
+        &_count {
+          position: absolute;
+          right: -10px;
+          top: -7px;
+          background-color: #ffa8a5;
+          border-radius: 50%;
+          display: flex;
+          font-size: 10px;
+          width: 15px;
+          justify-content: center;
+        }
+      }
+    }
+
+    &_left {
+      display: flex;
+      gap: 30px;
+      align-items: end;
+
+      &_nav {
+        display: flex;
+        gap: 30px;
+
+        &_item {
+          color: #444444;
+        }
+      }
+    }
+  }
+}

@@ -1,115 +1,61 @@
 'use client';
 
 import Link from 'next/link';
-import './Header.css';
-import { IoCart } from 'react-icons/io5';
-import { MdOutlineWbSunny } from 'react-icons/md';
-import { PiLeafLight } from 'react-icons/pi';
-import { usePathname } from 'next/navigation';
-import { PiLeafFill } from 'react-icons/pi';
-import { useTheme } from '@/contexts/ThemeContext';
-import { Moon } from 'lucide-react';
+import h from './Header.module.scss';
 import Image from 'next/image';
 import { useAuth } from '@/contexts/AuthContext';
 import { useCart } from '@/contexts/CartContext';
 import INav from '@/types/INav';
-import { FaUser } from 'react-icons/fa';
-import LogoutButton from '../Buttons/LogoutButton';
 
 export const navItem: INav[] = [
-  { name: 'Главная', href: '/' },
   { name: 'Каталог', href: '/flowers' },
-  { name: 'О нас', href: '/about' },
   { name: 'Контакты', href: '/contacts' },
+  { name: 'О нас', href: '/about' },
 ];
 
 export default function Header() {
-  const linkPathname = usePathname();
-  const { darkTheme, incTheme } = useTheme();
-  const { user, isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuth();
   const { cart } = useCart();
 
   const totalItems = isAuthenticated ? cart.reduce((sum, item) => sum + item.count, 0) : 0;
 
   return (
-    <header
-      className="header"
-      style={{ background: darkTheme ? '#fff' : '#222', color: darkTheme ? '#3d2d19' : '#ddd' }}>
-      <div className="container">
-        <div className="headerContent">
-          <div className="headerLogo">
-            <Link className="logoLink" href="/">
-              <Image src="/img/logo-png.png" alt="Наша история" width={40} height={40} />
-              <p className="logoText">MiAmore</p>
-            </Link>
-          </div>
-          <nav className="headerNav">
+    <header className={h.header}>
+      <div className={h.header_wrapper}>
+        <div className={h.header_wrapper_left}>
+          <Link className={h.header_wrapper_left_logo} href="/">
+            <Image src="/logo-svg.svg" alt="Наша история" width={210} height={1} />
+          </Link>
+          <nav className={h.header_wrapper_left_nav}>
             {navItem.map((item) => {
-              const isActive = linkPathname === item.href;
               return (
-                <Link
-                  className="navItem"
-                  style={{
-                    color:
-                      isActive && !darkTheme
-                        ? 'rgba(178, 255, 90, 1)'
-                        : isActive
-                        ? 'rgb(86, 153, 10)'
-                        : darkTheme
-                        ? '#222'
-                        : '#ddd',
-                    background: isActive ? '#b8c5b057' : 'transparent',
-                  }}
-                  key={item.name}
-                  href={item.href}>
-                  {isActive ? <PiLeafFill /> : <PiLeafLight />}
+                <Link className={h.header_wrapper_left_nav_item} key={item.name} href={item.href}>
                   {item.name}
                 </Link>
               );
             })}
           </nav>
-          <div className="headerIcons">
-            <button className="themeButton" onClick={incTheme}>
-              <MdOutlineWbSunny
-                className="themeButtonIcon"
-                size={24}
-                style={{
-                  background: darkTheme ? '#ffe7e7ff' : '#210101d5',
-                  opacity: darkTheme ? '1' : '0',
-                  transform: darkTheme ? 'translateX(0)' : 'translateX(30px)',
-                  color: 'black',
-                }}
-              />
-              <Moon
-                className="themeButtonIcon"
-                size={24}
-                style={{
-                  background: darkTheme ? '#ffe7e7ff' : '#210101d5',
-                  opacity: darkTheme ? '0' : '1',
-                  transform: darkTheme ? 'translateX(0)' : 'translateX(30px)',
-                }}
-              />
-            </button>
-            <Link className="cartIcon" href="/cart">
-              <IoCart size={26} />
-              {totalItems < 1 ? null : <span className="cartCount">{totalItems}</span>}
-            </Link>
-            {isAuthenticated ? (
-              <div className="header__user">
-                <Link href={'/user'}>
-                  <div className="user-info">
-                    <FaUser size={16} />
-                    <span>{user?.name || user?.email}</span>
-                  </div>
-                </Link>
-                <LogoutButton />
-              </div>
-            ) : (
-              <Link href="/login" className="header__login">
-                Войти
-              </Link>
+        </div>
+        <div className={h.header_wrapper_right}>
+          <Image src={'/icons/icon-search.svg'} alt="найти" width={27} height={27} />
+          <Link className={h.header_wrapper_right_icon} href="/">
+            <Image src={'/icons/icon-fav.svg'} alt="найти" width={27} height={27} />
+          </Link>
+          <Link className={h.header_wrapper_right_icon} href="/cart">
+            <Image src={'/icons/icon-cart.svg'} alt="найти" width={27} height={27} />
+            {totalItems < 1 ? null : (
+              <span className={h.header_wrapper_right_icon_count}>{totalItems}</span>
             )}
-          </div>
+          </Link>
+          {isAuthenticated ? (
+            <Link className={h.header_wrapper_right_icon} href="/user">
+              <Image src={'/icons/icon-profile.svg'} alt="найти" width={27} height={27} />
+            </Link>
+          ) : (
+            <Link href="/login" className={h.header_wrapper_right_logout}>
+              Войти
+            </Link>
+          )}
         </div>
       </div>
     </header>
