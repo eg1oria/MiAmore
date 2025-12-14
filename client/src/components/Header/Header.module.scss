@@ -12,6 +12,10 @@
     background: #fff;
   }
 
+  &:hover &_wrapper_left_nav_item {
+    color: #444444;
+  }
+
   &_wrapper {
     display: flex;
     align-items: center;
@@ -24,6 +28,7 @@
       display: flex;
       gap: 30px;
       align-items: center;
+      position: relative;
 
       &_icon {
         position: relative;
@@ -47,14 +52,53 @@
       gap: 30px;
       align-items: end;
 
+      &_logo {
+        fill: wheat;
+
+        &_url {
+          color: #ffa8a5;
+        }
+      }
+
       &_nav {
         display: flex;
         gap: 30px;
 
         &_item {
-          color: #444444;
+          color: #fff;
         }
       }
     }
+  }
+}
+
+.searchWrap {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 40px;
+  border: 1px solid black;
+  display: flex;
+  background: white;
+  z-index: 10;
+}
+
+.search {
+  width: 100%;
+  height: 100%;
+  padding: 7px 40px 7px 10px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  border: none;
+  outline: none;
+  background: transparent;
+
+  &_icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
   }
 }
