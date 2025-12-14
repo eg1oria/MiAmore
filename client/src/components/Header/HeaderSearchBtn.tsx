@@ -1,8 +1,15 @@
 import Image from 'next/image';
 import h from './Header.module.scss';
 import { motion } from 'framer-motion';
+import { MouseEventHandler, RefObject } from 'react';
 
-export default function HeaderSearchBtn({ onMouseOut, inputRef, isOpen }) {
+interface Htmld {
+  onMouseOut: MouseEventHandler;
+  inputRef: RefObject<HTMLInputElement | null>;
+  isOpen: boolean;
+}
+
+export default function HeaderSearchBtn({ onMouseOut, inputRef, isOpen }: Htmld) {
   return (
     <motion.div
       initial={{ opacity: 0, width: 0 }}

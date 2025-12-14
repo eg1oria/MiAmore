@@ -6,7 +6,7 @@
   width: 100%;
   z-index: 999;
   padding: 23px 0;
-  transition: background 0.2s linear;
+  transition: background 0.2s linear, color 0.2s linear;
 
   &:hover {
     background: #fff;
@@ -14,6 +14,14 @@
 
   &:hover &_wrapper_left_nav_item {
     color: #444444;
+  }
+
+  &:hover &_wrapper_left_logo_url {
+    color: black;
+  }
+
+  &:hover &_wrapper_right_icon_url {
+    color: black;
   }
 
   &_wrapper {
@@ -32,6 +40,10 @@
 
       &_icon {
         position: relative;
+
+        &_url {
+          color: white;
+        }
 
         &_count {
           position: absolute;
@@ -56,7 +68,8 @@
         fill: wheat;
 
         &_url {
-          color: #ffa8a5;
+          color: white;
+          width: 210px;
         }
       }
 

@@ -8,7 +8,6 @@ import { Provider } from 'react-redux';
 import { store } from './store';
 import { CartProvider } from '@/contexts/CartContext';
 import Header from '@/components/Header/Header';
-import IntroSlider from '@/components/IntroSlider/IntroSlider';
 
 export default function RootLayout({
   children,
@@ -21,7 +20,6 @@ export default function RootLayout({
         <AuthProvider>
           <BodyContent>
             <Header />
-            <IntroSlider />
             {children}
             <Footer />
           </BodyContent>

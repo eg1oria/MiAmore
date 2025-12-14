@@ -71,5 +71,25 @@
     "count": 1,
     "userId": "5160c056-d8b1-40e0-a7ca-2c6005f7d372",
     "createdAt": 1765644031355
+  },
+  "713ff490-1984-460b-b762-70ee85b73b6c": {
+    "id": "713ff490-1984-460b-b762-70ee85b73b6c",
+    "productId": "3",
+    "name": "Minimal Bloom",
+    "price": 3200,
+    "image": "/img/flowers/flower3.jpg",
+    "count": 1,
+    "userId": "5160c056-d8b1-40e0-a7ca-2c6005f7d372",
+    "createdAt": 1765730161871
+  },
+  "e94103bf-4011-48ee-9152-7ca8d57d04f4": {
+    "id": "e94103bf-4011-48ee-9152-7ca8d57d04f4",
+    "productId": "2",
+    "name": "Pure Line",
+    "price": 2300,
+    "image": "/img/flowers/flower.jpg",
+    "count": 1,
+    "userId": "5160c056-d8b1-40e0-a7ca-2c6005f7d372",
+    "createdAt": 1765730163819
   }
 }
