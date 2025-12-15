@@ -41,79 +41,85 @@ export default function Header() {
     const input = searchInputRef.current;
     if (!input) return;
     const hasValue = input.value.trim().length > 0;
-
     if (hasValue) return;
 
     SetSearchShow(false);
   };
 
   return (
-    <header className={h.header}>
-      <div className={h.header_wrapper}>
-        <div className={h.header_wrapper_left}>
-          <Link className={h.header_wrapper_left_logo} href="/">
-            <Logo className={h.header_wrapper_left_logo_url} />
-          </Link>
-          <nav className={h.header_wrapper_left_nav}>
-            {navItem.map((item) => {
-              return (
-                <Link className={h.header_wrapper_left_nav_item} key={item.name} href={item.href}>
-                  {item.name}
-                </Link>
-              );
-            })}
-          </nav>
-        </div>
-        <div className={h.header_wrapper_right}>
-          <AnimatePresence mode="wait">
-            {searchShow && (
-              <HeaderSearchBtn
-                onMouseOut={handleMouseOut}
-                inputRef={searchInputRef}
-                isOpen={searchShow}
-              />
-            )}
-          </AnimatePresence>
-
-          <motion.button
-            className={h.header_wrapper_right_searchBtn}
-            onClick={handleSearch}
-            animate={{ scale: searchShow ? 0.9 : 1 }}
-            transition={{ duration: 0.2 }}>
-            {!searchShow ? <SearchIcon className={h.header_wrapper_right_icon_url} /> : null}
-          </motion.button>
-
-          <AnimatePresence>
-            {!searchShow && (
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-                style={{ display: 'flex', gap: '30px', alignItems: 'center' }}>
-                <Link className={h.header_wrapper_right_icon} href="/">
-                  <FavIcon className={h.header_wrapper_right_icon_url} />
-                </Link>
-                <Link className={h.header_wrapper_right_icon} href="/cart">
-                  <CartIcon className={h.header_wrapper_right_icon_url} />
-                  {totalItems < 1 ? null : (
-                    <span className={h.header_wrapper_right_icon_count}>{totalItems}</span>
-                  )}
-                </Link>
-                {isAuthenticated ? (
-                  <Link className={h.header_wrapper_right_icon} href="/user">
-                    <UserIcon className={h.header_wrapper_right_icon_url} />
-                  </Link>
-                ) : (
-                  <Link href="/login" className={h.header_wrapper_right_logout}>
-                    Войти
-                  </Link>
+    <>
+      <div className={h.hower}>
+        <header className={h.header}>
+          <div className={h.header_wrapper}>
+            <div className={h.header_wrapper_left}>
+              <Link className={h.header_wrapper_left_logo} href="/">
+                <Logo className={h.header_wrapper_left_logo_url} />
+              </Link>
+              <nav className={h.header_wrapper_left_nav}>
+                {navItem.map((item) => {
+                  return (
+                    <Link
+                      className={h.header_wrapper_left_nav_item}
+                      key={item.name}
+                      href={item.href}>
+                      {item.name}
+                    </Link>
+                  );
+                })}
+              </nav>
+            </div>
+            <div className={h.header_wrapper_right}>
+              <AnimatePresence mode="wait">
+                {searchShow && (
+                  <HeaderSearchBtn
+                    onMouseOut={handleMouseOut}
+                    inputRef={searchInputRef}
+                    isOpen={searchShow}
+                  />
                 )}
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
+              </AnimatePresence>
+
+              <motion.button
+                className={h.header_wrapper_right_searchBtn}
+                onClick={handleSearch}
+                animate={{ scale: searchShow ? 0.9 : 1 }}
+                transition={{ duration: 0.2 }}>
+                {!searchShow ? <SearchIcon className={h.header_wrapper_right_icon_url} /> : null}
+              </motion.button>
+
+              <AnimatePresence>
+                {!searchShow && (
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+                    style={{ display: 'flex', gap: '30px', alignItems: 'center' }}>
+                    <Link className={h.header_wrapper_right_icon} href="/">
+                      <FavIcon className={h.header_wrapper_right_icon_url} />
+                    </Link>
+                    <Link className={h.header_wrapper_right_icon} href="/cart">
+                      <CartIcon className={h.header_wrapper_right_icon_url} />
+                      {totalItems < 1 ? null : (
+                        <span className={h.header_wrapper_right_icon_count}>{totalItems}</span>
+                      )}
+                    </Link>
+                    {isAuthenticated ? (
+                      <Link className={h.header_wrapper_right_icon} href="/user">
+                        <UserIcon className={h.header_wrapper_right_icon_url} />
+                      </Link>
+                    ) : (
+                      <Link href="/login" className={h.header_wrapper_right_logout}>
+                        Войти
+                      </Link>
+                    )}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          </div>
+        </header>
       </div>
-    </header>
+    </>
   );
 }
