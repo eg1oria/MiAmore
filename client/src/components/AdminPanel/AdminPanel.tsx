@@ -24,6 +24,11 @@ export default function AdminPanel() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [deleting, setDeleting] = useState<string | null>(null);
+  const [showId, setShowId] = useState<string | null>(null);
+
+  const handleShowId = (id: string) => {
+    setShowId((prev) => (prev === id ? null : id));
+  };
 
   useEffect(() => {
     const checkAdmin = async () => {
@@ -186,7 +191,15 @@ export default function AdminPanel() {
                         </div>
                         <div className="ml-4">
                           <div className="text-sm font-medium text-gray-900">{user.username}</div>
-                          <div className="text-sm text-gray-500">ID: {user.id}...</div>
+                          <button onClick={() => handleShowId(user.id)} className="cursor-pointer">
+                            {showId === user.id ? (
+                              <div className="text-sm text-gray-500">ID: {user.id}</div>
+                            ) : (
+                              <div className="text-sm text-gray-500">
+                                ID: {user.id.slice(0, 10)}...
+                              </div>
+                            )}
+                          </button>
                         </div>
                       </div>
                     </td>

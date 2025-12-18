@@ -10,7 +10,7 @@ interface CartItem {
   productId: string;
   name: string;
   price: number;
-  image: string; // ✅ ДОБАВИЛИ
+  image: string;
   count: number;
 }
 
