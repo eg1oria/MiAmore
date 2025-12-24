@@ -85,9 +85,9 @@ export default function Flowers() {
     <>
       <div className="filters">
         <div className="filters-block">
-          {types.map((t) => (
+          {types.map((t, i) => (
             <button
-              key={t}
+              key={i}
               className={`filter-btn ${filter === t ? 'active' : ''}`}
               onClick={() => {
                 setFilter(t);

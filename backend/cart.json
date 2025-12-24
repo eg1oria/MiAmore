@@ -62,34 +62,14 @@
     "userId": "f068bc5c-63e6-47e3-b3a6-4e5149c08149",
     "createdAt": 1763576453388
   },
-  "8d45d295-0da9-47ed-a12b-9011f440179b": {
-    "id": "8d45d295-0da9-47ed-a12b-9011f440179b",
-    "productId": "14",
-    "name": "Crimson Heart",
-    "price": 4200,
-    "image": "/img/flowers/flower2.jpg",
-    "count": 1,
-    "userId": "5160c056-d8b1-40e0-a7ca-2c6005f7d372",
-    "createdAt": 1765644031355
-  },
-  "713ff490-1984-460b-b762-70ee85b73b6c": {
-    "id": "713ff490-1984-460b-b762-70ee85b73b6c",
-    "productId": "3",
-    "name": "Minimal Bloom",
-    "price": 3200,
-    "image": "/img/flowers/flower3.jpg",
-    "count": 1,
-    "userId": "5160c056-d8b1-40e0-a7ca-2c6005f7d372",
-    "createdAt": 1765730161871
-  },
-  "e94103bf-4011-48ee-9152-7ca8d57d04f4": {
-    "id": "e94103bf-4011-48ee-9152-7ca8d57d04f4",
+  "72202cea-7731-402e-9dda-36aa38de6675": {
+    "id": "72202cea-7731-402e-9dda-36aa38de6675",
     "productId": "2",
     "name": "Pure Line",
     "price": 2300,
     "image": "/img/flowers/flower.jpg",
     "count": 1,
     "userId": "5160c056-d8b1-40e0-a7ca-2c6005f7d372",
-    "createdAt": 1765730163819
+    "createdAt": 1766582680007
   }
 }
