@@ -5,12 +5,33 @@ import Image from 'next/image';
 import './Flowers.css';
 import Link from 'next/link';
 import CartButton from '../Buttons/CartButton';
+import { useSearch } from '@/contexts/SearchContext';
 
 export default function Flowers() {
   const [data, setData] = useState<IFlower[] | null>(null);
   const [loading, setLoading] = useState(true);
   const [visibleCount, setVisibleCount] = useState(8);
   const [filter, setFilter] = useState('Все');
+  const [debouncedFilter, setDebouncedFilter] = useState('Все');
+
+  const { searchQuery } = useSearch();
+  const [debouncedSearch, setDebouncedSearch] = useState('');
+
+  useEffect(() => {
+    const id = setTimeout(() => {
+      setDebouncedFilter(filter);
+    }, 300);
+
+    return () => clearTimeout(id);
+  }, [filter]);
+
+  useEffect(() => {
+    const id = setTimeout(() => {
+      setDebouncedSearch(searchQuery);
+    }, 300);
+
+    return () => clearTimeout(id);
+  }, [searchQuery]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,10 +70,25 @@ export default function Flowers() {
     [data],
   );
 
-  const filtered = useMemo(
-    () => (data ? (filter === 'Все' ? data : data.filter((f) => f.type === filter)) : []),
-    [data, filter],
-  );
+  const filtered = useMemo(() => {
+    if (!data) return [];
+
+    let result = debouncedFilter === 'Все' ? data : data.filter((f) => f.type === debouncedFilter);
+
+    if (debouncedSearch.trim()) {
+      const query = debouncedSearch.toLowerCase();
+      const numQuery = Number(debouncedSearch);
+
+      result = result.filter(
+        (f) =>
+          f.name.toLowerCase().includes(query) ||
+          f.type.toLowerCase().includes(query) ||
+          (!isNaN(numQuery) && f.price === numQuery),
+      );
+    }
+
+    return result;
+  }, [data, debouncedFilter, debouncedSearch]);
 
   const visibleFlowers = useMemo(() => filtered.slice(0, visibleCount), [filtered, visibleCount]);
 
@@ -98,6 +134,12 @@ export default function Flowers() {
           ))}
         </div>
       </div>
+
+      {filtered.length === 0 && (
+        <div style={{ textAlign: 'center', margin: '50px auto' }}>
+          <p>Ничего не найдено по запросу: {debouncedSearch}</p>
+        </div>
+      )}
 
       <ul className="flowers-list">
         {visibleFlowers.map((item) => (

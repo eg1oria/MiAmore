@@ -8,6 +8,7 @@ import { Provider } from 'react-redux';
 import { store } from './store';
 import { CartProvider } from '@/contexts/CartContext';
 import Header from '@/components/Header/Header';
+import { SearchProvider } from '@/contexts/SearchContext';
 
 export default function RootLayout({
   children,
@@ -16,15 +17,17 @@ export default function RootLayout({
 }>) {
   return (
     <Provider store={store}>
-      <CartProvider>
-        <AuthProvider>
-          <BodyContent>
-            <Header />
-            {children}
-            <Footer />
-          </BodyContent>
-        </AuthProvider>
-      </CartProvider>
+      <SearchProvider>
+        <CartProvider>
+          <AuthProvider>
+            <BodyContent>
+              <Header />
+              {children}
+              <Footer />
+            </BodyContent>
+          </AuthProvider>
+        </CartProvider>
+      </SearchProvider>
     </Provider>
   );
 }

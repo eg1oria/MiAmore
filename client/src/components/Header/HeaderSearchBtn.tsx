@@ -1,7 +1,11 @@
+'use client';
+
 import Image from 'next/image';
 import h from './Header.module.scss';
 import { motion } from 'framer-motion';
 import { MouseEventHandler, RefObject } from 'react';
+import { useSearch } from '@/contexts/SearchContext';
+import { useRouter, usePathname } from 'next/navigation';
 
 interface Htmld {
   onMouseOut: MouseEventHandler;
@@ -10,6 +14,25 @@ interface Htmld {
 }
 
 export default function HeaderSearchBtn({ onMouseOut, inputRef, isOpen }: Htmld) {
+  const { searchQuery, setSearchQuery } = useSearch();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearchQuery(value);
+
+    if (pathname !== '/flowers' && value.trim()) {
+      router.push('/flowers');
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && searchQuery.trim()) {
+      router.push('/flowers');
+    }
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, width: 0 }}
@@ -31,6 +54,9 @@ export default function HeaderSearchBtn({ onMouseOut, inputRef, isOpen }: Htmld)
         type="text"
         className={h.search}
         placeholder="Поиск"
+        value={searchQuery}
+        onChange={handleChange}
+        onKeyDown={handleKeyDown}
         onMouseOut={onMouseOut}
         ref={inputRef}
       />
