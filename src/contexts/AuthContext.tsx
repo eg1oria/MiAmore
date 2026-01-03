@@ -30,6 +30,28 @@ const port = 'https://flower-shop-backend-6hsn.onrender.com';
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
+// Функция для получения токена
+function getToken(): string | null {
+  if (typeof window !== 'undefined') {
+    return localStorage.getItem('auth_token');
+  }
+  return null;
+}
+
+// Функция для сохранения токена
+function setToken(token: string) {
+  if (typeof window !== 'undefined') {
+    localStorage.setItem('auth_token', token);
+  }
+}
+
+// Функция для удаления токена
+function removeToken() {
+  if (typeof window !== 'undefined') {
+    localStorage.removeItem('auth_token');
+  }
+}
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -46,14 +68,24 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        console.log('🔍 Checking auth...');
+        const token = getToken();
+
+        if (!token) {
+          console.log('❌ No token found');
+          setIsLoading(false);
+          return;
+        }
+
+        console.log('🔍 Checking auth with token...');
 
         const response = await fetch(`${port}/auth/check`, {
           credentials: 'include',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         });
 
         console.log('📡 Auth check response status:', response.status);
-        console.log('📡 Auth check headers:', Object.fromEntries(response.headers.entries()));
 
         if (response.ok) {
           const data = await response.json();
@@ -63,10 +95,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             setUser(normalizeUser(data.user));
           }
         } else {
-          console.log('❌ Auth check failed');
+          console.log('❌ Auth check failed, removing token');
+          removeToken();
         }
       } catch (error) {
         console.error('❌ Auth check error:', error);
+        removeToken();
       } finally {
         setIsLoading(false);
       }
@@ -87,7 +121,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       });
 
       console.log('📡 Login response status:', response.status);
-      console.log('📡 Login response headers:', Object.fromEntries(response.headers.entries()));
 
       if (!response.ok) {
         const error = await response.json().catch(() => ({ error: 'Ошибка авторизации' }));
@@ -97,11 +130,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const data = await response.json();
       console.log('✅ Login successful, user data:', data);
 
+      // Сохраняем токен
+      if (data.token) {
+        setToken(data.token);
+        console.log('🔑 Token saved to localStorage');
+      }
+
       setUser(normalizeUser(data.user));
-
-      // Проверяем cookies в браузере
-      console.log("🍪 Document cookies (HttpOnly won't be visible):", document.cookie);
-
       router.push('/');
     } catch (error) {
       console.error('❌ Login error:', error);
@@ -124,7 +159,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       });
 
       console.log('📡 Register response status:', response.status);
-      console.log('📡 Register response headers:', Object.fromEntries(response.headers.entries()));
 
       if (!response.ok) {
         const error = await response.json().catch(() => ({ error: 'Ошибка регистрации' }));
@@ -134,10 +168,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const data = await response.json();
       console.log('✅ Registration successful, user data:', data);
 
+      // Сохраняем токен
+      if (data.token) {
+        setToken(data.token);
+        console.log('🔑 Token saved to localStorage');
+      }
+
       setUser(normalizeUser(data.user));
-
-      console.log("🍪 Document cookies (HttpOnly won't be visible):", document.cookie);
-
       router.push('/');
     } catch (error) {
       console.error('❌ Registration error:', error);
@@ -151,10 +188,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const logout = () => {
     console.log('👋 Logging out...');
 
+    const token = getToken();
+
     fetch(`${port}/auth/logout`, {
       method: 'POST',
       credentials: 'include',
+      headers: token
+        ? {
+            Authorization: `Bearer ${token}`,
+          }
+        : {},
     }).finally(() => {
+      removeToken();
       setUser(null);
       router.push('/login');
     });
