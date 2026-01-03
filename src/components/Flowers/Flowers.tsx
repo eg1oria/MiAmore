@@ -1,5 +1,5 @@
 'use client';
-import { useMemo, useState, useEffect } from 'react';
+import { useMemo, useState, useEffect, useCallback, useRef } from 'react';
 import { IFlower } from '@/types/IFlower';
 import Image from 'next/image';
 import './Flowers.css';
@@ -8,77 +8,104 @@ import CartButton from '../Buttons/CartButton';
 import { useSearch } from '@/contexts/SearchContext';
 
 const port = 'https://flower-shop-backend-6hsn.onrender.com';
+const INITIAL_VISIBLE_COUNT = 8;
+const ITEMS_PER_LOAD = 8;
+const DEBOUNCE_DELAY = 300;
 
 export default function Flowers() {
   const [data, setData] = useState<IFlower[] | null>(null);
   const [loading, setLoading] = useState(true);
-  const [visibleCount, setVisibleCount] = useState(8);
+  const [error, setError] = useState<string | null>(null);
+  const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE_COUNT);
   const [filter, setFilter] = useState('Все');
   const [debouncedFilter, setDebouncedFilter] = useState('Все');
 
   const { searchQuery } = useSearch();
   const [debouncedSearch, setDebouncedSearch] = useState('');
 
+  const abortControllerRef = useRef<AbortController | null>(null);
+
+  // Debounce filter
   useEffect(() => {
     const id = setTimeout(() => {
       setDebouncedFilter(filter);
-    }, 300);
+    }, DEBOUNCE_DELAY);
 
     return () => clearTimeout(id);
   }, [filter]);
 
+  // Debounce search
   useEffect(() => {
     const id = setTimeout(() => {
       setDebouncedSearch(searchQuery);
-    }, 300);
+    }, DEBOUNCE_DELAY);
 
     return () => clearTimeout(id);
   }, [searchQuery]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const res = await fetch(`${port}/flowers`);
-        const json = await res.json();
-        setData(json);
-      } catch (error) {
-        console.error('Ошибка при загрузке данных:', error);
-        setData([]);
-      } finally {
-        setLoading(false);
-      }
-    };
+  // Fetch data with abort controller
+  const fetchData = useCallback(async () => {
+    // Cancel previous request
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
 
-    fetchData();
-  }, []);
+    abortControllerRef.current = new AbortController();
 
-  const reFetch = async () => {
     setLoading(true);
+    setError(null);
+
     try {
-      const res = await fetch(`${port}/flowers`);
+      const res = await fetch(`${port}/flowers`, {
+        signal: abortControllerRef.current.signal,
+      });
+
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+
       const json = await res.json();
       setData(json);
-    } catch (error) {
-      console.error('Ошибка при загрузке данных:', error);
+    } catch (err) {
+      if (err instanceof Error && err.name === 'AbortError') {
+        // Request was cancelled, ignore
+        return;
+      }
+
+      console.error('Ошибка при загрузке данных:', err);
+      setError('Не удалось загрузить данные. Проверьте подключение к интернету.');
       setData([]);
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
+  // Initial fetch
+  useEffect(() => {
+    fetchData();
+
+    return () => {
+      // Cleanup: cancel request on unmount
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+    };
+  }, [fetchData]);
+
+  // Memoized types
   const types = useMemo(
     () => (data ? ['Все', ...new Set(data.map((f) => f.type))] : ['Все']),
     [data],
   );
 
+  // Memoized filtered flowers
   const filtered = useMemo(() => {
     if (!data) return [];
 
     let result = debouncedFilter === 'Все' ? data : data.filter((f) => f.type === debouncedFilter);
 
     if (debouncedSearch.trim()) {
-      const query = debouncedSearch.toLowerCase();
+      const query = debouncedSearch.toLowerCase().trim();
       const numQuery = Number(debouncedSearch);
 
       result = result.filter(
@@ -92,126 +119,164 @@ export default function Flowers() {
     return result;
   }, [data, debouncedFilter, debouncedSearch]);
 
+  // Memoized visible flowers
   const visibleFlowers = useMemo(() => filtered.slice(0, visibleCount), [filtered, visibleCount]);
 
+  // Handle filter change
+  const handleFilterChange = useCallback((newFilter: string) => {
+    setFilter(newFilter);
+    setVisibleCount(INITIAL_VISIBLE_COUNT);
+  }, []);
+
+  // Handle show more
+  const handleShowMore = useCallback(() => {
+    setVisibleCount((prev) => prev + ITEMS_PER_LOAD);
+  }, []);
+
+  // Handle collapse
+  const handleCollapse = useCallback(() => {
+    setVisibleCount(INITIAL_VISIBLE_COUNT);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+
+  const canShowMore = visibleCount < filtered.length;
+  const canShowUp = visibleCount > INITIAL_VISIBLE_COUNT;
+
+  // Loading state
   if (loading) {
-    return <div className="loader" style={{ margin: '300px auto' }}></div>;
+    return (
+      <div className="flowers-loading" role="status" aria-live="polite">
+        <div className="loader" aria-label="Загрузка цветов"></div>
+        <p className="sr-only">Загружаем цветы...</p>
+      </div>
+    );
   }
 
-  if (!data || data.length === 0) {
+  // Error state
+  if (error || !data || data.length === 0) {
     return (
-      <div style={{ textAlign: 'center', margin: '100px auto' }}>
-        <p>Ошибка сервера или нет данных</p>
-        <button
-          onClick={reFetch}
-          style={{
-            padding: '10px 20px',
-            marginTop: '20px',
-            cursor: 'pointer',
-            fontSize: '16px',
-          }}>
-          Обновить
+      <div className="flowers-error" role="alert">
+        <div className="error-icon">⚠️</div>
+        <h2 className="error-title">Упс! Что-то пошло не так</h2>
+        <p className="error-message">
+          {error || 'Не удалось загрузить цветы. Попробуйте обновить страницу.'}
+        </p>
+        <button className="error-retry-btn" onClick={fetchData} aria-label="Попробовать снова">
+          🔄 Попробовать снова
         </button>
       </div>
     );
   }
 
-  const canShowMore = visibleCount < filtered.length;
-  const canShowUp = visibleCount > 8;
-
   return (
-    <>
-      <div className="filters">
-        <div className="filters-block">
-          {types.map((t, i) => (
+    <div className="flowers-wrapper">
+      {/* Filters */}
+      <nav className="filters" aria-label="Фильтры категорий">
+        <div className="filters-block" role="group" aria-label="Выбор категории">
+          {types.map((t) => (
             <button
-              key={i}
+              key={t}
               className={`filter-btn ${filter === t ? 'active' : ''}`}
-              onClick={() => {
-                setFilter(t);
-                setVisibleCount(8);
-              }}>
+              onClick={() => handleFilterChange(t)}
+              aria-pressed={filter === t}
+              aria-label={`Фильтр: ${t}`}>
               {t}
             </button>
           ))}
         </div>
-      </div>
+      </nav>
 
+      {/* Empty state */}
       {filtered.length === 0 && (
-        <div style={{ textAlign: 'center', margin: '50px auto' }}>
-          <p>Ничего не найдено по запросу: {debouncedSearch}</p>
+        <div className="flowers-empty" role="status">
+          <div className="empty-icon">🔍</div>
+          <h3 className="empty-title">Ничего не найдено</h3>
+          <p className="empty-message">
+            По запросу <strong>{debouncedSearch}</strong> ничего не найдено.
+          </p>
+          <p className="empty-hint">Попробуйте изменить поисковый запрос или фильтр.</p>
         </div>
       )}
 
-      <ul className="flowers-list">
-        {visibleFlowers.map((item) => (
-          <li
-            key={item.id}
-            className="main__right-item"
-            style={
-              item.count === 0
-                ? {
-                    filter: 'blur(1px)',
-                    opacity: 0.5,
-                    pointerEvents: 'none',
-                    position: 'relative',
-                  }
-                : {}
-            }>
-            {item.count === 0 && (
-              <span
-                style={{
-                  position: 'absolute',
-                  top: '50%',
-                  left: '50%',
-                  transform: 'translate(-50%, -50%)',
-                  background: 'rgba(0,0,0,0.64)',
-                  color: '#fff',
-                  padding: '6px 10px',
-                  borderRadius: '8px',
-                  fontSize: '14px',
-                  zIndex: 2,
-                }}>
-                Нет в наличии
-              </span>
+      {/* Flowers list */}
+      {filtered.length > 0 && (
+        <>
+          <ul className="flowers-list" role="list">
+            {visibleFlowers.map((item) => (
+              <li
+                key={item.id}
+                className={`main__right-item ${item.count === 0 ? 'out-of-stock' : ''}`}
+                role="listitem">
+                {item.count === 0 && (
+                  <div className="out-of-stock-badge" role="status" aria-label="Нет в наличии">
+                    <span className="badge-text">Нет в наличии</span>
+                  </div>
+                )}
+
+                <Link
+                  href={`/flowers/${item.id}`}
+                  className="flower-card-link"
+                  aria-label={`Подробнее о ${item.name}`}
+                  tabIndex={item.count === 0 ? -1 : 0}>
+                  <div className="main__img-container">
+                    <Image
+                      width={280}
+                      height={280}
+                      className="main__img"
+                      src={item.image}
+                      alt={item.description || item.name}
+                      loading="lazy"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      quality={85}
+                    />
+                  </div>
+                  <div className="main__right-container">
+                    <h3 className="main__item-title">{item.name}</h3>
+                    <p className="main__item-subtitle">{item.type}</p>
+                    <span className="main__item-price" aria-label={`Цена: ${item.price} рублей`}>
+                      {item.price.toLocaleString('ru-RU')} ₽
+                    </span>
+                  </div>
+                </Link>
+
+                {item.count > 0 && (
+                  <CartButton
+                    className="main__buy-button"
+                    item={item}
+                    aria-label={`Добавить ${item.name} в корзину`}
+                  />
+                )}
+              </li>
+            ))}
+          </ul>
+
+          {/* Pagination controls */}
+          <div className="flowers-controls" role="navigation" aria-label="Управление списком">
+            {canShowMore && (
+              <button
+                className="show-more-btn"
+                onClick={handleShowMore}
+                aria-label={`Показать ещё ${ITEMS_PER_LOAD} товаров`}>
+                Показать ещё
+              </button>
             )}
 
-            <Link href={`/flowers/${item.id}`}>
-              <div className="main__img-container">
-                <Image
-                  width={170}
-                  height={170}
-                  className="main__img load"
-                  src={item.image}
-                  alt={item.description}
-                  loading="lazy"
-                />
-              </div>
-              <div className="main__right-container">
-                <h3 className="main__item-title">{item.name}</h3>
-                <p className="main__item-subtitle">{item.type}</p>
-                <span className="main__item-price">{item.price} ₽</span>
-              </div>
-            </Link>
+            {canShowUp && (
+              <button
+                className="show-less-btn"
+                onClick={handleCollapse}
+                aria-label="Свернуть список">
+                ↑ Свернуть
+              </button>
+            )}
+          </div>
 
-            {item.count > 0 && <CartButton className="main__buy-button" item={item} />}
-          </li>
-        ))}
-      </ul>
-
-      <div className="flowersContainer">
-        {canShowMore && (
-          <button className="show-more-btn" onClick={() => setVisibleCount((prev) => prev + 8)}>
-            Показать ещё
-          </button>
-        )}
-
-        {canShowUp && (
-          <button className="show-more-btn" onClick={() => setVisibleCount(8)}>
-            Свернуть
-          </button>
-        )}
-      </div>
-    </>
+          {/* Results info */}
+          <div className="flowers-results-info" role="status" aria-live="polite">
+            Показано {visibleFlowers.length} из {filtered.length} товаров
+          </div>
+        </>
+      )}
+    </div>
   );
 }
