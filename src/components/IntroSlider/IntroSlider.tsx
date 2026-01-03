@@ -79,22 +79,6 @@ export default function IntroSlider() {
             </div>
           </div>
         </SwiperSlide>
-        <SwiperSlide>
-          <div className={i.slider_slide3}>
-            <div className="sdfs">
-              <Logo className="jjj" />
-              <p className="edfdf">Flowers of your dream</p>
-              <div className="btmns">
-                <Link className="btmn" href={'/flowers'}>
-                  Выбрать букет
-                </Link>
-                <Link className="btmn btmne" href={'/contacts'}>
-                  Связаться с нами
-                </Link>
-              </div>
-            </div>
-          </div>
-        </SwiperSlide>
         <button className={`custom-prev ${i.custom_prev}`}>
           <ChevronLeft size={24} />
         </button>
