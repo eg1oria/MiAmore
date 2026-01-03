@@ -108,7 +108,6 @@ export const api = {
     return response.json();
   },
 
-  // ДОБАВЬТЕ ЭТУ ФУНКЦИЮ
   async checkout(data: {
     phone: string;
     name: string;
@@ -158,7 +157,6 @@ export async function clearCart() {
   return api.clear();
 }
 
-// ДОБАВЬТЕ ЭКСПОРТ
 export async function checkout(data: {
   phone: string;
   name: string;
