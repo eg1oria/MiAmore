@@ -6,13 +6,18 @@ import './Flowers.css';
 import Link from 'next/link';
 import CartButton from '../Buttons/CartButton';
 import { useSearch } from '@/contexts/SearchContext';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const port = 'https://flower-shop-backend-6hsn.onrender.com';
 
 export default function Flowers() {
   const [data, setData] = useState<IFlower[] | null>(null);
   const [loading, setLoading] = useState(true);
-  const [visibleCount, setVisibleCount] = useState(8);
   const [filter, setFilter] = useState('Все');
   const [debouncedFilter, setDebouncedFilter] = useState('Все');
 
@@ -92,8 +97,6 @@ export default function Flowers() {
     return result;
   }, [data, debouncedFilter, debouncedSearch]);
 
-  const visibleFlowers = useMemo(() => filtered.slice(0, visibleCount), [filtered, visibleCount]);
-
   if (loading) {
     return <div className="loader" style={{ margin: '300px auto' }}></div>;
   }
@@ -116,25 +119,15 @@ export default function Flowers() {
     );
   }
 
-  const canShowMore = visibleCount < filtered.length;
-  const canShowUp = visibleCount > 8;
-
   return (
     <>
       <div className="filters">
-        <div className="filters-block">
-          {types.map((t, i) => (
-            <button
-              key={i}
-              className={`filter-btn ${filter === t ? 'active' : ''}`}
-              onClick={() => {
-                setFilter(t);
-                setVisibleCount(8);
-              }}>
-              {t}
-            </button>
-          ))}
-        </div>
+        <button className={`custom-prev1`}>
+          <ChevronLeft size={24} />
+        </button>
+        <button className={`custom-next1`}>
+          <ChevronRight size={24} />
+        </button>
       </div>
 
       {filtered.length === 0 && (
@@ -144,74 +137,76 @@ export default function Flowers() {
       )}
 
       <ul className="flowers-list">
-        {visibleFlowers.map((item) => (
-          <li
-            key={item.id}
-            className="main__right-item"
-            style={
-              item.count === 0
-                ? {
-                    filter: 'blur(1px)',
-                    opacity: 0.5,
-                    pointerEvents: 'none',
-                    position: 'relative',
-                  }
-                : {}
-            }>
-            {item.count === 0 && (
-              <span
-                style={{
-                  position: 'absolute',
-                  top: '50%',
-                  left: '50%',
-                  transform: 'translate(-50%, -50%)',
-                  background: 'rgba(0,0,0,0.64)',
-                  color: '#fff',
-                  padding: '6px 10px',
-                  borderRadius: '8px',
-                  fontSize: '14px',
-                  zIndex: 2,
-                }}>
-                Нет в наличии
-              </span>
-            )}
+        <Swiper
+          modules={[Navigation, Pagination, Autoplay]}
+          slidesPerView={5}
+          loop
+          spaceBetween={30}
+          autoplay={{ delay: 3000 }}
+          pagination={{ clickable: true }}
+          navigation={{
+            nextEl: '.custom-next1',
+            prevEl: '.custom-prev1',
+          }}>
+          {filtered.map((item) => (
+            <SwiperSlide key={item.id}>
+              <li
+                className="main__right-item"
+                style={
+                  item.count === 0
+                    ? {
+                        filter: 'blur(1px)',
+                        opacity: 0.5,
+                        pointerEvents: 'none',
+                        position: 'relative',
+                      }
+                    : {}
+                }>
+                {item.count === 0 && (
+                  <span
+                    style={{
+                      position: 'absolute',
+                      top: '50%',
+                      left: '50%',
+                      transform: 'translate(-50%, -50%)',
+                      background: 'rgba(0,0,0,0.64)',
+                      color: '#fff',
+                      padding: '6px 10px',
+                      borderRadius: '8px',
+                      fontSize: '14px',
+                      zIndex: 2,
+                    }}>
+                    Нет в наличии
+                  </span>
+                )}
 
-            <Link href={`/flowers/${item.id}`}>
-              <div className="main__img-container">
-                <Image
-                  width={170}
-                  height={170}
-                  className="main__img load"
-                  src={item.image}
-                  alt={item.description}
-                  loading="lazy"
-                />
-              </div>
-              <div className="main__right-container">
-                <h3 className="main__item-title">{item.name}</h3>
-                <p className="main__item-subtitle">{item.type}</p>
-                <span className="main__item-price">{item.price} ₽</span>
-              </div>
-            </Link>
+                <Link href={`/flowers/${item.id}`}>
+                  <div className="main__img-container">
+                    <Image
+                      width={170}
+                      height={170}
+                      className="main__img load"
+                      src={item.image}
+                      alt={item.description}
+                      loading="lazy"
+                    />
+                  </div>
+                  <div className="main__right-container">
+                    <h3 className="main__item-title">{item.name}</h3>
+                    <p className="main__item-subtitle">{item.type}</p>
+                    <span className="main__item-price-old">{item.price} ₽</span>
+                    <span className="main__item-price">
+                      {Math.round(item.price * (1 - item.discount))} ₽
+                    </span>
+                  </div>
+                </Link>
 
-            {item.count > 0 && <CartButton className="main__buy-button" item={item} />}
-          </li>
-        ))}
+                {item.count > 0 && <CartButton className="main__buy-button" item={item} />}
+              </li>
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </ul>
-
-      <div className="flowersContainer">
-        {canShowMore && (
-          <button className="show-more-btn" onClick={() => setVisibleCount((prev) => prev + 8)}>
-            Показать ещё
-          </button>
-        )}
-
-        {canShowUp && (
-          <button className="show-more-btn" onClick={() => setVisibleCount(8)}>
-            Свернуть
-          </button>
-        )}
-      </div>
     </>
   );
 }

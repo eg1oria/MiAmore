@@ -6,10 +6,7 @@ export interface IFlower {
   description: string;
   count: number;
   type: string;
-  quantity?: number;
-  rating: number;
-  ratingCount?: number;
-  totalRating?: number;
+  discount: number;
 }
 
 export interface CartItem {

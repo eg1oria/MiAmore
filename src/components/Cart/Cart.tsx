@@ -118,7 +118,6 @@ export default function CartPage() {
     setIsCheckingOut(true);
 
     try {
-      // ИСПОЛЬЗУЕМ ФУНКЦИЮ checkout ИЗ API ВМЕСТО ПРЯМОГО FETCH
       const data = await checkout({
         phone,
         name,
@@ -146,7 +145,13 @@ export default function CartPage() {
     }
   };
 
-  const total = cart.reduce((sum, item) => sum + item.price * item.count, 0);
+  let total;
+
+  if (postCard) {
+    total = cart.reduce((sum, item) => sum + item.price * item.count, 0);
+  } else {
+    total = cart.reduce((sum, item) => sum + item.price + 100 * item.count, 0);
+  }
   const totalItems = cart.reduce((sum, item) => sum + item.count, 0);
 
   return (
