@@ -107,6 +107,29 @@ export const api = {
 
     return response.json();
   },
+
+  // ДОБАВЬТЕ ЭТУ ФУНКЦИЮ
+  async checkout(data: {
+    phone: string;
+    name: string;
+    adres: string;
+    postCard: boolean;
+    postCardText: string;
+  }): Promise<{ success: boolean; message: string; orderId?: number }> {
+    const response = await fetch(`${port}/cart/checkout`, {
+      method: 'POST',
+      headers: getHeaders(), // ← Важно: используем getHeaders с токеном
+      credentials: 'include',
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      const error = await response.json().catch(() => ({ error: 'Ошибка при отправке заказа' }));
+      throw new Error(error.error || 'Ошибка при отправке заказа');
+    }
+
+    return response.json();
+  },
 };
 
 export async function getCart() {
@@ -133,4 +156,15 @@ export async function removeCartItem(itemId: string) {
 
 export async function clearCart() {
   return api.clear();
+}
+
+// ДОБАВЬТЕ ЭКСПОРТ
+export async function checkout(data: {
+  phone: string;
+  name: string;
+  adres: string;
+  postCard: boolean;
+  postCardText: string;
+}) {
+  return api.checkout(data);
 }

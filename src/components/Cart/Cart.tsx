@@ -14,8 +14,7 @@ import { FiUser } from 'react-icons/fi';
 import { FaMapMarkerAlt } from 'react-icons/fa';
 import { FaPhoneAlt } from 'react-icons/fa';
 import Map from '../Map/Map';
-
-const port = 'https://flower-shop-backend-6hsn.onrender.com';
+import { checkout } from '@/app/api/CartApi'; // ← ДОБАВЬТЕ ЭТОТ ИМПОРТ
 
 export default function CartPage() {
   const { cart, changeCount, remove, isLoading, clearCart } = useCart();
@@ -119,27 +118,16 @@ export default function CartPage() {
     setIsCheckingOut(true);
 
     try {
-      const res = await fetch(`${port}/cart/checkout`, {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          phone,
-          name,
-          adres,
-          postCard,
-          postCardText,
-        }),
+      // ИСПОЛЬЗУЕМ ФУНКЦИЮ checkout ИЗ API ВМЕСТО ПРЯМОГО FETCH
+      const data = await checkout({
+        phone,
+        name,
+        adres,
+        postCard,
+        postCardText,
       });
 
-      const data = await res.json();
-
-      if (!res.ok) {
-        alert(data.error || 'Ошибка при оформлении заказа');
-        return;
-      }
+      console.log('✅ Заказ отправлен:', data);
 
       clearCart();
       setPhone('');
@@ -147,11 +135,12 @@ export default function CartPage() {
       setAdres('');
       setErrors({});
       setPostCardText('');
+      setPostCard(false);
 
       alert('Заказ успешно отправлен!');
-    } catch (e) {
-      console.error('Checkout error:', e);
-      alert('Ошибка сети. Попробуйте ещё раз.');
+    } catch (error) {
+      console.error('❌ Checkout error:', error);
+      alert(error instanceof Error ? error.message : 'Ошибка при оформлении заказа');
     } finally {
       setIsCheckingOut(false);
     }
@@ -235,7 +224,7 @@ export default function CartPage() {
                     <div className="iconWrap">
                       <FiUser
                         className="inputIcon"
-                        style={{ color: phone.length > 0 ? '#4caf50' : '#ccc' }}
+                        style={{ color: name.length > 0 ? '#4caf50' : '#ccc' }}
                       />
                       <input
                         type="text"
