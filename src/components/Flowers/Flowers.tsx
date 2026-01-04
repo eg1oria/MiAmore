@@ -7,7 +7,7 @@ import Link from 'next/link';
 import CartButton from '../Buttons/CartButton';
 import { useSearch } from '@/contexts/SearchContext';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -18,7 +18,6 @@ const port = 'https://flower-shop-backend-6hsn.onrender.com';
 export default function Flowers() {
   const [data, setData] = useState<IFlower[] | null>(null);
   const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState('Все');
   const [debouncedFilter, setDebouncedFilter] = useState('Все');
 
   const { searchQuery } = useSearch();
@@ -26,11 +25,11 @@ export default function Flowers() {
 
   useEffect(() => {
     const id = setTimeout(() => {
-      setDebouncedFilter(filter);
+      setDebouncedFilter(debouncedFilter);
     }, 300);
 
     return () => clearTimeout(id);
-  }, [filter]);
+  }, [debouncedFilter]);
 
   useEffect(() => {
     const id = setTimeout(() => {
@@ -71,12 +70,6 @@ export default function Flowers() {
       setLoading(false);
     }
   };
-
-  const types = useMemo(
-    () => (data ? ['Все', ...new Set(data.map((f) => f.type))] : ['Все']),
-    [data],
-  );
-
   const filtered = useMemo(() => {
     if (!data) return [];
 
@@ -121,13 +114,16 @@ export default function Flowers() {
 
   return (
     <>
-      <div className="filters">
-        <button className={`custom-prev1`}>
-          <ChevronLeft size={24} />
-        </button>
-        <button className={`custom-next1`}>
-          <ChevronRight size={24} />
-        </button>
+      <div className="flowers-head">
+        <h2 className="flowers-popular">Популярные букеты</h2>
+        <div className="filters">
+          <button className="custom-prev1">
+            <ChevronLeft size={24} />
+          </button>
+          <button className="custom-next1">
+            <ChevronRight size={24} />
+          </button>
+        </div>
       </div>
 
       {filtered.length === 0 && (
@@ -138,11 +134,12 @@ export default function Flowers() {
 
       <ul className="flowers-list">
         <Swiper
-          modules={[Navigation, Pagination, Autoplay]}
-          slidesPerView={5}
-          loop
+          modules={[Navigation, Pagination]}
+          slidesPerView={6}
+          centeredSlides={true}
+          grabCursor={true}
           spaceBetween={30}
-          autoplay={{ delay: 3000 }}
+          initialSlide={3}
           pagination={{ clickable: true }}
           navigation={{
             nextEl: '.custom-next1',

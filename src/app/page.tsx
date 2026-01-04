@@ -11,7 +11,6 @@ export default function App() {
       <div className="main">
         <IntroSlider />
         <div className="container">
-          <h2 className="mainTitle">Каталог</h2>
           <Flowers />
         </div>
       </div>
