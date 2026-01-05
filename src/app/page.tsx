@@ -4,6 +4,7 @@ import Flowers from '@/components/Flowers/Flowers';
 import { Provider } from 'react-redux';
 import { store } from './store';
 import IntroSlider from '@/components/IntroSlider/IntroSlider';
+import AboutPage from '@/components/AboutPage/AboutPage';
 
 export default function App() {
   return (
@@ -11,7 +12,8 @@ export default function App() {
       <div className="main">
         <IntroSlider />
         <div className="container">
-          <Flowers />
+          <Flowers slicedNum={8} />
+          <AboutPage />
         </div>
       </div>
     </Provider>

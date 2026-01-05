@@ -17,7 +17,7 @@ export default function App() {
         Каталог
       </h1>
       <ErrorBoundary>
-        <Flowers />
+        <Flowers slicedNum={44} />
       </ErrorBoundary>
     </div>
   );

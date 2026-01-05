@@ -15,7 +15,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const port = 'https://flower-shop-backend-6hsn.onrender.com';
 
-export default function Flowers() {
+export default function Flowers({ slicedNum }: { slicedNum: number }) {
   const [data, setData] = useState<IFlower[] | null>(null);
   const [loading, setLoading] = useState(true);
   const [debouncedFilter, setDebouncedFilter] = useState('Все');
@@ -90,6 +90,8 @@ export default function Flowers() {
     return result;
   }, [data, debouncedFilter, debouncedSearch]);
 
+  const sliced = filtered.slice(0, slicedNum);
+
   if (loading) {
     return <div className="loader" style={{ margin: '300px auto' }}></div>;
   }
@@ -135,17 +137,22 @@ export default function Flowers() {
       <ul className="flowers-list">
         <Swiper
           modules={[Navigation, Pagination]}
-          slidesPerView={6}
-          centeredSlides={true}
-          grabCursor={true}
+          slidesPerView={4}
           spaceBetween={30}
-          initialSlide={3}
-          pagination={{ clickable: true }}
+          pagination={{
+            clickable: true,
+          }}
+          breakpoints={{
+            320: { slidesPerView: 1 },
+            640: { slidesPerView: 2 },
+            1024: { slidesPerView: 3 },
+            1280: { slidesPerView: 4 },
+          }}
           navigation={{
             nextEl: '.custom-next1',
             prevEl: '.custom-prev1',
           }}>
-          {filtered.map((item) => (
+          {sliced.map((item) => (
             <SwiperSlide key={item.id}>
               <li
                 className="main__right-item"

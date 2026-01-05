@@ -1,80 +1,51 @@
 'use client';
 
 import Image from 'next/image';
-import './about.css';
+import './about.scss';
 import Link from 'next/link';
+import fj from '../../../public/img/about-img.png';
+import { Playfair_Display_SC } from 'next/font/google';
+
+const playfair = Playfair_Display_SC({
+  subsets: ['latin', 'cyrillic'],
+  weight: ['400', '700', '900'], // Доступные: 400, 700, 900
+  variable: '--font-playfair',
+  display: 'swap',
+});
 
 export default function AboutPage() {
   return (
-    <div className="container about-page">
-      <section className="about-hero">
-        <div className="hero-content">
-          <h1 className="hero-title">О нашем магазине</h1>
-          <p className="hero-subtitle">Цветы, которые создают настроение с 2020 года</p>
-        </div>
-      </section>
+    <div className={`about ${playfair.variable}`}>
+      <h1 className="about_title">О нас</h1>
 
-      <section className="about-story">
-        <div className="story-image">
-          <Image src="/img/logo-png.png" alt="Наша история" width={400} height={300} />
-        </div>
-        <div className="story-text">
-          <h2>Наша история</h2>
-          <p>
-            Всё началось с идеи сделать свежие цветы доступными каждому. Мы верим, что красота
-            природы должна быть частью повседневной жизни.
+      <div className="about_content">
+        <div className="about_content-left">
+          <h2 className="about_content-left_title">MiAmore — цветочная мастерская про чувства</h2>
+          <p className="about_content-left_text">
+            Мы создаём букеты вручную, вкладывая в них не только цветы, а смысл и настроение
+            момента.
           </p>
-          <p>
-            Мы сотрудничаем с лучшими поставщиками, чтобы вы получали самые свежие и качественные
-            букеты.
+          <p className="about_content-left_text about_content-left_text-second">
+            Каждая композиция продумана до деталей — чтобы помочь сказать то, что словами сказать
+            сложно.
           </p>
-        </div>
-      </section>
 
-      <section className="about-values">
-        <h2>Наши ценности</h2>
-        <div className="values-grid">
-          <div className="value-item">
-            <h3>Качество</h3>
-            <p>Только свежие цветы от проверенных поставщиков</p>
-          </div>
-          <div className="value-item">
-            <h3>Простота</h3>
-            <p>Легкий заказ и быстрая доставка</p>
-          </div>
-          <div className="value-item">
-            <h3>Забота</h3>
-            <p>Каждый букет упакован с любовью</p>
-          </div>
-          <div className="value-item">
-            <h3>Прозрачность</h3>
-            <p>Честные цены без скрытых комиссий</p>
+          <Link href="/flowers" className="about_content-left-link">
+            Просмотреть работы
+          </Link>
+        </div>
+        <div className="about_content-right">
+          <div className="about_content-right-img-wrapper">
+            <Image
+              src={fj}
+              alt="About Us"
+              width={1000}
+              height={1000}
+              className="about_content-right-img"
+            />
           </div>
         </div>
-      </section>
-
-      <section className="about-stats">
-        <div className="stat-item">
-          <div className="stat-number">5000+</div>
-          <div className="stat-label">Довольных клиентов</div>
-        </div>
-        <div className="stat-item">
-          <div className="stat-number">50+</div>
-          <div className="stat-label">Видов цветов</div>
-        </div>
-        <div className="stat-item">
-          <div className="stat-number">100%</div>
-          <div className="stat-label">Гарантия свежести</div>
-        </div>
-      </section>
-
-      <section className="about-cta">
-        <h2>Хотите связаться с нами?</h2>
-        <p>Мы всегда рады помочь выбрать идеальный букет</p>
-        <Link href="/contacts" className="cta-button">
-          Связаться
-        </Link>
-      </section>
+      </div>
     </div>
   );
 }
