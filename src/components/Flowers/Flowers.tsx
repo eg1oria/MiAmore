@@ -15,7 +15,13 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const port = 'https://flower-shop-backend-6hsn.onrender.com';
 
-export default function Flowers({ slicedNum }: { slicedNum: number }) {
+export default function Flowers({
+  slicedNum,
+  titleText,
+}: {
+  slicedNum: number;
+  titleText?: string;
+}) {
   const [data, setData] = useState<IFlower[] | null>(null);
   const [loading, setLoading] = useState(true);
   const [debouncedFilter, setDebouncedFilter] = useState('Все');
@@ -70,6 +76,7 @@ export default function Flowers({ slicedNum }: { slicedNum: number }) {
       setLoading(false);
     }
   };
+
   const filtered = useMemo(() => {
     if (!data) return [];
 
@@ -83,6 +90,7 @@ export default function Flowers({ slicedNum }: { slicedNum: number }) {
         (f) =>
           f.name.toLowerCase().includes(query) ||
           f.type.toLowerCase().includes(query) ||
+          f.searchQuery?.toLowerCase().includes(query) ||
           (!isNaN(numQuery) && f.price === numQuery),
       );
     }
@@ -117,7 +125,9 @@ export default function Flowers({ slicedNum }: { slicedNum: number }) {
   return (
     <>
       <div className="flowers-head">
-        <h2 className="flowers-popular">Популярные букеты</h2>
+        <h2 className="flowers-popular">
+          {debouncedSearch ? `Запрос: ${debouncedSearch}` : titleText ? titleText : 'Каталог'}
+        </h2>
         <div className="filters">
           <button className="custom-prev1">
             <ChevronLeft size={24} />

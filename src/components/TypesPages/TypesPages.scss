@@ -1,0 +1,33 @@
+@import '../../styles/fonts.scss';
+
+.types {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+  padding: 50px 0;
+
+  &_item:nth-child(1) {
+    grid-column: span 2;
+  }
+
+  &_item:nth-child(2) {
+    grid-column: span 2;
+  }
+
+  &_item {
+    position: relative;
+  }
+
+  &_text {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 25px;
+    font-family: 'Playfair Display SC', serif;
+    text-shadow: 0 0 30px rgb(0, 0, 0), 0 0 20px rgb(0, 0, 0), 0 0 10px rgb(0, 0, 0);
+  }
+}

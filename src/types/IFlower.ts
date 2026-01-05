@@ -7,6 +7,7 @@ export interface IFlower {
   count: number;
   type: string;
   discount: number;
+  searchQuery: string;
 }
 
 export interface CartItem {

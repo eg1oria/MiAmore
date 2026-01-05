@@ -60,6 +60,7 @@ export default function HeaderSearchBtn({ onMouseOut, inputRef, isOpen }: Htmld)
         onMouseOut={onMouseOut}
         ref={inputRef}
       />
+
       <Image
         src={'/icons/icon-search.svg'}
         alt="найти"

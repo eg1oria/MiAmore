@@ -1,6 +1,7 @@
 'use client';
 
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { usePathname } from 'next/navigation';
+import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 
 interface SearchContextType {
   searchQuery: string;
@@ -11,6 +12,13 @@ const SearchContext = createContext<SearchContextType | undefined>(undefined);
 
 export function SearchProvider({ children }: { children: ReactNode }) {
   const [searchQuery, setSearchQuery] = useState('');
+  const pathname = usePathname();
+
+  useEffect(() => {
+    if (pathname !== '/flowers') {
+      setSearchQuery('');
+    }
+  }, [pathname]);
 
   return (
     <SearchContext.Provider value={{ searchQuery, setSearchQuery }}>

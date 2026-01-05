@@ -8,16 +8,13 @@ const Flowers = dynamic(() => import('@/components/Flowers/Flowers'), {
 export default function App() {
   return (
     <div className="container">
-      <h1
-        style={{
-          fontSize: '40px',
-          fontWeight: 'bold',
-          margin: '20px 0 25px 0',
-        }}>
-        Каталог
-      </h1>
       <ErrorBoundary>
-        <Flowers slicedNum={44} />
+        <div
+          style={{
+            marginTop: '100px',
+          }}>
+          <Flowers slicedNum={44} titleText="Каталог" />
+        </div>
       </ErrorBoundary>
     </div>
   );

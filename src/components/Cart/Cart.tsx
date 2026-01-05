@@ -342,15 +342,7 @@ export default function CartPage() {
             </div>
           </div>
         )}
-        <h1
-          style={{
-            fontSize: '30px',
-            fontWeight: 'bold',
-            margin: '150px 0 30px 0',
-          }}>
-          Можете добавить букеты прямо из корзины
-        </h1>
-        <Flowers />
+        <Flowers slicedNum={44} titleText="Можете добавить букеты прямо из корзины" />
       </div>
       {openMap && (
         <Map
