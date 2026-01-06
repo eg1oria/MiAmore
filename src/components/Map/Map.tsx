@@ -8,6 +8,7 @@ import { IoClose } from 'react-icons/io5';
 interface MapProps {
   onAddressSelect?: (address: string, lat: number, lng: number) => void;
   onClose?: () => void;
+  className: string;
 }
 
 interface ClickHandlerProps {
@@ -16,7 +17,7 @@ interface ClickHandlerProps {
   onAddressSelect?: (address: string, lat: number, lng: number) => void;
 }
 
-const shopIcon = new L.Icon({
+export const shopIcon = new L.Icon({
   iconUrl:
     'data:image/svg+xml;base64,' +
     btoa(`
@@ -77,7 +78,7 @@ function ClickHandler({ setPosition, setAddress, onAddressSelect }: ClickHandler
   return null;
 }
 
-export default function Map({ onAddressSelect, onClose }: MapProps) {
+export default function Map({ onAddressSelect, onClose, className }: MapProps) {
   const [position, setPosition] = useState<[number, number] | null>(null);
   const [address, setAddress] = useState<string>('');
   const shopPosition: [number, number] = [43.2389, 76.8897];
@@ -89,18 +90,7 @@ export default function Map({ onAddressSelect, onClose }: MapProps) {
   };
 
   return (
-    <div
-      style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        zIndex: 1000,
-        backgroundColor: '#fff',
-        display: 'flex',
-        flexDirection: 'column',
-      }}>
+    <div className={className}>
       <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.css"

@@ -3,7 +3,7 @@
 import { useCart } from '@/contexts/CartContext';
 import { useRouter } from 'next/navigation';
 import { FaPlus, FaMinus, FaTrash } from 'react-icons/fa';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import './Cart.css';
 import 'react-photo-view/dist/react-photo-view.css';
 import Flowers from '../Flowers/Flowers';
@@ -21,7 +21,6 @@ export default function CartPage() {
   const router = useRouter();
   const { isAuthenticated } = useAuth();
   const [isCheckingOut, setIsCheckingOut] = useState(false);
-  const [mounted, setMounted] = useState(false);
   const [phone, setPhone] = useState('');
   const [name, setName] = useState('');
   const [adres, setAdres] = useState('');
@@ -29,8 +28,6 @@ export default function CartPage() {
   const [postCardText, setPostCardText] = useState('');
   const [errors, setErrors] = useState<{ phone?: string; name?: string; adres?: string }>({});
   const [openMap, setOpenMap] = useState(false);
-
-  useEffect(() => setMounted(true), []);
 
   function handleOpenMap() {
     if (openMap) {
@@ -47,8 +44,6 @@ export default function CartPage() {
       setPostCard(true);
     }
   };
-
-  if (!mounted) return null;
 
   if (!isAuthenticated) {
     return (
@@ -351,6 +346,7 @@ export default function CartPage() {
             setErrors((prev) => ({ ...prev, adres: undefined }));
           }}
           onClose={() => setOpenMap(false)}
+          className='mapCart'
         />
       )}
     </>

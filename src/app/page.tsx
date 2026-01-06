@@ -6,6 +6,7 @@ import { store } from './store';
 import IntroSlider from '@/components/IntroSlider/IntroSlider';
 import AboutPage from '@/components/AboutPage/AboutPage';
 import TypesPages from '@/components/TypesPages/TypesPages';
+import MapPage from '@/components/MapPage.tsx/MapPage';
 
 export default function App() {
   return (
@@ -13,9 +14,10 @@ export default function App() {
       <div className="main">
         <IntroSlider />
         <div className="container">
-          <Flowers slicedNum={8} titleText="Популярные букеты" />
+          <Flowers slicedNum={8} titleText="Популярные букеты" showOutOfStock={false} />
           <AboutPage />
           <TypesPages />
+          <MapPage />
         </div>
       </div>
     </Provider>

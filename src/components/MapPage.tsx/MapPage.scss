@@ -1,0 +1,107 @@
+.map {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  border: 1px solid black;
+  border-radius: 16px;
+  overflow: hidden;
+
+  &_info {
+    display: flex;
+    flex-direction: column;
+    padding: 14px 120px 5px 0;
+    width: 590px;
+  }
+
+  &_title {
+    font-size: 40px;
+    color: #4a403f;
+    font-family: 'Playfair Display SC', serif;
+  }
+
+  &_text-bold {
+    font-size: 20px;
+    font-weight: 700;
+    margin-top: 10px;
+    color: #000000b0;
+  }
+
+  &_text {
+    font-size: 16px;
+    margin-top: 10px;
+    margin-bottom: 30px;
+  }
+
+  &_adress {
+    display: flex;
+    align-items: start;
+    gap: 5px;
+    margin: 5px 0 0 0;
+
+    &-street {
+      font-size: 16px;
+      color: #605857;
+      display: flex;
+    }
+  }
+
+  &_btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    width: 450px;
+    border-radius: 12px;
+    border: 1px solid #000;
+    color: #000;
+    margin: 20px 0 0 0;
+    font-family: 'Playfair Display SC', serif;
+    font-size: 20px;
+    cursor: pointer;
+    font-size: 24px;
+    gap: 10px;
+
+    &-open {
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      background-color: rgba(255, 255, 255, 0.423);
+      border: none;
+      width: 100%;
+      height: 150px;
+      font-size: 20px;
+      cursor: pointer;
+      z-index: 1500;
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 1);
+      }
+    }
+  }
+
+  &_subText {
+    font-size: 13px;
+    margin-top: auto;
+    color: #898989;
+  }
+}
+
+.MapContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}
+
+.arrow {
+  opacity: 0;
+  transform: translateX(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.map_btn:hover .arrow {
+  opacity: 1;
+  transform: translateX(0);
+}

@@ -5,6 +5,7 @@ import './about.scss';
 import Link from 'next/link';
 import fj from '../../../public/img/about-img.png';
 import { Playfair_Display_SC } from 'next/font/google';
+import { FaArrowRightLong } from 'react-icons/fa6';
 
 const playfair = Playfair_Display_SC({
   subsets: ['latin', 'cyrillic'],
@@ -31,7 +32,7 @@ export default function AboutPage() {
           </p>
 
           <Link href="/flowers" className="about_content-left-link">
-            Просмотреть работы
+            Просмотреть работы <FaArrowRightLong size={16} className="arrow" />
           </Link>
         </div>
         <div className="about_content-right">

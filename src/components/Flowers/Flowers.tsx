@@ -18,24 +18,18 @@ const port = 'https://flower-shop-backend-6hsn.onrender.com';
 export default function Flowers({
   slicedNum,
   titleText,
+  showOutOfStock = true,
 }: {
   slicedNum: number;
   titleText?: string;
+  showOutOfStock?: boolean;
 }) {
   const [data, setData] = useState<IFlower[] | null>(null);
   const [loading, setLoading] = useState(true);
-  const [debouncedFilter, setDebouncedFilter] = useState('Все');
+  const [filter, setFilter] = useState('Все');
 
   const { searchQuery } = useSearch();
   const [debouncedSearch, setDebouncedSearch] = useState('');
-
-  useEffect(() => {
-    const id = setTimeout(() => {
-      setDebouncedFilter(debouncedFilter);
-    }, 300);
-
-    return () => clearTimeout(id);
-  }, [debouncedFilter]);
 
   useEffect(() => {
     const id = setTimeout(() => {
@@ -80,7 +74,11 @@ export default function Flowers({
   const filtered = useMemo(() => {
     if (!data) return [];
 
-    let result = debouncedFilter === 'Все' ? data : data.filter((f) => f.type === debouncedFilter);
+    let result = filter === 'Все' ? data : data.filter((f) => f.type === filter);
+
+    if (!showOutOfStock) {
+      result = result.filter((f) => f.count > 0);
+    }
 
     if (debouncedSearch.trim()) {
       const query = debouncedSearch.toLowerCase();
@@ -96,7 +94,7 @@ export default function Flowers({
     }
 
     return result;
-  }, [data, debouncedFilter, debouncedSearch]);
+  }, [data, filter, debouncedSearch, showOutOfStock]);
 
   const sliced = filtered.slice(0, slicedNum);
 
@@ -162,63 +160,67 @@ export default function Flowers({
             nextEl: '.custom-next1',
             prevEl: '.custom-prev1',
           }}>
-          {sliced.map((item) => (
-            <SwiperSlide key={item.id}>
-              <li
-                className="main__right-item"
-                style={
-                  item.count === 0
-                    ? {
-                        filter: 'blur(1px)',
-                        opacity: 0.5,
-                        pointerEvents: 'none',
-                        position: 'relative',
-                      }
-                    : {}
-                }>
-                {item.count === 0 && (
-                  <span
-                    style={{
-                      position: 'absolute',
-                      top: '50%',
-                      left: '50%',
-                      transform: 'translate(-50%, -50%)',
-                      background: 'rgba(0,0,0,0.64)',
-                      color: '#fff',
-                      padding: '6px 10px',
-                      borderRadius: '8px',
-                      fontSize: '14px',
-                      zIndex: 2,
-                    }}>
-                    Нет в наличии
-                  </span>
-                )}
+          {sliced.map((item) => {
+            const isOutOfStock = item.count === 0;
 
-                <Link href={`/flowers/${item.id}`}>
-                  <div className="main__img-container">
-                    <Image
-                      width={170}
-                      height={170}
-                      className="main__img load"
-                      src={item.image}
-                      alt={item.description}
-                      loading="lazy"
-                    />
-                  </div>
-                  <div className="main__right-container">
-                    <h3 className="main__item-title">{item.name}</h3>
-                    <p className="main__item-subtitle">{item.type}</p>
-                    <span className="main__item-price-old">{item.price} ₽</span>
-                    <span className="main__item-price">
-                      {Math.round(item.price * (1 - item.discount))} ₽
+            return (
+              <SwiperSlide key={item.id}>
+                <li
+                  className="main__right-item"
+                  style={
+                    isOutOfStock
+                      ? {
+                          filter: 'blur(1px)',
+                          opacity: 0.5,
+                          pointerEvents: 'none',
+                          position: 'relative',
+                        }
+                      : {}
+                  }>
+                  {isOutOfStock && (
+                    <span
+                      style={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        background: 'rgba(0,0,0,0.64)',
+                        color: '#fff',
+                        padding: '6px 10px',
+                        borderRadius: '8px',
+                        fontSize: '14px',
+                        zIndex: 2,
+                      }}>
+                      Нет в наличии
                     </span>
-                  </div>
-                </Link>
+                  )}
 
-                {item.count > 0 && <CartButton className="main__buy-button" item={item} />}
-              </li>
-            </SwiperSlide>
-          ))}
+                  <Link href={`/flowers/${item.id}`}>
+                    <div className="main__img-container">
+                      <Image
+                        width={170}
+                        height={170}
+                        className="main__img load"
+                        src={item.image}
+                        alt={item.description}
+                        loading="lazy"
+                      />
+                    </div>
+                    <div className="main__right-container">
+                      <h3 className="main__item-title">{item.name}</h3>
+                      <p className="main__item-subtitle">{item.type}</p>
+                      <span className="main__item-price-old">{item.price} ₽</span>
+                      <span className="main__item-price">
+                        {Math.round(item.price * (1 - item.discount))} ₽
+                      </span>
+                    </div>
+                  </Link>
+
+                  {!isOutOfStock && <CartButton className="main__buy-button" item={item} />}
+                </li>
+              </SwiperSlide>
+            );
+          })}
         </Swiper>
       </ul>
     </>

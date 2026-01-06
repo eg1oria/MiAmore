@@ -16,9 +16,16 @@
 
   &_item {
     position: relative;
+    cursor: pointer;
+    user-select: none;
+
+    &:hover .types_text {
+      transform: translateX(-50%) scale(1.05);
+    }
   }
 
   &_text {
+    transition: transform 0.2s ease;
     position: absolute;
     bottom: 40px;
     left: 50%;
