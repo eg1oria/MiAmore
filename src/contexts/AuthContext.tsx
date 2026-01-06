@@ -16,7 +16,6 @@ interface AuthContextType {
   login: (email: string, password: string) => Promise<void>;
   register: (email: string, password: string, name?: string) => Promise<void>;
   logout: () => void;
-  name?: User;
 }
 
 interface ServerUser {
@@ -30,7 +29,6 @@ const port = 'https://flower-shop-backend-6hsn.onrender.com';
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
-// Функция для получения токена
 function getToken(): string | null {
   if (typeof window !== 'undefined') {
     return localStorage.getItem('auth_token');
@@ -38,14 +36,12 @@ function getToken(): string | null {
   return null;
 }
 
-// Функция для сохранения токена
 function setToken(token: string) {
   if (typeof window !== 'undefined') {
     localStorage.setItem('auth_token', token);
   }
 }
 
-// Функция для удаления токена
 function removeToken() {
   if (typeof window !== 'undefined') {
     localStorage.removeItem('auth_token');
@@ -61,7 +57,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return {
       id: data.id,
       email: data.email,
-      name: data.username || '',
+      name: data.username || data.name || '',
     };
   }
 
@@ -93,6 +89,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
           if (data.isAuthenticated && data.user) {
             setUser(normalizeUser(data.user));
+          } else {
+            removeToken();
           }
         } else {
           console.log('❌ Auth check failed, removing token');
@@ -122,24 +120,30 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       console.log('📡 Login response status:', response.status);
 
+      const data = await response.json();
+
       if (!response.ok) {
-        const error = await response.json().catch(() => ({ error: 'Ошибка авторизации' }));
-        throw new Error(error.error || 'Ошибка авторизации');
+        throw new Error(data.error || 'Ошибка авторизации');
       }
 
-      const data = await response.json();
       console.log('✅ Login successful, user data:', data);
 
-      // Сохраняем токен
       if (data.token) {
         setToken(data.token);
         console.log('🔑 Token saved to localStorage');
+      } else {
+        console.warn('⚠️ No token received from server');
       }
 
-      setUser(normalizeUser(data.user));
-      router.push('/');
+      if (data.user) {
+        setUser(normalizeUser(data.user));
+        router.push('/');
+      } else {
+        throw new Error('Данные пользователя не получены');
+      }
     } catch (error) {
       console.error('❌ Login error:', error);
+      removeToken();
       if (error instanceof Error) {
         throw error;
       }
@@ -160,24 +164,30 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       console.log('📡 Register response status:', response.status);
 
+      const data = await response.json();
+
       if (!response.ok) {
-        const error = await response.json().catch(() => ({ error: 'Ошибка регистрации' }));
-        throw new Error(error.error || 'Ошибка регистрации');
+        throw new Error(data.error || 'Ошибка регистрации');
       }
 
-      const data = await response.json();
       console.log('✅ Registration successful, user data:', data);
 
-      // Сохраняем токен
       if (data.token) {
         setToken(data.token);
         console.log('🔑 Token saved to localStorage');
+      } else {
+        console.warn('⚠️ No token received from server');
       }
 
-      setUser(normalizeUser(data.user));
-      router.push('/');
+      if (data.user) {
+        setUser(normalizeUser(data.user));
+        router.push('/');
+      } else {
+        throw new Error('Данные пользователя не получены');
+      }
     } catch (error) {
       console.error('❌ Registration error:', error);
+      removeToken();
       if (error instanceof Error) {
         throw error;
       }
@@ -198,11 +208,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             Authorization: `Bearer ${token}`,
           }
         : {},
-    }).finally(() => {
-      removeToken();
-      setUser(null);
-      router.push('/login');
-    });
+    })
+      .catch((error) => {
+        console.error('Logout request failed:', error);
+      })
+      .finally(() => {
+        removeToken();
+        setUser(null);
+        router.push('/login');
+      });
   };
 
   return (

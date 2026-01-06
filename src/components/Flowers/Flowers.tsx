@@ -26,7 +26,7 @@ export default function Flowers({
 }) {
   const [data, setData] = useState<IFlower[] | null>(null);
   const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState('Все');
+  const filter = 'Все';
 
   const { searchQuery } = useSearch();
   const [debouncedSearch, setDebouncedSearch] = useState('');
