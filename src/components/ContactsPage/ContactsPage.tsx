@@ -3,6 +3,9 @@
 import { useAuth } from '@/contexts/AuthContext';
 import './contacts.css';
 import { useEffect, useState } from 'react';
+import { BsTiktok } from 'react-icons/bs';
+import { FaInstagram } from 'react-icons/fa';
+import { FaWhatsapp } from 'react-icons/fa';
 
 const port = 'https://flower-shop-backend-6hsn.onrender.com';
 
@@ -79,37 +82,6 @@ export default function ContactsPage() {
 
   return (
     <div className="contacts-page">
-      <section className="contacts-hero">
-        <h1 className="contacts-hero-title">Контакты</h1>
-        <p className="contacts-hero-subtitle">
-          Мы всегда на связи и готовы ответить на ваши вопросы
-        </p>
-      </section>
-
-      <section className="contacts-info">
-        <div className="info-grid">
-          <div className="info-block">
-            <h3>Телефон</h3>
-            <a href="tel:+77054424389" className="info-link">
-              +7 (705) 442-443-89
-            </a>
-            <p className="info-description">Ежедневно с 9:00 до 21:00</p>
-          </div>
-          <div className="info-block">
-            <h3>Email</h3>
-            <a href="mailto:info@miamore.kz" className="info-link">
-              info@miamore.kz
-            </a>
-            <p className="info-description">Ответим в течение 24 часов</p>
-          </div>
-          <div className="info-block">
-            <h3>Адрес</h3>
-            <p className="info-link">г. Астана, ул. Кабанбай Батыра, 15</p>
-            <p className="info-description">Пн-Вс: 10:00 - 20:00</p>
-          </div>
-        </div>
-      </section>
-
       <section className="contacts-form-section">
         <div className="form-container">
           {!submitted ? (
@@ -188,21 +160,15 @@ export default function ContactsPage() {
           )}
         </div>
       </section>
-
       <section className="contacts-social">
-        <h3>Мы в социальных сетях</h3>
-        <div className="social-links">
-          <a href="https://www.instagram.com/_le_o_ne_" className="social-link">
-            Instagram
-          </a>
-          <a
-            href="https://wa.me/77054424389?text=Здравствуйте+у+меня+один+вопрос"
-            className="social-link">
-            WhatsApp
-          </a>
-          <a href="https://t.me/eg1oria" className="social-link">
-            Telegram
-          </a>
+        <h2 className="contacts_social-title">Мы на связи</h2>
+        <p className="contacts_social-text">
+          Instagram — работы и букеты TikTok — процесс WhatsApp — быстрый заказ
+        </p>
+        <div className="сontacts_social-container">
+          <BsTiktok size={37} />
+          <FaInstagram size={37} />
+          <FaWhatsapp size={37} />
         </div>
       </section>
     </div>

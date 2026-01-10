@@ -7,6 +7,8 @@ import IntroSlider from '@/components/IntroSlider/IntroSlider';
 import AboutPage from '@/components/AboutPage/AboutPage';
 import TypesPages from '@/components/TypesPages/TypesPages';
 import MapPage from '@/components/MapPage.tsx/MapPage';
+import ReviewPage from '@/components/ReviewPage/ReviewPage';
+import ContactsPage from '@/components/ContactsPage/ContactsPage';
 
 export default function App() {
   return (
@@ -14,10 +16,19 @@ export default function App() {
       <div className="main">
         <IntroSlider />
         <div className="container">
-          <Flowers slicedNum={8} titleText="Популярные букеты" showOutOfStock={false} />
+          <Flowers
+            slicedNum={8}
+            titleText="Популярные букеты"
+            showOutOfStock={false}
+            useSlider={true}
+          />
           <AboutPage />
           <TypesPages />
           <MapPage />
+        </div>
+        <ReviewPage />
+        <div className="container">
+          <ContactsPage />
         </div>
       </div>
     </Provider>

@@ -6,5 +6,9 @@ const ContactsPage = dynamic(() => import('@/components/ContactsPage/ContactsPag
   loading: () => <div className="loader"></div>,
 });
 export default function App() {
-  return <ContactsPage />;
+  return (
+    <div className="container">
+      <ContactsPage />{' '}
+    </div>
+  );
 }

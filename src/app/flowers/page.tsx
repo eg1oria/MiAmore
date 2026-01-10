@@ -1,7 +1,7 @@
 import { ErrorBoundary } from '@/components/ErrorBoundary/ErrorBoundary';
 import dynamic from 'next/dynamic';
 
-const Flowers = dynamic(() => import('@/components/Flowers/Flowers'), {
+const Catalog = dynamic(() => import('@/components/Catalog/Catalog'), {
   loading: () => <div className="loader"></div>,
 });
 
@@ -13,7 +13,7 @@ export default function App() {
           style={{
             marginTop: '100px',
           }}>
-          <Flowers slicedNum={44} titleText="Каталог" />
+          <Catalog />
         </div>
       </ErrorBoundary>
     </div>

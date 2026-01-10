@@ -1,0 +1,23 @@
+.catalog {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: 20px;
+
+  &-filters {
+    width: 100%;
+    border: 1px solid #000000;
+    padding: 10px;
+    border-radius: 16px;
+  }
+
+  &-flowers {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+
+    &_item {
+      &_img {
+      }
+    }
+  }
+}
