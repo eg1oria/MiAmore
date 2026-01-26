@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useSearch } from '@/contexts/SearchContext';
 import { useFlowers } from './useFlowers';
 import FlowersList from './FlowersList';
+import FlowerCard from './FlowerCard';
 import './Flowers.css';
 
 interface FlowersProps {
@@ -12,12 +13,7 @@ interface FlowersProps {
   useSlider?: boolean;
 }
 
-export default function Flowers({
-  slicedNum,
-  titleText,
-  showOutOfStock = true,
-  useSlider = true,
-}: FlowersProps) {
+export default function Flowers({ slicedNum, titleText, useSlider = true }: FlowersProps) {
   const { searchQuery } = useSearch();
   const [debouncedSearch, setDebouncedSearch] = useState('');
 
@@ -28,23 +24,18 @@ export default function Flowers({
     return () => clearTimeout(id);
   }, [searchQuery]);
 
-  const { flowers, loading, error, refetch } = useFlowers({
-    filter: 'Все',
+  const { flowers, loading, error } = useFlowers({
+    type: 'Все',
     searchQuery: debouncedSearch,
-    showOutOfStock,
-    sliceCount: slicedNum,
+    limit: slicedNum,
   });
-
-  if (loading) {
-    return <div className="loader" style={{ margin: '300px auto' }}></div>;
-  }
 
   if (error) {
     return (
       <div style={{ textAlign: 'center', margin: '100px auto' }}>
         <p>{error}</p>
         <button
-          onClick={refetch}
+          onClick={() => window.location.reload()}
           style={{
             padding: '10px 20px',
             marginTop: '20px',
@@ -58,6 +49,26 @@ export default function Flowers({
   }
 
   const displayTitle = debouncedSearch ? `Запрос: ${debouncedSearch}` : titleText || 'Каталог';
+
+  // Если идет загрузка, показываем скелетоны
+  if (loading) {
+    const skeletonCount = Math.min(slicedNum, 8); // Показываем максимум 8 скелетонов
+
+    return (
+      <div className="flowers-section">
+        {titleText && (
+          <div className="flowers-head">
+            <h2 className="flowers-popular">{displayTitle}</h2>
+          </div>
+        )}
+        <div className="flowers-skeleton-container">
+          {Array.from({ length: skeletonCount }).map((_, index) => (
+            <FlowerCard key={`skeleton-${index}`} isLoading={true} />
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return <FlowersList flowers={flowers} title={displayTitle} useSlider={useSlider} />;
 }

@@ -260,8 +260,8 @@ export default function CartPage() {
                           borderColor: errors.phone
                             ? '#ff0000a5'
                             : phone.length > 0
-                            ? '#4caf50'
-                            : '#ccc',
+                              ? '#4caf50'
+                              : '#ccc',
                         }}
                       />
                     </div>
@@ -288,8 +288,8 @@ export default function CartPage() {
                           borderColor: errors.adres
                             ? '#ff0000a5'
                             : adres.length > 0
-                            ? '#4caf50'
-                            : '#ccc',
+                              ? '#4caf50'
+                              : '#ccc',
                         }}
                       />
                     </div>
@@ -346,7 +346,7 @@ export default function CartPage() {
             setErrors((prev) => ({ ...prev, adres: undefined }));
           }}
           onClose={() => setOpenMap(false)}
-          className='mapCart'
+          className="mapCart"
         />
       )}
     </>

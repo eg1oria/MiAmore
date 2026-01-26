@@ -5,11 +5,29 @@ import CartButton from '../Buttons/CartButton';
 import './Flowers.css';
 
 interface FlowerCardProps {
-  item: IFlower;
+  item?: IFlower;
   className?: string;
+  isLoading?: boolean;
 }
 
-export default function FlowerCard({ item, className = '' }: FlowerCardProps) {
+export default function FlowerCard({ item, className = '', isLoading = false }: FlowerCardProps) {
+  if (isLoading || !item) {
+    return (
+      <li className={`main__right-item main__right-item--skeleton ${className}`}>
+        <div className="main__img-container main__img-container--skeleton">
+          <div className="skeleton-shimmer"></div>
+        </div>
+        <div className="main__right-container main__right-container--skeleton">
+          <div className="skeleton-title skeleton-shimmer"></div>
+          <div className="skeleton-subtitle skeleton-shimmer"></div>
+          <div className="skeleton-price-old skeleton-shimmer"></div>
+          <div className="skeleton-price skeleton-shimmer"></div>
+        </div>
+        <div className="main__buy-button main__buy-button--skeleton skeleton-shimmer"></div>
+      </li>
+    );
+  }
+
   const isOutOfStock = item.count === 0;
 
   return (

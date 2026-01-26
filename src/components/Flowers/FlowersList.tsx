@@ -31,7 +31,7 @@ export default function FlowersList({
 
   if (useSlider) {
     return (
-      <div className={className}>
+      <div>
         {title && (
           <div className="flowers-head">
             <h2 className="flowers-popular">{title}</h2>
@@ -81,7 +81,7 @@ export default function FlowersList({
         </div>
       )}
 
-      <ul className="flowers-list flowers-grid">
+      <ul className={`flowers-list ${className}`}>
         {flowers.map((item) => (
           <FlowerCard key={item.id} item={item} />
         ))}

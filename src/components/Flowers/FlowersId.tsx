@@ -11,6 +11,38 @@ import { PhotoProvider, PhotoView } from 'react-photo-view';
 
 const port = 'https://flower-shop-backend-6hsn.onrender.com';
 
+// Skeleton Component
+const FlowerDetailSkeleton = () => {
+  return (
+    <div className="flower-page">
+      <div className="flower-container">
+        <div className="image-section">
+          <div className="image-wrapper flower-skeleton">
+            <div className="flower-image-skeleton skeleton-shimmer"></div>
+          </div>
+        </div>
+
+        <div className="details-section">
+          <div className="flower-title-skeleton skeleton-shimmer"></div>
+
+          <div className="flower-meta-skeleton skeleton-shimmer"></div>
+
+          <div className="price-section-skeleton">
+            <div className="price-label-skeleton skeleton-shimmer"></div>
+            <div className="price-value-skeleton skeleton-shimmer"></div>
+          </div>
+
+          <div className="actions-section">
+            <div className="cart-button-skeleton skeleton-shimmer"></div>
+          </div>
+
+          <div className="back-button-skeleton skeleton-shimmer"></div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export default function FlowerId() {
   const [flower, setFlower] = useState<IFlower | null>(null);
   const [loading, setLoading] = useState(true);
@@ -25,14 +57,8 @@ export default function FlowerId() {
       .finally(() => setLoading(false));
   }, [id]);
 
-  if (loading)
-    return (
-      <div
-        className="loader"
-        style={{
-          margin: '300px auto',
-        }}></div>
-    );
+  if (loading) return <FlowerDetailSkeleton />;
+
   if (!flower)
     return (
       <div className="not-found">
