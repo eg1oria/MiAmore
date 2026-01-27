@@ -1,7 +1,7 @@
 'use client';
 
 import { useAuth } from '@/contexts/AuthContext';
-import './contacts.css';
+import './contacts.scss';
 import { useEffect, useState } from 'react';
 import { BsTiktok } from 'react-icons/bs';
 import { FaInstagram } from 'react-icons/fa';
@@ -166,9 +166,9 @@ export default function ContactsPage() {
           Instagram — работы и букеты TikTok — процесс WhatsApp — быстрый заказ
         </p>
         <div className="сontacts_social-container">
-          <BsTiktok size={37} />
-          <FaInstagram size={37} />
-          <FaWhatsapp size={37} />
+          <BsTiktok className="social-icon" />
+<FaInstagram className="social-icon" />
+<FaWhatsapp className="social-icon" />
         </div>
       </section>
     </div>

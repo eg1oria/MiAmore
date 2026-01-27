@@ -1,3 +1,5 @@
+@import '../../styles/mixins.scss';
+
 .contacts-page {
   display: flex;
   flex-direction: column;
@@ -11,7 +13,7 @@
   align-items: center;
   justify-content: center;
   position: relative;
-  margin: 30px 0 70px 0;
+  margin: 0 0 70px 0;
   padding: 0 0 20px 0;
 }
 
@@ -29,6 +31,26 @@
 .contacts_social-text {
   font-size: 15px;
   color: #4a403f;
+
+  @include vp-767 {
+    font-size: 12px;
+    text-align: center;
+  }
+}
+
+.social-icon {
+  width: 37px;
+  height: 37px;
+
+  @include vp-767 {
+    width: 28px;
+    height: 28px;
+  }
+
+  @include vp-500 {
+    width: 24px;
+    height: 24px;
+  }
 }
 
 .сontacts_social-container {
@@ -42,6 +64,10 @@
   font-size: 40px;
   font-weight: bold;
   letter-spacing: 2px;
+
+  @include vp-767 {
+    font-size: 28px;
+  }
 }
 
 .contacts-form-section {

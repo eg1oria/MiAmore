@@ -1,3 +1,5 @@
+@import '../../styles/mixins.scss';
+
 .flowers-list {
   list-style: none;
   margin: 0;
@@ -187,6 +189,10 @@
 .filters {
   display: flex;
   gap: 30px;
+
+  @include vp-767 {
+  }
+  gap: 10px;
 }
 
 .filter-btn {
@@ -311,7 +317,6 @@
   width: fit-content;
 }
 
- 
 .price-section {
   display: flex;
   flex-direction: column;
@@ -486,6 +491,10 @@
   font-size: 30px;
   font-weight: bold;
   color: #000;
+
+  @include vp-767 {
+    font-size: 24px;
+  }
 }
 
 .custom-prev1,
@@ -582,10 +591,6 @@
     height: 46px;
   }
 
-  .main__img-container {
-    height: 220px;
-  }
-
   .main__right-container {
     padding: 12px 16px 6px 16px;
   }
@@ -671,10 +676,6 @@
 
   .back-button-skeleton {
     height: 44px;
-  }
-
-  .main__img-container {
-    height: 180px;
   }
 
   .main__right-container {

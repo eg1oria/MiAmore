@@ -1,0 +1,473 @@
+@import '../../styles/mixins.scss';
+
+$c-primary: #4caf50;
+$c-danger: #e74c3c;
+$c-text: #333;
+$c-gray: #999;
+$c-border: #eee;
+$c-bg: #f9f9f9;
+$radius: 12px;
+
+.cart-container {
+  padding: 40px 0 80px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: 20px;
+  padding-right: 20px;
+
+  @include vp-767 {
+    padding-top: 20px;
+    padding-bottom: 40px;
+  }
+}
+
+.cart-title {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 30px;
+  color: $c-text;
+
+  @include vp-767 {
+    font-size: 26px;
+    margin-bottom: 20px;
+  }
+}
+
+.cart-content {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 30px;
+  align-items: start;
+
+  @include vp-1023 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cart-items {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.cart-container .flowers-popular {
+  font-size: 16px;
+}
+
+.cart-item {
+  display: grid;
+  grid-template-columns: 100px 1fr auto auto auto;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  background: white;
+  border-radius: $radius;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  transition: transform 0.2s;
+
+  @include vp-767 {
+    grid-template-columns: 80px 1fr;
+    grid-template-areas:
+      'img info'
+      'img controls';
+    gap: 15px;
+    padding: 15px;
+    position: relative;
+  }
+}
+
+.cart-item-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f5f5f5;
+  flex-shrink: 0;
+
+  @include vp-767 {
+    grid-area: img;
+    width: 80px;
+    height: 80px;
+  }
+
+  .cart-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.3s;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+}
+
+.cart-item-info {
+  @include vp-767 {
+    grid-area: info;
+  }
+
+  h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 5px 0;
+    line-height: 1.3;
+
+    @include vp-767 {
+      font-size: 16px;
+      padding-right: 30px;
+    }
+  }
+
+  .price {
+    font-size: 16px;
+    color: $c-gray;
+
+    @include vp-767 {
+      font-size: 14px;
+    }
+  }
+}
+
+.cart-item-count {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  @include vp-767 {
+    grid-area: controls;
+    margin-top: 5px;
+  }
+
+  button {
+    width: 32px;
+    height: 32px;
+    border: 1px solid $c-border;
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    color: $c-text;
+
+    &:hover:not(:disabled) {
+      border-color: $c-primary;
+      color: $c-primary;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  span {
+    font-weight: 600;
+    min-width: 24px;
+    text-align: center;
+    font-size: 16px;
+  }
+}
+
+.cart-item-total {
+  font-weight: 700;
+  font-size: 18px;
+  color: $c-primary;
+  min-width: 80px;
+  text-align: right;
+
+  @include vp-767 {
+    display: none;
+  }
+}
+
+.cart-item-remove {
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: #fff0f0;
+  color: $c-danger;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+
+  &:hover:not(:disabled) {
+    background: #ffe0e0;
+  }
+
+  @include vp-767 {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    width: 30px;
+    height: 30px;
+
+    &:hover:not(:disabled) {
+      background: #f5f5f5;
+    }
+  }
+}
+
+// ------------------------------------------------------------------
+// Сайдбар (Итого)
+// ------------------------------------------------------------------
+.cart-summary {
+  background: white;
+  border-radius: $radius;
+  padding: 30px;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.06);
+  position: sticky;
+  top: 20px; // Прилипание при скролле
+  height: fit-content;
+
+  @include vp-1023 {
+    position: static; // На планшетах отключаем sticky
+    padding: 24px;
+  }
+}
+
+.summary-info {
+  margin-bottom: 25px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  font-size: 15px;
+  color: $c-text;
+
+  &.total {
+    font-size: 22px;
+    font-weight: 800;
+    border-top: 1px dashed $c-border;
+    padding-top: 15px;
+    margin-top: 15px;
+    margin-bottom: 25px;
+    color: $c-text;
+  }
+}
+
+// ------------------------------------------------------------------
+// Формы и Инпуты
+// ------------------------------------------------------------------
+.inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.inputWrap {
+  position: relative;
+  width: 100%;
+}
+
+.checkout-phone,
+.checkout-textarea {
+  width: 100%;
+  padding: 14px 14px 14px 44px; // Отступ слева под иконку
+  border-radius: 10px;
+  border: 1px solid #e0e0e0;
+  font-size: 15px;
+  background: #fcfcfc;
+  outline: none;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+  font-family: inherit;
+
+  &:focus {
+    border-color: $c-primary;
+    box-shadow: 0 0 0 3px rgba($c-primary, 0.1);
+    background: white;
+  }
+
+  &::placeholder {
+    color: #bbb;
+  }
+}
+
+.checkout-textarea {
+  padding: 14px;
+  min-height: 100px;
+  resize: vertical;
+}
+
+.iconWrap {
+  position: relative;
+  width: 100%;
+}
+
+.inputIcon {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 50%;
+  left: 14px;
+  transform: translateY(-50%);
+  z-index: 2;
+  transition: color 0.2s;
+}
+
+.error-text {
+  color: $c-danger;
+  font-size: 12px;
+  margin-top: 4px;
+  padding-left: 4px;
+}
+
+// Чекбокс
+.customCheckbox {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  font-size: 15px;
+  user-select: none;
+  color: $c-text;
+  margin-top: 5px;
+
+  input {
+    position: absolute;
+    opacity: 0;
+    height: 0;
+    width: 0;
+  }
+
+  .checkmark {
+    width: 22px;
+    height: 22px;
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    position: relative;
+    transition: all 0.2s;
+
+    &::after {
+      content: '';
+      position: absolute;
+      display: none;
+      left: 7px;
+      top: 3px;
+      width: 6px;
+      height: 11px;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+  }
+
+  &:hover .checkmark {
+    border-color: $c-primary;
+  }
+
+  input:checked ~ .checkmark {
+    background-color: $c-primary;
+    border-color: $c-primary;
+
+    &::after {
+      display: block;
+    }
+  }
+}
+
+// Кнопки действий
+.checkout-btn {
+  width: 100%;
+  padding: 16px;
+  background: $c-primary;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    transform 0.1s;
+  box-shadow: 0 4px 10px rgba($c-primary, 0.3);
+
+  &:hover:not(:disabled) {
+    background: darken($c-primary, 5%);
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+
+  &:disabled {
+    background: #ccc;
+    box-shadow: none;
+    cursor: not-allowed;
+  }
+}
+
+.openMapBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 10px;
+  padding: 12px;
+  background-color: #222;
+  color: white;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  border: none;
+
+  &:hover {
+    background-color: black;
+  }
+}
+
+// Пустая корзина
+.cart-empty {
+  text-align: center;
+  padding: 100px 20px;
+
+  p {
+    font-size: 20px;
+    color: $c-gray;
+    margin-bottom: 25px;
+  }
+
+  button {
+    padding: 14px 35px;
+    background: $c-primary;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba($c-primary, 0.3);
+    transition: transform 0.2s;
+
+    &:hover {
+      transform: translateY(-2px);
+    }
+  }
+}
+
+// Карта
+.mapCart {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}

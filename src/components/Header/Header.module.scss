@@ -1,3 +1,5 @@
+@import '../../styles/mixins.scss';
+
 .header {
   position: fixed;
   top: 0;
@@ -6,9 +8,17 @@
   width: 100%;
   z-index: 999;
   padding: 23px 0;
-  transition: transform 0.2s linear, opacity 0.2s linear;
+  transition:
+    transform 0.2s linear,
+    opacity 0.2s linear;
   transform: translateY(-50px);
   opacity: 0;
+
+  @include vp-767 {
+    opacity: 1;
+    transform: translateY(0);
+    padding: 15px 0;
+  }
 
   &_wrapper {
     display: flex;
@@ -18,11 +28,31 @@
     margin: 0 auto;
     padding: 0 200px;
 
+    @include vp-1440 {
+      padding: 0 130px;
+    }
+
+    @include vp-1023 {
+      padding: 0 50px;
+    }
+
+    @include vp-767 {
+      padding: 0 20px;
+    }
+
     &_right {
       display: flex;
       gap: 30px;
       align-items: center;
       position: relative;
+
+      @include vp-1023 {
+        gap: 10px;
+      }
+
+      @include vp-767 {
+        display: none;
+      }
 
       &_icon {
         position: relative;
@@ -43,6 +73,25 @@
           justify-content: center;
         }
       }
+
+      &_searchBtn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        display: flex;
+        align-items: center;
+      }
+
+      &_logout {
+        color: #444444;
+        font-weight: 500;
+        transition: color 0.2s;
+
+        &:hover {
+          color: #ffa8a5;
+        }
+      }
     }
 
     &_left {
@@ -50,10 +99,20 @@
       gap: 30px;
       align-items: end;
 
+      @include vp-767 {
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+      }
+
       &_logo {
         &_url {
           color: black;
           width: 210px;
+
+          @include vp-1023 {
+            width: 150px;
+          }
         }
       }
 
@@ -61,8 +120,21 @@
         display: flex;
         gap: 30px;
 
+        @include vp-1023 {
+          gap: 10px;
+        }
+
+        @include vp-767 {
+          display: none;
+        }
+
         &_item {
           color: #444444;
+          transition: color 0.2s;
+
+          &:hover {
+            color: #ffa8a5;
+          }
         }
       }
     }
@@ -79,6 +151,10 @@
   display: flex;
   background: white;
   z-index: 10;
+
+  @include vp-1023 {
+    width: 120px;
+  }
 }
 
 .search {
@@ -108,12 +184,187 @@
   width: 100%;
   z-index: 100;
   padding: 40px 0;
-  transition: background 0.2s linear, color 0.2s linear;
+  transition:
+    background 0.2s linear,
+    color 0.2s linear;
 
   &:hover {
     .header {
       opacity: 1;
       transform: translateY(0);
     }
+  }
+}
+
+.burger {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 350px;
+  height: 100vh;
+  background: white;
+  z-index: 1001;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+
+  @include vp-767 {
+    width: 280px;
+  }
+
+  @include vp-500 {
+    width: 240px;
+  }
+
+  &_close {
+    align-self: flex-end;
+    cursor: pointer;
+    color: black;
+    margin-bottom: 30px;
+    transition: transform 0.2s;
+  }
+
+  &_search {
+    position: relative;
+    width: 100%;
+    margin: 10px 0;
+
+    @include vp-500 {
+      padding: 0;
+    }
+
+    &_input {
+      width: 100%;
+      padding: 12px 45px 12px 15px;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 16px;
+      outline: none;
+      transition: border-color 0.2s;
+
+      &:focus {
+        border-color: #ffa8a5;
+      }
+
+      &::placeholder {
+        color: #999;
+      }
+    }
+
+    &_button {
+      border: 1px solid silver;
+      margin-bottom: 10px;
+
+      &:hover {
+        color: #ffa8a5;
+      }
+    }
+  }
+
+  &_nav {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-bottom: 40px;
+
+    @include vp-500 {
+      gap: 20px;
+      padding: 0;
+    }
+
+    &_item {
+      font-size: 24px;
+      color: #444444;
+      font-weight: 500;
+      transition: color 0.2s;
+
+      &:hover {
+        color: #ffa8a5;
+      }
+
+      @include vp-767 {
+        font-size: 20px;
+      }
+    }
+  }
+
+  &_actions {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border-top: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 30px 0;
+    margin-bottom: 10px;
+
+    @include vp-500 {
+      padding: 30px 0;
+    }
+
+    &_link {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      font-size: 18px;
+      color: #444444;
+      transition: color 0.2s;
+
+      &:hover {
+        color: #ffa8a5;
+
+        svg {
+          color: #ffa8a5;
+        }
+      }
+
+      @include vp-767 {
+        font-size: 16px;
+      }
+    }
+
+    &_button {
+      margin-top: 10px;
+      padding: 12px 24px;
+      background: #ffa8a5;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+      width: 100%;
+
+      &:hover {
+        background: #ff9592;
+      }
+    }
+  }
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  cursor: pointer;
+}
+
+.hamburger {
+  display: none;
+  cursor: pointer;
+  color: black;
+  transition: color 0.2s;
+
+  &:hover {
+    color: #ffa8a5;
+  }
+
+  @include vp-767 {
+    display: block;
   }
 }

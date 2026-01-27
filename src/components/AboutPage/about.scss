@@ -1,10 +1,12 @@
 @use '../../styles/fonts' as *;
+@import '../../styles/mixins.scss';
 
 .about {
   display: flex;
   flex-direction: column;
   justify-content: center;
   width: 100%;
+  margin: 50px 0;
 
   &_title {
     font-family: 'Playfair Display SC', serif;
@@ -21,6 +23,16 @@
     border-radius: 16px;
     overflow: hidden;
 
+    @include vp-1440 {
+      grid-template-columns: 500px 1fr;
+      gap: 40px;
+    }
+
+    @include vp-767 {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
     &-left {
       display: flex;
       flex-direction: column;
@@ -32,6 +44,13 @@
         align-items: center;
         padding: 10px;
         width: 450px;
+
+        @include vp-767 {
+          width: 100%;
+          font-size: 16px;
+          padding: 5px;
+        }
+
         border-radius: 12px;
         border: 1px solid #000;
         color: #000;
@@ -49,9 +68,17 @@
         color: #4a403f;
         width: 70%;
 
+        @include vp-767 {
+          width: 100%;
+          font-size: 16px;
+          margin-top: 10px;
+          padding: 5px 0;
+        }
+
         &-second {
           font-weight: normal;
           padding: 0;
+          margin-bottom: 10px;
         }
       }
 
@@ -59,6 +86,10 @@
         font-size: 36px;
         font-family: 'Playfair Display SC', serif;
         font-weight: 100;
+
+        @include vp-767 {
+          font-size: 28px;
+        }
       }
     }
   }
@@ -78,6 +109,10 @@
     bottom: 0;
     box-shadow: 128px 0px 50px -10px rgb(255, 255, 255) inset;
     pointer-events: none;
+
+    @include vp-767 {
+      box-shadow: 0 60px 40px -15px rgb(255, 255, 255) inset;
+    }
   }
 }
 
@@ -91,7 +126,9 @@
 .arrow {
   opacity: 0;
   transform: translateX(10px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
 }
 
 .about_content-left-link:hover .arrow {

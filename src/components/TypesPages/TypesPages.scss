@@ -1,10 +1,16 @@
 @use '../../styles/fonts' as *;
+@import '../../styles/mixins.scss';
 
 .types {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 30px;
   padding: 50px 0;
+
+  @include vp-767 {
+    padding: 20px 0;
+    gap: 10px;
+  }
 
   &_item:nth-child(1) {
     grid-column: span 2;
@@ -14,14 +20,66 @@
     grid-column: span 2;
   }
 
+  &_item:nth-child(3) {
+    @include vp-767 {
+      grid-column: span 4;
+    }
+  }
+
+  &_item:nth-child(4) {
+    @include vp-767 {
+      grid-column: span 2;
+    }
+  }
+
+  &_item:nth-child(5) {
+    @include vp-767 {
+      grid-column: span 2;
+    }
+  }
+
+  &_item:nth-child(6) {
+    @include vp-767 {
+      grid-column: span 2;
+      grid-column-start: -4;
+      grid-column-end: -2;
+    }
+  }
+
   &_item {
     position: relative;
     cursor: pointer;
     user-select: none;
+    overflow: hidden;
+    aspect-ratio: 1 / 1;
+    transition: transform 0.3s ease;
+    &:hover {
+      transform: scale(1.02);
 
-    &:hover .types_text {
-      transform: translateX(-50%) scale(1.05);
+      .types_text {
+        transform: translateX(-50%) scale(1.05);
+      }
+
+      .types_item-image {
+        transform: scale(1.05);
+      }
     }
+
+    &:nth-child(1),
+    &:nth-child(2) {
+      aspect-ratio: 2 / 1;
+
+      @include vp-767 {
+        aspect-ratio: 1 / 1;
+      }
+    }
+  }
+
+  &_item-image {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.3s ease;
   }
 
   &_text {
@@ -35,6 +93,20 @@
     text-align: center;
     font-size: 25px;
     font-family: 'Playfair Display SC', serif;
-    text-shadow: 0 0 30px rgb(0, 0, 0), 0 0 20px rgb(0, 0, 0), 0 0 10px rgb(0, 0, 0);
+    text-shadow:
+      0 0 30px rgb(0, 0, 0),
+      0 0 20px rgb(0, 0, 0),
+      0 0 10px rgb(0, 0, 0);
+    z-index: 1;
+    pointer-events: none;
+
+    @include vp-767 {
+      font-size: 18px;
+      bottom: 20px;
+    }
   }
+}
+
+.img {
+  object-fit: cover;
 }

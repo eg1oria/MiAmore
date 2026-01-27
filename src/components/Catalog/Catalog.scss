@@ -1,10 +1,23 @@
+@import '../../styles/mixins.scss';
+
 .catalog {
   display: grid;
   grid-template-columns: 280px 1fr;
   gap: 30px;
-  padding: 40px 20px;
-  max-width: 1400px;
+  max-width: 1700px;
   margin: 0 auto;
+
+  @include vp-1023 {
+    padding: 0 -100px;
+    margin: 0 -70px;
+    grid-template-columns: 220px 1fr;
+  }
+
+  @include vp-767 {
+    padding: 0;
+    margin: 0;
+    grid-template-columns: 1fr;
+  }
 
   &-filters {
     width: 100%;
@@ -15,6 +28,10 @@
     height: fit-content;
     position: sticky;
     top: 20px;
+
+    @include vp-767 {
+      position: relative;
+    }
 
     &_title {
       font-size: 24px;
@@ -65,16 +82,15 @@
     display: flex;
     flex-direction: column;
     gap: 24px;
-    min-height: 600px; // Минимальная высота для предотвращения дерганий
+    min-height: 600px;
   }
 
   &-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-bottom: 16px;
-    border-bottom: 2px solid #e0e0e0;
-    min-height: 60px; // Фиксированная высота
+    padding-top: 16px;
+    min-height: 60px;
   }
 
   &-title {
@@ -83,6 +99,10 @@
     color: #1a1a1a;
     margin: 0;
     line-height: 1.2;
+
+    @include vp-767 {
+      font-size: 22px;
+    }
   }
 
   &-count {
@@ -90,8 +110,11 @@
     color: #666;
     font-weight: 500;
     white-space: nowrap;
-    min-width: 150px; // Минимальная ширина для стабильности
     text-align: right;
+
+    @include vp-767 {
+      font-size: 12px;
+    }
   }
 
   &-count-skeleton {
@@ -106,13 +129,30 @@
 
   &-flowers {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 24px;
     list-style: none;
     margin: 0;
     padding: 0;
-    min-height: 500px; // Минимальная высота грида
-    align-content: start; // Контент начинается сверху
+    min-height: 500px;
+    align-content: start;
+
+    @media (max-width: 1300px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include vp-767 {
+      gap: 10px;
+    }
+
+    @include vp-500 {
+      grid-template-columns: 1fr;
+      padding: 0 40px;
+    }
+
+    @media (max-width: 350px) {
+      padding: 0;
+    }
   }
 
   &-error {
@@ -265,130 +305,12 @@
   }
 }
 
-// Анимация shimmer для скелетона
 @keyframes shimmer {
   0% {
     background-position: -1000px 0;
   }
   100% {
     background-position: 1000px 0;
-  }
-}
-
-// Адаптив для планшетов
-@media (max-width: 1024px) {
-  .catalog {
-    grid-template-columns: 240px 1fr;
-    gap: 20px;
-    padding: 30px 15px;
-
-    &-filters {
-      padding: 20px;
-
-      &_title {
-        font-size: 20px;
-      }
-    }
-
-    &-title {
-      font-size: 28px;
-    }
-
-    &-flowers {
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 20px;
-    }
-
-    &-content {
-      min-height: 500px;
-    }
-  }
-}
-
-// Адаптив для мобильных
-@media (max-width: 768px) {
-  .catalog {
-    grid-template-columns: 1fr;
-    gap: 24px;
-    padding: 20px 15px;
-
-    &-filters {
-      position: static;
-      padding: 16px;
-
-      &_title {
-        font-size: 18px;
-        margin-bottom: 16px;
-      }
-
-      &_items {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 8px;
-      }
-
-      &_item {
-        padding: 10px 12px;
-        font-size: 14px;
-        text-align: center;
-      }
-    }
-
-    &-header {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 8px;
-      min-height: 80px;
-    }
-
-    &-title {
-      font-size: 24px;
-    }
-
-    &-count {
-      text-align: left;
-      min-width: auto;
-    }
-
-    &-flowers {
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      gap: 16px;
-      min-height: 400px;
-    }
-
-    &-content {
-      min-height: 400px;
-    }
-  }
-
-  .filter-section {
-    margin-bottom: 16px;
-    padding-bottom: 16px;
-
-    &_title {
-      font-size: 15px;
-    }
-  }
-}
-
-// Для очень маленьких экранов
-@media (max-width: 480px) {
-  .catalog {
-    &-flowers {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      min-height: 350px;
-    }
-
-    &-filters {
-      &_items {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    &-content {
-      min-height: 350px;
-    }
   }
 }
 
@@ -453,10 +375,6 @@
   .flower-card-skeleton {
     min-height: 360px;
 
-    &__image {
-      height: 220px;
-    }
-
     &__content {
       padding: 16px;
       gap: 10px;
@@ -478,12 +396,6 @@
 
 @media (max-width: 480px) {
   .flower-card-skeleton {
-    min-height: 320px;
-
-    &__image {
-      height: 180px;
-    }
-
     &__content {
       padding: 12px;
       gap: 8px;

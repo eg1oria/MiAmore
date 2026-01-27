@@ -44,7 +44,7 @@ export default function IntroSlider() {
         modules={[Navigation, Pagination, Autoplay]}
         slidesPerView={1}
         loop
-        autoplay={{ delay: 3000 }}
+        // autoplay={{ delay: 3000 }}
         pagination={{ clickable: true }}
         navigation={{
           nextEl: '.custom-next',
@@ -71,7 +71,13 @@ export default function IntroSlider() {
             <div className={i.slider_slide2_wrap}>
               {slede2.map((item, y) => (
                 <div key={y} className={i.slider_slide2_item}>
-                  <Image src={item.icon} alt={item.title} width={item.size} height={item.size} />
+                  <Image
+                    src={item.icon}
+                    alt={item.title}
+                    width={item.size}
+                    height={item.size}
+                    className={i.slider_slide2_item_icon}
+                  />
                   <h3 className={i.slider_slide2_item_title}>{item.title}</h3>
                   <p className={i.slider_slide2_item_desc}>{item.desc}</p>
                 </div>

@@ -1,3 +1,5 @@
+@import '../../styles/mixins.scss';
+
 .slider {
   background-image: url('../../../public/img/introSlide.png');
   background-repeat: no-repeat;
@@ -6,6 +8,10 @@
   height: 700px;
   display: flex;
   overflow: hidden;
+
+  @include vp-767 {
+    height: 550px;
+  }
 
   &_slide2 {
     display: flex;
@@ -21,16 +27,50 @@
       grid-template-columns: repeat(4, 1fr);
       gap: 50px;
       align-items: flex-start;
+
+      @include vp-1023 {
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        width: 700px;
+      }
+
+      @include vp-767 {
+        width: 500px;
+      }
+
+      @include vp-500 {
+        width: 300px;
+      }
     }
     &_item {
       display: flex;
       flex-direction: column;
       align-items: center;
 
+      @include vp-767 {
+        margin: 0 auto;
+        width: 150px;
+      }
+
+      &_icon {
+        @include vp-767 {
+          width: 40px;
+          height: 40px;
+        }
+        @include vp-500 {
+          width: 30px;
+          height: 30px;
+        }
+      }
+
       &_title {
         color: #fff;
         margin: 20px 0 0 0;
         font-size: 22px;
+
+        @include vp-1023 {
+          font-size: 18px;
+        }
       }
 
       &_desc {
@@ -56,11 +96,27 @@
       align-items: center;
       justify-content: center;
 
+      @include vp-1023 {
+        width: 600px;
+      }
+
+      @include vp-767 {
+        width: 450px;
+      }
+
+      @include vp-500 {
+        width: 300px;
+      }
+
       &_buttons {
         display: flex;
         gap: 20px;
         width: 100%;
         margin: 10px 0 0 0;
+
+        @include vp-767 {
+          flex-direction: column;
+        }
 
         &_button1 {
           width: 100%;
@@ -94,7 +150,7 @@
           &:hover {
             background: #ffa8a5;
             box-shadow: unset;
-            color: #000;
+            color: #fff;
           }
         }
       }
@@ -106,6 +162,16 @@
         display: flex;
         font-size: 40px;
         letter-spacing: 9px;
+
+        @include vp-767 {
+          font-size: 30px;
+          letter-spacing: 5px;
+        }
+
+        @include vp-500 {
+          font-size: 22px;
+          letter-spacing: 3px;
+        }
       }
 
       &_logo {
@@ -130,14 +196,25 @@
   align-items: center;
   transition: background-color 0.3s ease;
   border-radius: 100%;
+
+  @include vp-1023 {
+    display: none;
+  }
 }
 
 .custom_prev {
   left: 300px;
+
+  @media (max-width: 1450px) {
+    left: 100px;
+  }
 }
 
 .custom_next {
   right: 300px;
+  @media (max-width: 1450px) {
+    right: 100px;
+  }
 }
 
 :global(.swiper-pagination-bullet) {

@@ -1,7 +1,7 @@
 'use client';
 import CartButton from '@/components/Buttons/CartButton';
 import Image from 'next/image';
-import './Flowers.css';
+import './Flowers.scss';
 import { useEffect, useState } from 'react';
 import { IFlower } from '@/types/IFlower';
 import { useParams } from 'next/navigation';

@@ -1,9 +1,30 @@
+@import '../../styles/mixins.scss';
+
 .reviewCont {
   display: grid;
   grid-template-columns: 1fr 1fr;
   border: 2px solid #000;
   margin: 30px auto;
   padding: 30px 240px;
+  position: relative;
+  z-index: 0;
+
+  @include vp-1440 {
+    padding: 20px 170px;
+  }
+
+  @media (max-width: 1150px) {
+    padding: 20px 120px;
+  }
+
+  @include vp-1023 {
+    padding: 10px 80px;
+  }
+
+  @include vp-767 {
+    grid-template-columns: 1fr;
+    padding: 10px 20px;
+  }
 
   &_left {
     display: flex;
@@ -16,6 +37,14 @@
       font-weight: 600;
       margin-bottom: 20px;
       text-align: center;
+
+      @include vp-1023 {
+        font-size: 24px;
+      }
+
+      @include vp-500 {
+        font-size: 20px;
+      }
     }
 
     &-text {
@@ -25,6 +54,14 @@
       line-height: 2em;
       letter-spacing: 2px;
       color: #555;
+
+      @include vp-1023 {
+        font-size: 16px;
+      }
+
+      @include vp-500 {
+        font-size: 14px;
+      }
     }
   }
 
@@ -59,4 +96,74 @@
 .reviewCont_right .review .swiper-pagination-bullets,
 .reviewCont_right .swiper-pagination-bullets.swiper-pagination-horizontal {
   display: none;
+}
+
+.reviewCont_right-swiper-slide {
+  height: auto;
+}
+
+.review-card {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+}
+
+.review-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.review-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 1px solid silver;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 700;
+  color: #000;
+}
+
+.review-name {
+  margin: 0;
+  color: #000;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.review-date {
+  margin: 4px 0 0;
+  color: #000;
+  font-size: 14px;
+}
+
+.review-rating {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.star-icon {
+  width: 24px;
+  height: 24px;
+  color: #ffd700;
+}
+
+.review-text {
+  color: #000;
+  font-size: 16px;
+  line-height: 1.7;
+  margin: 0;
+  position: relative;
+  z-index: 1;
 }

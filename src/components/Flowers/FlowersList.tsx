@@ -53,8 +53,8 @@ export default function FlowersList({
             spaceBetween={30}
             pagination={{ clickable: true }}
             breakpoints={{
-              320: { slidesPerView: 1 },
-              640: { slidesPerView: 2 },
+              0: { slidesPerView: 1 },
+              500: { slidesPerView: 2 },
               1024: { slidesPerView: 3 },
               1280: { slidesPerView: 4 },
             }}

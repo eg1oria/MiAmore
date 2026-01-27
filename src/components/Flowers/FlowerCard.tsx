@@ -2,7 +2,7 @@ import { IFlower } from '@/types/IFlower';
 import Image from 'next/image';
 import Link from 'next/link';
 import CartButton from '../Buttons/CartButton';
-import './Flowers.css';
+import './Flowers.scss';
 
 interface FlowerCardProps {
   item?: IFlower;

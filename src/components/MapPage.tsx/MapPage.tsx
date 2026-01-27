@@ -35,7 +35,7 @@ export default function MapPage() {
     <div className="map">
       {openMap && <MapComponent />}
       <div className="map_container">
-        <Image src={'/img/map.png'} alt="Карта" width={1000} height={1000} />
+        <Image src={'/img/map.png'} alt="Карта" width={1000} height={1000} className="img" />
       </div>
 
       <div className="map_info">

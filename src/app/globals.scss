@@ -1,0 +1,60 @@
+@import 'tailwindcss';
+@import '../styles/mixins.scss';
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: white;
+  color: black;
+  font-family: Arial, Helvetica, sans-serif;
+  transition:
+    background 0.3s,
+    color 0.3s;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+.container {
+  max-width: 1920px;
+  margin: 0 auto;
+  padding: 0 240px;
+
+  @media (max-width: 1450px) {
+    padding: 0 170px;
+  }
+
+  @media (max-width: 1150px) {
+    padding: 0 120px;
+  }
+
+  @include vp-1023 {
+    padding: 0 100px;
+  }
+
+  @include vp-767 {
+    padding: 0 20px;
+  }
+
+  @media (max-width: 350px) {
+    padding: 10px;
+  }
+}
+
+.mainTitle {
+  font-size: 32px;
+  font-weight: bold;
+  margin: 50px 0;
+}
+
+.flowCont {
+  @include vp-500 {
+    padding: 0 30px;
+  }
+  @media (max-width: 350px) {
+    padding: 0;
+  }
+}

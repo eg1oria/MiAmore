@@ -4,7 +4,7 @@ import { useSearch } from '@/contexts/SearchContext';
 import { useFlowers } from './useFlowers';
 import FlowersList from './FlowersList';
 import FlowerCard from './FlowerCard';
-import './Flowers.css';
+import './Flowers.scss';
 
 interface FlowersProps {
   slicedNum: number;
@@ -52,7 +52,7 @@ export default function Flowers({ slicedNum, titleText, useSlider = true }: Flow
 
   // Если идет загрузка, показываем скелетоны
   if (loading) {
-    const skeletonCount = Math.min(slicedNum, 8); // Показываем максимум 8 скелетонов
+    const skeletonCount = Math.min(slicedNum, 4);
 
     return (
       <div className="flowers-section">

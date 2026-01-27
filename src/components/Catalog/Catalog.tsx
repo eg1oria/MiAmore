@@ -46,7 +46,6 @@ export default function CustomLayout() {
     return 'товаров';
   };
 
-  // Рендерим скелетоны при загрузке
   const renderSkeletons = () => {
     return Array.from({ length: 8 }).map((_, index) => (
       <FlowerCard key={`skeleton-${index}`} isLoading={true} />

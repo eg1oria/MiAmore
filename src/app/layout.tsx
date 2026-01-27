@@ -2,7 +2,7 @@
 
 import BodyContent from '@/components/BodyContent/BodyContent';
 import { AuthProvider } from '@/contexts/AuthContext'; // Добавляем AuthProvider
-import './globals.css';
+import './globals.scss';
 import Footer from '@/components/Footer/Footer';
 import { Provider } from 'react-redux';
 import { store } from './store';

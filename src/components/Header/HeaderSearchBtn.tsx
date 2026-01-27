@@ -38,7 +38,7 @@ export default function HeaderSearchBtn({ onMouseOut, inputRef, isOpen }: Htmld)
       initial={{ opacity: 0, width: 0 }}
       animate={{
         opacity: isOpen ? 1 : 0,
-        width: isOpen ? 300 : 0,
+        width: isOpen ? 250 : 0,
       }}
       exit={{ opacity: 0, width: 0 }}
       transition={{

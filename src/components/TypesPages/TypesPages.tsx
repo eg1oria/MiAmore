@@ -71,10 +71,11 @@ export default function TypesPages() {
           <div className="types_item-image">
             <Image
               src={type.img}
-              width={1000}
-              height={1000}
+              fill
+              sizes="(max-width: 767px) 50vw, 25vw"
               alt={type.name}
-              className="types_image"
+              className="img"
+              priority={type.id <= 2}
             />
           </div>
           <p className="types_text">{type.name}</p>

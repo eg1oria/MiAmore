@@ -16,12 +16,14 @@ export default function App() {
       <div className="main">
         <IntroSlider />
         <div className="container">
-          <Flowers
-            slicedNum={8}
-            titleText="Популярные букеты"
-            showOutOfStock={false}
-            useSlider={true}
-          />
+          <div className="flowCont">
+            <Flowers
+              slicedNum={8}
+              titleText="Популярные букеты"
+              showOutOfStock={false}
+              useSlider={true}
+            />
+          </div>
           <AboutPage />
           <TypesPages />
           <MapPage />

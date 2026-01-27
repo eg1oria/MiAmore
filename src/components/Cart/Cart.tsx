@@ -4,7 +4,7 @@ import { useCart } from '@/contexts/CartContext';
 import { useRouter } from 'next/navigation';
 import { FaPlus, FaMinus, FaTrash } from 'react-icons/fa';
 import { useState } from 'react';
-import './Cart.css';
+import './Cart.scss';
 import 'react-photo-view/dist/react-photo-view.css';
 import Flowers from '../Flowers/Flowers';
 import { useAuth } from '@/contexts/AuthContext';
