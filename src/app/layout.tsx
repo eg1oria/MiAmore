@@ -9,6 +9,7 @@ import { store } from './store';
 import { CartProvider } from '@/contexts/CartContext';
 import Header from '@/components/Header/Header';
 import { SearchProvider } from '@/contexts/SearchContext';
+import { SnackbarProvider } from 'notistack';
 
 export default function RootLayout({
   children,
@@ -17,17 +18,19 @@ export default function RootLayout({
 }>) {
   return (
     <Provider store={store}>
-      <SearchProvider>
-        <CartProvider>
+      <SnackbarProvider maxSnack={3} anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}>
+        <SearchProvider>
           <AuthProvider>
-            <BodyContent>
-              <Header />
-              {children}
-              <Footer />
-            </BodyContent>
+            <CartProvider>
+              <BodyContent>
+                <Header />
+                {children}
+                <Footer />
+              </BodyContent>
+            </CartProvider>
           </AuthProvider>
-        </CartProvider>
-      </SearchProvider>
+        </SearchProvider>
+      </SnackbarProvider>
     </Provider>
   );
 }

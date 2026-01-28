@@ -2,7 +2,7 @@
 
 import { useCart } from '@/contexts/CartContext';
 import { useRouter } from 'next/navigation';
-import { FaPlus, FaMinus, FaTrash } from 'react-icons/fa';
+import { FaPlus, FaMinus } from 'react-icons/fa';
 import { useState } from 'react';
 import './Cart.scss';
 import 'react-photo-view/dist/react-photo-view.css';
@@ -14,10 +14,11 @@ import { FiUser } from 'react-icons/fi';
 import { FaMapMarkerAlt } from 'react-icons/fa';
 import { FaPhoneAlt } from 'react-icons/fa';
 import Map from '../Map/Map';
-import { checkout } from '@/app/api/CartApi'; // ← ДОБАВЬТЕ ЭТОТ ИМПОРТ
+import { checkout } from '@/app/api/CartApi';
+import CartButton from '../Buttons/CartButton';
 
 export default function CartPage() {
-  const { cart, changeCount, remove, isLoading, clearCart } = useCart();
+  const { cart, changeCount, isLoading, clearCart } = useCart();
   const router = useRouter();
   const { isAuthenticated } = useAuth();
   const [isCheckingOut, setIsCheckingOut] = useState(false);
@@ -198,12 +199,7 @@ export default function CartPage() {
 
                     <div className="cart-item-total">{item.price * item.count} ₽</div>
 
-                    <button
-                      onClick={() => remove(item.id)}
-                      disabled={isLoading || isCheckingOut}
-                      className="cart-item-remove">
-                      <FaTrash />
-                    </button>
+                    <CartButton className="cart-item-remove" item={item} />
                   </div>
                 ))}
               </PhotoProvider>

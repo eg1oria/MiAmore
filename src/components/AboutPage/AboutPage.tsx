@@ -9,7 +9,7 @@ import { FaArrowRightLong } from 'react-icons/fa6';
 
 const playfair = Playfair_Display_SC({
   subsets: ['latin', 'cyrillic'],
-  weight: ['400', '700', '900'], // Доступные: 400, 700, 900
+  weight: ['400', '700', '900'],
   variable: '--font-playfair',
   display: 'swap',
 });

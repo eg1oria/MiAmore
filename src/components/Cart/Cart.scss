@@ -9,7 +9,7 @@ $c-bg: #f9f9f9;
 $radius: 12px;
 
 .cart-container {
-  padding: 40px 0 80px;
+  padding: 100px 0 80px;
   max-width: 1200px;
   margin: 0 auto;
   padding-left: 20px;
@@ -57,7 +57,7 @@ $radius: 12px;
 
 .cart-item {
   display: grid;
-  grid-template-columns: 100px 1fr auto auto auto;
+  grid-template-columns: 100px 1fr 150px auto 100px;
   align-items: center;
   gap: 20px;
   padding: 20px;
@@ -186,10 +186,7 @@ $radius: 12px;
 }
 
 .cart-item-remove {
-  width: 36px;
-  height: 36px;
   border: none;
-  background: #fff0f0;
   color: $c-danger;
   border-radius: 8px;
   cursor: pointer;
@@ -198,8 +195,8 @@ $radius: 12px;
   justify-content: center;
   transition: background 0.2s;
 
-  &:hover:not(:disabled) {
-    background: #ffe0e0;
+  &:hover {
+    opacity: 0.8;
   }
 
   @include vp-767 {
@@ -207,29 +204,20 @@ $radius: 12px;
     top: 10px;
     right: 10px;
     background: transparent;
-    width: 30px;
-    height: 30px;
-
-    &:hover:not(:disabled) {
-      background: #f5f5f5;
-    }
   }
 }
 
-// ------------------------------------------------------------------
-// Сайдбар (Итого)
-// ------------------------------------------------------------------
 .cart-summary {
   background: white;
   border-radius: $radius;
   padding: 30px;
   box-shadow: 0 4px 25px rgba(0, 0, 0, 0.06);
   position: sticky;
-  top: 20px; // Прилипание при скролле
+  top: 20px;
   height: fit-content;
 
   @include vp-1023 {
-    position: static; // На планшетах отключаем sticky
+    position: static;
     padding: 24px;
   }
 }
@@ -256,9 +244,6 @@ $radius: 12px;
   }
 }
 
-// ------------------------------------------------------------------
-// Формы и Инпуты
-// ------------------------------------------------------------------
 .inputs {
   display: flex;
   flex-direction: column;

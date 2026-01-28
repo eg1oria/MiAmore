@@ -16,7 +16,7 @@ export function SearchProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (pathname !== '/flowers') {
-      setSearchQuery('');
+      setTimeout(() => setSearchQuery(''), 0);
     }
   }, [pathname]);
 

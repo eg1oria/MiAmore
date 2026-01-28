@@ -167,7 +167,6 @@
   }
 }
 
-// Секция фильтра
 .filter-section {
   margin-bottom: 24px;
   padding-bottom: 20px;
@@ -187,7 +186,6 @@
   }
 }
 
-// Ползунок цены
 .price-range {
   &_values {
     display: flex;
@@ -266,7 +264,6 @@
   }
 }
 
-// Кнопка сброса
 .reset-filters {
   width: 100%;
   padding: 12px;
@@ -286,7 +283,6 @@
   }
 }
 
-// Нет результатов
 .no-results {
   grid-column: 1 / -1;
   text-align: center;

@@ -22,14 +22,47 @@ function getHeaders(): HeadersInit {
   return headers;
 }
 
+// Проверка наличия токена перед запросом
+function hasValidToken(): boolean {
+  const token = getToken();
+  if (!token) {
+    console.warn('⚠️ No auth token found');
+    return false;
+  }
+  return true;
+}
+
+// Функция для обработки ошибок аутентификации
+function handleAuthError(status: number): void {
+  if (status === 401 || status === 403) {
+    console.warn('🚫 Auth error, clearing token');
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('auth_token');
+      // Не делаем редирект отсюда - пусть компоненты решают
+    }
+  }
+}
+
 export const api = {
   async get(): Promise<CartItemApi[]> {
+    // Не делаем запрос без токена
+    if (!hasValidToken()) {
+      return [];
+    }
+
     const response = await fetch(`${port}/cart`, {
       credentials: 'include',
       headers: getHeaders(),
     });
 
     if (!response.ok) {
+      handleAuthError(response.status);
+
+      // Для 401/403 возвращаем пустой массив вместо ошибки
+      if (response.status === 401 || response.status === 403) {
+        return [];
+      }
+
       throw new Error('Failed to fetch cart');
     }
 
@@ -44,6 +77,10 @@ export const api = {
     image?: string;
     count: number;
   }): Promise<CartItemApi> {
+    if (!hasValidToken()) {
+      throw new Error('Authentication required');
+    }
+
     const response = await fetch(`${port}/cart/add`, {
       method: 'POST',
       headers: getHeaders(),
@@ -52,6 +89,12 @@ export const api = {
     });
 
     if (!response.ok) {
+      handleAuthError(response.status);
+
+      if (response.status === 401 || response.status === 403) {
+        throw new Error('Session expired. Please login again.');
+      }
+
       throw new Error('Failed to add item');
     }
 
@@ -59,6 +102,10 @@ export const api = {
   },
 
   async updateCount(itemId: string, count: number): Promise<void> {
+    if (!hasValidToken()) {
+      throw new Error('Authentication required');
+    }
+
     const response = await fetch(`${port}/cart/update`, {
       method: 'POST',
       headers: getHeaders(),
@@ -67,23 +114,60 @@ export const api = {
     });
 
     if (!response.ok) {
+      handleAuthError(response.status);
+
+      if (response.status === 401 || response.status === 403) {
+        throw new Error('Session expired. Please login again.');
+      }
+
       throw new Error('Failed to update count');
     }
   },
 
   async remove(itemId: string): Promise<void> {
+    if (!hasValidToken()) {
+      throw new Error('Authentication required');
+    }
+
+    console.log('🗑️ DELETE request to:', `${port}/cart/${itemId}`);
+    console.log('📋 Headers:', getHeaders());
+
     const response = await fetch(`${port}/cart/${itemId}`, {
       method: 'DELETE',
       credentials: 'include',
       headers: getHeaders(),
     });
 
+    console.log('📡 Response status:', response.status);
+
     if (!response.ok) {
-      throw new Error('Failed to remove item');
+      // Специальная обработка 403
+      if (response.status === 403) {
+        handleAuthError(response.status);
+        throw new Error('Session expired. Please login again.');
+      }
+
+      handleAuthError(response.status);
+
+      // Попытка получить детали ошибки от сервера
+      let errorMessage = 'Failed to remove item';
+      try {
+        const errorData = await response.json();
+        console.error('❌ Server error:', errorData);
+        errorMessage = errorData.error || errorData.message || errorMessage;
+      } catch (e) {
+        console.error('❌ Could not parse error response', e);
+      }
+
+      throw new Error(errorMessage);
     }
   },
 
   async clear(): Promise<void> {
+    if (!hasValidToken()) {
+      return; // Тихо возвращаемся, если нет токена
+    }
+
     const response = await fetch(`${port}/cart`, {
       method: 'DELETE',
       credentials: 'include',
@@ -91,17 +175,33 @@ export const api = {
     });
 
     if (!response.ok) {
+      handleAuthError(response.status);
+
+      if (response.status === 401 || response.status === 403) {
+        return; // Игнорируем ошибки авторизации при очистке
+      }
+
       throw new Error('Failed to clear cart');
     }
   },
 
   async getTotal(): Promise<{ total: number; count: number }> {
+    if (!hasValidToken()) {
+      return { total: 0, count: 0 };
+    }
+
     const response = await fetch(`${port}/cart/total`, {
       credentials: 'include',
       headers: getHeaders(),
     });
 
     if (!response.ok) {
+      handleAuthError(response.status);
+
+      if (response.status === 401 || response.status === 403) {
+        return { total: 0, count: 0 };
+      }
+
       throw new Error('Failed to fetch total');
     }
 
@@ -115,14 +215,20 @@ export const api = {
     postCard: boolean;
     postCardText: string;
   }): Promise<{ success: boolean; message: string; orderId?: number }> {
+    if (!hasValidToken()) {
+      throw new Error('Authentication required');
+    }
+
     const response = await fetch(`${port}/cart/checkout`, {
       method: 'POST',
-      headers: getHeaders(), // ← Важно: используем getHeaders с токеном
+      headers: getHeaders(),
       credentials: 'include',
       body: JSON.stringify(data),
     });
 
     if (!response.ok) {
+      handleAuthError(response.status);
+
       const error = await response.json().catch(() => ({ error: 'Ошибка при отправке заказа' }));
       throw new Error(error.error || 'Ошибка при отправке заказа');
     }
