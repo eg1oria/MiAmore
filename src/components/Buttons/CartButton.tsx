@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { useSnackbar } from 'notistack';
 
 interface Props {
-  item: IFlower | CartItemApi; // Принимаем оба типа
+  item: IFlower | CartItemApi;
   className?: string;
 }
 

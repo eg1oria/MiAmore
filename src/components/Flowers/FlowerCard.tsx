@@ -75,8 +75,10 @@ export default function FlowerCard({ item, className = '', isLoading = false }: 
         <div className="main__right-container">
           <h3 className="main__item-title">{item.name}</h3>
           <p className="main__item-subtitle">{item.type}</p>
-          <span className="main__item-price-old">{item.price} ₽</span>
-          <span className="main__item-price">{Math.round(item.price * (1 - item.discount))} ₽</span>
+          <span className="main__item-price-old">{item.price * 5} ₸</span>
+          <span className="main__item-price">
+            {Math.round(item.price * 5 * (1 - item.discount))} ₸
+          </span>
         </div>
       </Link>
 

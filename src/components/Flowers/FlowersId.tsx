@@ -94,7 +94,7 @@ export default function FlowerId() {
 
             <div className="price-section">
               <span className="price-label">Цена:</span>
-              <span className="price-value">{flower.price} ₽</span>
+              <span className="price-value">{flower.price * 5} ₸</span>
             </div>
 
             <div className="actions-section">

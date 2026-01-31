@@ -22,7 +22,6 @@ function getHeaders(): HeadersInit {
   return headers;
 }
 
-// Проверка наличия токена перед запросом
 function hasValidToken(): boolean {
   const token = getToken();
   if (!token) {
@@ -32,20 +31,17 @@ function hasValidToken(): boolean {
   return true;
 }
 
-// Функция для обработки ошибок аутентификации
 function handleAuthError(status: number): void {
   if (status === 401 || status === 403) {
     console.warn('🚫 Auth error, clearing token');
     if (typeof window !== 'undefined') {
       localStorage.removeItem('auth_token');
-      // Не делаем редирект отсюда - пусть компоненты решают
     }
   }
 }
 
 export const api = {
   async get(): Promise<CartItemApi[]> {
-    // Не делаем запрос без токена
     if (!hasValidToken()) {
       return [];
     }
@@ -58,7 +54,6 @@ export const api = {
     if (!response.ok) {
       handleAuthError(response.status);
 
-      // Для 401/403 возвращаем пустой массив вместо ошибки
       if (response.status === 401 || response.status === 403) {
         return [];
       }
@@ -141,7 +136,6 @@ export const api = {
     console.log('📡 Response status:', response.status);
 
     if (!response.ok) {
-      // Специальная обработка 403
       if (response.status === 403) {
         handleAuthError(response.status);
         throw new Error('Session expired. Please login again.');
@@ -149,7 +143,6 @@ export const api = {
 
       handleAuthError(response.status);
 
-      // Попытка получить детали ошибки от сервера
       let errorMessage = 'Failed to remove item';
       try {
         const errorData = await response.json();
@@ -165,7 +158,7 @@ export const api = {
 
   async clear(): Promise<void> {
     if (!hasValidToken()) {
-      return; // Тихо возвращаемся, если нет токена
+      return;
     }
 
     const response = await fetch(`${port}/cart`, {
@@ -178,7 +171,7 @@ export const api = {
       handleAuthError(response.status);
 
       if (response.status === 401 || response.status === 403) {
-        return; // Игнорируем ошибки авторизации при очистке
+        return;
       }
 
       throw new Error('Failed to clear cart');

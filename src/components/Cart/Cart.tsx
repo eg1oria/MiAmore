@@ -144,9 +144,9 @@ export default function CartPage() {
   let total;
 
   if (postCard) {
-    total = cart.reduce((sum, item) => sum + item.price * item.count, 0);
+    total = cart.reduce((sum, item) => sum + item.price * 5 * item.count, 0);
   } else {
-    total = cart.reduce((sum, item) => sum + item.price + 100 * item.count, 0);
+    total = cart.reduce((sum, item) => sum + item.price * 5 + 100 * item.count, 0);
   }
   const totalItems = cart.reduce((sum, item) => sum + item.count, 0);
 
@@ -180,7 +180,7 @@ export default function CartPage() {
 
                     <div className="cart-item-info">
                       <h3>{item.name}</h3>
-                      <p className="price">{item.price} ₽</p>
+                      <p className="price">{item.price * 5} ₸</p>
                     </div>
 
                     <div className="cart-item-count">
@@ -197,7 +197,7 @@ export default function CartPage() {
                       </button>
                     </div>
 
-                    <div className="cart-item-total">{item.price * item.count} ₽</div>
+                    <div className="cart-item-total">{item.price * 5 * item.count} ₸</div>
 
                     <CartButton className="cart-item-remove" item={item} />
                   </div>
@@ -213,7 +213,7 @@ export default function CartPage() {
                 </div>
                 <div className="summary-row total">
                   <span>Итого:</span>
-                  <span>{total} ₽</span>
+                  <span>{total} ₸</span>
                 </div>
                 <div className="inputs">
                   <div className="inputWrap">

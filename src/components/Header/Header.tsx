@@ -138,10 +138,6 @@ export default function Header() {
               </nav>
 
               <div className={h.burger_actions}>
-                <Link className={h.burger_actions_link} href="/" onClick={closeBurger}>
-                  <FavIcon />
-                  <span>Избранное</span>
-                </Link>
                 <Link className={h.burger_actions_link} href="/cart" onClick={closeBurger}>
                   <CartIcon />
                   <span>Корзина {totalItems > 0 && `(${totalItems})`}</span>
